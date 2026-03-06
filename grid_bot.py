@@ -1,0 +1,1215 @@
+import os, time, json, logging, hmac, hashlib
+from datetime import datetime, timezone, timedelta
+from urllib.parse import urlencode
+import requests
+
+# ── TELEGRAM ────────────────────────────────────────────
+def tg(msg: str):
+    """Send Telegram notification — silent fail"""
+    token   = os.environ.get("TELEGRAM_TOKEN","")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID","")
+    if not token or not chat_id:
+        return
+    try:
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={"chat_id": chat_id, "text": msg, "parse_mode": "HTML"},
+            timeout=8
+        )
+    except:
+        pass
+
+# ── MILESTONE ALERTS ────────────────────────────────────
+MILESTONES_NET = [5, 10, 20, 30, 50, 75, 100, 150, 200]  # USD net profit
+MILESTONES_WR  = [70, 75, 80, 85, 90]                     # Win rate %
+MILESTONES_FILLS = [500, 1000, 2000, 5000]                 # Total fills
+
+def check_milestones(state):
+    """Cek dan kirim alert untuk milestone yang baru tercapai"""
+    reached = state.get("milestones_reached", [])
+    changed = False
+    fs      = state.get("fee_simulation", {})
+    net_pnl = float(fs.get("simulated_pnl", 0))
+    wl      = state.get("win_loss", {})
+    wins    = wl.get("wins", 0)
+    losses  = wl.get("losses", 0)
+    wr      = wins / (wins + losses) * 100 if (wins + losses) > 0 else 0
+    fills   = state.get("total_fills", 0)
+    capital = 500
+    NL = chr(10)
+    for m in MILESTONES_NET:
+        key = f"net_{m}"
+        if net_pnl >= m and key not in reached:
+            reached.append(key)
+            roi = m / capital * 100
+            msg = f"🏆 MILESTONE +${m} NET{NL}💰 Net PnL: +${net_pnl:.2f}{NL}📈 ROI: +{roi:.1f}%{NL}#zerovant #milestone"
+            tg(msg)
+            changed = True
+    for m in MILESTONES_WR:
+        key = f"wr_{m}"
+        if wr >= m and key not in reached:
+            reached.append(key)
+            msg = f"🎯 WIN RATE {m}%{NL}📊 Rate: {wr:.1f}% ({wins}W/{losses}L){NL}#zerovant #winrate"
+            tg(msg)
+            changed = True
+    for m in MILESTONES_FILLS:
+        key = f"fills_{m}"
+        if fills >= m and key not in reached:
+            reached.append(key)
+            msg = f"⚡ FILLS {m:,}{NL}🔄 Total: {fills:,}{NL}#zerovant #fills"
+            tg(msg)
+            changed = True
+    history = state.get("daily_pnl_history", {})
+    if history:
+        best_day  = max((float(d.get("pnl",0)) for d in history.values()), default=0)
+        snap      = state.get("today_snapshot", {}) or {}
+        today_pnl = float(snap.get("pnl", 0))
+        key = f"best_day_{int(best_day*100)}"
+        if today_pnl > best_day and today_pnl > 5 and key not in reached:
+            reached.append(key)
+            msg = f"📅 NEW DAILY RECORD{NL}🌟 Today: +${today_pnl:.4f}{NL}📈 Prev: +${best_day:.4f}{NL}#zerovant #record"
+            tg(msg)
+            changed = True
+    if changed:
+        state["milestones_reached"] = reached
+
+def send_daily_report(state):
+    """Daily report jam 07:00 WIB — auto pin"""
+    from datetime import datetime, timezone, timedelta
+    wib = timezone(timedelta(hours=7))
+    now = datetime.now(wib)
+
+    fs      = state.get("fee_simulation", {})
+    wl      = state.get("win_loss", {})
+    wins    = wl.get("wins", 0)
+    losses  = wl.get("losses", 0)
+    wr      = wins/(wins+losses)*100 if (wins+losses) > 0 else 0
+    gross   = float(fs.get("gross_pnl", 0))
+    net     = float(fs.get("simulated_pnl", 0))
+    fills   = state.get("total_fills", 0)
+    sharpe  = float(state.get("sharpe_ratio", 0))
+    capital = 500
+    balance = capital + net
+
+    # Today PnL
+    snap      = state.get("today_snapshot", {}) or {}
+    today_pnl = float(snap.get("pnl", 0))
+    today_net = float(snap.get("net_pnl", 0))
+    asset_lines = ""
+    for sym, pnl in state.get("asset_pnl", {}).items():
+        sym_short = sym.replace("USDT","")
+        icon = "+" if float(pnl) >= 0 else "-"
+        asset_lines += f"  [{icon}] {sym_short}: ${float(pnl):+.4f}\n"
+    msg = (
+        f"\U0001f4ca <b>ZEROVANT CLAW - DAILY REPORT</b>\n"
+        f"\U0001f4c5 {now.strftime('%d %B %Y')} | {now.strftime('%H:%M')} WIB\n"
+        f"\U0001f4b0 <b>Balance: ${balance:.2f}</b> NET est\n"
+        f"\U0001f4c8 Today: ${today_pnl:+.4f} gross | ${today_net:+.4f} net\n"
+        f"\U0001f4ca All-time Net: ${net:+.4f} ({net/capital*100:+.2f}%)\n"
+        f"\U0001f3af Win Rate: {wr:.1f}% ({wins}W/{losses}L)\n"
+        f"\U0001f4ca Sharpe: {sharpe:.2f}\n"
+        f"\u26a1 Fills: {fills:,}\n"
+        f"\U0001f4bc Per Asset:\n{asset_lines}"
+        f"#zerovant #daily"
+    )
+
+    token   = os.environ.get("TELEGRAM_TOKEN","")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID","")
+    if not token or not chat_id: return
+    try:
+        r = requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={"chat_id": chat_id, "text": msg, "parse_mode": "HTML"},
+            timeout=8
+        )
+        msg_id = r.json().get("result",{}).get("message_id")
+        if msg_id:
+            requests.post(
+                f"https://api.telegram.org/bot{token}/pinChatMessage",
+                json={"chat_id": chat_id, "message_id": msg_id, "disable_notification": True},
+                timeout=8
+            )
+            log.info("  📌 Daily report sent & pinned")
+    except Exception as e:
+        log.warning(f"  Daily report error: {e}")
+
+def check_daily_report(state):
+    """Cek apakah sudah waktunya kirim daily report (07:00 WIB)"""
+    from datetime import datetime, timezone, timedelta
+    wib      = timezone(timedelta(hours=7))
+    now      = datetime.now(wib)
+    today    = now.strftime("%Y-%m-%d")
+    last_rpt = state.get("last_daily_report","")
+    # Kirim antara 07:00-07:15 WIB
+    if now.hour == 7 and now.minute < 15 and last_rpt != today:
+        send_daily_report(state)
+        state["last_daily_report"] = today
+
+def apply_compound(state):
+    """Compound 50% profit ke capital setiap hari saat reset"""
+    fs      = state.get("fee_simulation", {})
+    net_pnl = float(fs.get("simulated_pnl", 0))
+    if net_pnl <= 0:
+        return  # Tidak compound kalau rugi
+
+    total_cap = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+    compound_amt = round(net_pnl * COMPOUND_RATE, 2)
+
+    # Distribusi proporsional ke semua asset
+    for sym, cfg in GRID_CONFIG.items():
+        if cfg["capital"] <= 0:
+            continue
+        share = cfg["capital"] / total_cap
+        addition = round(compound_amt * share, 2)
+        old_cap = cfg["capital"]
+        cfg["capital"] = round(old_cap + addition, 2)
+
+    new_total = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+    state["total_capital"] = new_total
+    state["grid_capitals"] = {sym: cfg["capital"] for sym, cfg in GRID_CONFIG.items()}
+    state["last_compound"] = {
+        "amount": compound_amt,
+        "net_pnl": net_pnl,
+        "new_total": new_total,
+        "capitals": {sym: cfg["capital"] for sym, cfg in GRID_CONFIG.items()}
+    }
+    log.info(f"  🔥 COMPOUND: +${compound_amt:.2f} → total capital ${new_total:.2f}")
+    tg("\U0001f4b0 <b>COMPOUND EXECUTED</b>\n"
+       "+ $" + str(compound_amt) + " added to capital\n"
+       "New total: $" + str(round(new_total, 2)) + "\n"
+       "From net profit: $" + str(round(net_pnl, 2)) + "\n"
+       "#zerovant #compound")
+
+# ── CONFIG ──────────────────────────────────────────────
+TESTNET_BASE  = "https://testnet.binance.vision/api/v3"
+API_KEY       = os.environ.get("BINANCE_TESTNET_API_KEY", "")
+API_SECRET    = os.environ.get("BINANCE_TESTNET_SECRET", "")
+ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+VENICE_KEY    = os.environ.get("VENICE_API_KEY", "")
+USE_VENICE    = bool(VENICE_KEY)  # Auto-switch ke Venice jika key tersedia
+
+ASSETS = ["ETHUSDT", "SOLUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT"]
+# ── RISK MANAGEMENT ────────────────────────────────────
+MAX_DAILY_LOSS_PCT  = 0.05   # Stop semua grid kalau loss >5% modal hari ini
+RANGE_BREACH_PCT    = 0.15   # Cancel grid kalau harga keluar range >15%
+MAX_DRAWDOWN_PCT    = 0.10   # Emergency stop kalau drawdown >10% dari peak
+DAILY_PROFIT_TARGET = 0.02   # Optional: lock profit kalau sudah +2% hari ini
+
+# Flash crash / news protection
+FLASH_CRASH_PCT     = 0.05   # Cancel semua kalau 1 candle bergerak >5%
+VOLUME_SPIKE_MULT   = 5.0    # Volume spike = volume > 5x rata-rata 20 candle
+BB_EXPLOSION_MULT   = 2.5    # BB width explode = >2.5x dari BB sebelumnya
+COOLDOWN_MINUTES    = 30     # Pause trading setelah extreme event
+
+# Optimized for $500 real capital — weighted by backtest ROI
+# DOGE/XRP/SOL overweighted (highest ROI), BTC underweighted (lowest ROI per $)
+# $500 real capital — BTC removed (min notional too high for small capital)
+# Reallocated BTC+BNB share to DOGE/XRP/SOL (higher ROI anyway)
+GRID_CONFIG = {
+    "ETHUSDT":  {"capital": 80,  "num_grids": 10, "range_pct": 0.10},  # 16%
+    "SOLUSDT":  {"capital": 110, "num_grids": 10, "range_pct": 0.12},  # 22%
+    "BNBUSDT":  {"capital": 60,  "num_grids": 10, "range_pct": 0.08},  # 12%
+    "DOGEUSDT": {"capital": 150, "num_grids": 10, "range_pct": 0.10},  # 30%
+    "XRPUSDT":  {"capital": 100, "num_grids": 10, "range_pct": 0.12},  # 20%
+}
+# Total: $500 | BTC removed (min order $5, $30/10grids=$3 too small)
+# Expected monthly: ~$55/month = 11% monthly ROI
+CYCLE_MINUTES  = 15
+AI_REBALANCE_H = 2
+COMPOUND_RATE  = 0.5
+DATA_FILE      = "data/grid_state.json"
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.FileHandler("grid_bot.log"), logging.StreamHandler()]
+)
+log = logging.getLogger(__name__)
+
+def sign(params):
+    query = urlencode(params)
+    sig = hmac.new(API_SECRET.encode(), query.encode(), hashlib.sha256).hexdigest()
+    params["signature"] = sig
+    return params
+
+def api_get(endpoint, params={}, auth=False):
+    if auth:
+        params["timestamp"] = int(time.time() * 1000)
+        params = sign(params)
+    resp = requests.get(f"{TESTNET_BASE}{endpoint}", params=params,
+                        headers={"X-MBX-APIKEY": API_KEY}, timeout=10)
+    resp.raise_for_status()
+    return resp.json()
+
+def api_post(endpoint, params):
+    params["timestamp"] = int(time.time() * 1000)
+    params = sign(params)
+    resp = requests.post(f"{TESTNET_BASE}{endpoint}", params=params,
+                         headers={"X-MBX-APIKEY": API_KEY}, timeout=10)
+    resp.raise_for_status()
+    return resp.json()
+
+def get_price(symbol):
+    return float(api_get("/ticker/price", {"symbol": symbol})["price"])
+
+def get_klines(symbol, interval="15m", limit=100):
+    data = api_get("/klines", {"symbol": symbol, "interval": interval, "limit": limit})
+    return [{"open":float(c[1]),"high":float(c[2]),"low":float(c[3]),"close":float(c[4]),"volume":float(c[5])} for c in data]
+
+def cancel_open_orders(symbol):
+    try:
+        orders = api_get("/openOrders", {"symbol": symbol}, auth=True)
+        if not orders:
+            return
+        for o in orders:
+            params = {"symbol": symbol, "orderId": o["orderId"],
+                      "timestamp": int(time.time() * 1000)}
+            params = sign(params)
+            requests.delete(f"{TESTNET_BASE}/order", params=params,
+                           headers={"X-MBX-APIKEY": API_KEY}, timeout=10)
+        log.info(f"  Cancelled {len(orders)} orders: {symbol}")
+    except Exception as e:
+        log.warning(f"  Cancel error {symbol}: {e}")
+
+def place_limit_order(symbol, side, price, qty):
+    # price precision per asset
+    price_prec = {"BTCUSDT":2,"ETHUSDT":2,"SOLUSDT":2,"BNBUSDT":2,"DOGEUSDT":5,"XRPUSDT":4}.get(symbol,2)
+    qty_prec = {"BTCUSDT":5,"ETHUSDT":4,"SOLUSDT":3,"BNBUSDT":3,"DOGEUSDT":0,"XRPUSDT":1}.get(symbol,2)
+    pd, qd = price_prec, qty_prec
+    return api_post("/order", {
+        "symbol": symbol, "side": side, "type": "LIMIT",
+        "timeInForce": "GTC",
+        "price": f"{price:.{pd}f}",
+        "quantity": f"{qty:.{qd}f}",
+    })
+
+def compute_atr(candles, period=14):
+    trs = [max(c["high"]-c["low"], abs(c["high"]-candles[i-1]["close"]),
+               abs(c["low"]-candles[i-1]["close"])) for i, c in enumerate(candles) if i > 0]
+    return sum(trs[-period:]) / period if trs else 0
+
+def compute_bb_width(candles, period=20):
+    closes = [c["close"] for c in candles[-period:]]
+    mean = sum(closes) / len(closes)
+    std  = (sum((c-mean)**2 for c in closes) / len(closes)) ** 0.5
+    return round((std * 2) / mean, 4)
+
+def market_analysis(symbol):
+    candles = get_klines(symbol, "15m", 100)
+    price   = candles[-1]["close"]
+    atr     = compute_atr(candles)
+    bb_w    = compute_bb_width(candles)
+    ema20   = sum(c["close"] for c in candles[-20:]) / 20
+    ema50   = sum(c["close"] for c in candles[-50:]) / 50
+    trend   = "UP" if ema20 > ema50 else "DOWN"
+    vol     = "HIGH" if bb_w > 0.04 else ("MEDIUM" if bb_w > 0.02 else "LOW")
+    return {"symbol":symbol,"price":price,"atr":round(atr,2),
+            "atr_pct":round(atr/price,4),"bb_width":bb_w,
+            "trend":trend,"vol_regime":vol,"ema20":round(ema20,2),"ema50":round(ema50,2)}
+
+def call_venice_ai(prompt_text):
+    """Call Venice AI — OpenAI compatible, no data retention"""
+    import openai as openai_lib
+    client = openai_lib.OpenAI(
+        api_key=VENICE_KEY,
+        base_url="https://api.venice.ai/api/v1"
+    )
+    resp = client.chat.completions.create(
+        model="mistral-31-24b",
+        messages=[{"role": "user", "content": prompt_text}],
+        max_tokens=1500,
+        temperature=0.2,
+    )
+    return resp.choices[0].message.content
+
+def call_anthropic_ai(prompt_text):
+    """Call Anthropic Claude — fallback"""
+    client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
+    msg = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=1500,
+        messages=[{"role": "user", "content": prompt_text}]
+    )
+    return msg.content[0].text
+
+def call_ai(prompt_text):
+    """Auto-select Venice (cheap) atau Anthropic (fallback)"""
+    if USE_VENICE and VENICE_KEY:
+        try:
+            result = call_venice_ai(prompt_text)
+            log.info("  🔥 Venice AI used")
+            return result
+        except Exception as e:
+            log.warning(f"  Venice failed: {e} — fallback to Anthropic")
+    return call_anthropic_ai(prompt_text)
+
+def ai_grid_decision(analyses, current_grids):
+    if not ANTHROPIC_KEY:
+        return rule_based_grid_params(analyses, _current_state)
+    prompt = f"""You are a grid trading AI. Given market conditions, output optimal grid parameters.
+    
+    MARKET CONDITIONS:
+    {json.dumps(analyses, indent=2)}
+    
+    Rules:
+    - HIGH volatility → wider range, fewer grids
+    - LOW volatility → tighter range, more grids
+    - Strong trend (ema20 far from ema50) → consider CANCEL
+    - Grid spacing MUST be minimum 0.4% of price (covers 0.1% buy fee + 0.1% sell fee + 0.2% net profit)
+    - If calculated spacing < 0.4%, expand range or reduce grids
+- Never place grids closer than 0.4% apart
+
+Respond ONLY in JSON (no markdown):
+{{
+  "BTCUSDT": {{"action":"REBALANCE","range_low":80000,"range_high":90000,"num_grids":20,"reason":"..."}},
+  "ETHUSDT": {{"action":"REBALANCE","range_low":2200,"range_high":2600,"num_grids":18,"reason":"..."}},
+  "SOLUSDT": {{"action":"CANCEL","range_low":0,"range_high":0,"num_grids":0,"reason":"..."}}
+}}"""
+    try:
+        raw = call_ai(prompt)
+        text = raw.strip().strip("```json").strip("```").strip()
+        decision = json.loads(text)
+        log.info("  AI decision received")
+        return decision
+    except Exception as e:
+        log.error(f"  AI error: {e} - fallback to rule-based")
+        return rule_based_grid_params(analyses, _current_state)
+def rule_based_grid_params(analyses, state=None):
+    result = {}
+    for a in analyses:
+        symbol, price, atr_pct = a["symbol"], a["price"], a["atr_pct"]
+        vol, trend = a["vol_regime"], a["trend"]
+        ema_diff = abs(a["ema20"] - a["ema50"]) / price
+        if ema_diff > 0.03:
+            result[symbol] = {"action":"CANCEL","range_low":0,"range_high":0,"num_grids":0,
+                              "reason":f"Strong trend ({trend}), EMA diff {ema_diff:.2%}"}
+            continue
+        # Use backtest-optimized config per asset
+        cfg = GRID_CONFIG.get(symbol, {})
+        num_grids = cfg.get("num_grids", 10)
+        target_range = cfg.get("range_pct", 0.10)
+        # Dynamic width based on volatility
+        if vol == "HIGH":
+            range_pct = min(target_range * 1.3, max(target_range, atr_pct * 2.0))
+        elif vol == "MEDIUM":
+            range_pct = target_range
+        else:
+            range_pct = min(target_range * 0.85, max(target_range * 0.7, atr_pct * 1.5))
+        # Asymmetric grid — bias toward trend
+        if trend == "DOWN":
+            buy_side  = range_pct * 0.62  # more room below — catch bounces
+            sell_side = range_pct * 0.38
+        elif trend == "UP":
+            buy_side  = range_pct * 0.38
+            sell_side = range_pct * 0.62  # more room above — ride momentum
+        else:
+            buy_side  = range_pct * 0.50
+            sell_side = range_pct * 0.50
+        # Trailing grid — blend current price with previous range center
+        grids_state = (state or {}).get("grids", {})
+        prev_low  = grids_state.get(symbol, {}).get("range_low") or price
+        prev_high = grids_state.get(symbol, {}).get("range_high") or price
+        prev_center = (float(prev_low) + float(prev_high)) / 2
+        # 80% current price, 20% previous center — smooth trailing
+        center = price * 0.85 + prev_center * 0.15
+        # Precision berdasarkan harga
+        if price < 0.001:  dec = 7
+        elif price < 0.01: dec = 6
+        elif price < 0.1:  dec = 5
+        elif price < 1:    dec = 4
+        elif price < 10:   dec = 3
+        else:              dec = 2
+        rl = round(center * (1 - buy_side),  dec)
+        rh = round(center * (1 + sell_side), dec)
+        # Sanity check — range must be > 0
+        if rl <= 0 or rh <= rl:
+            rl = round(price * (1 - range_pct/2), dec)
+            rh = round(price * (1 + range_pct/2), dec)
+        result[symbol] = {
+            "action": "REBALANCE",
+            "range_low":  rl,
+            "range_high": rh,
+            "num_grids": num_grids,
+            "reason": f"{vol} vol, {trend} trend, ATR={atr_pct:.2%}"
+        }
+    return result
+
+def rebalance_capital(state):
+    """Rebalance capital allocation based on performance — run daily"""
+    asset_pnl = state.get("asset_pnl", {})
+    if not asset_pnl or len(asset_pnl) < 2: return
+    total_pnl = sum(v for v in asset_pnl.values() if v > 0)
+    if total_pnl <= 0: return
+    total_cap = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+    for sym, cfg in GRID_CONFIG.items():
+        perf  = asset_pnl.get(sym, 0)
+        share = perf / total_pnl if total_pnl > 0 else 1/len(GRID_CONFIG)
+        # Scale: winner gets max 1.4x base, loser gets min 0.6x base
+        base  = total_cap / len(GRID_CONFIG)
+        ratio = max(0.6, min(1.4, 0.7 + share * len(GRID_CONFIG) * 0.7))
+        new_cap = round(base * ratio, 0)
+        if abs(new_cap - cfg["capital"]) > 10:  # only update if change >$10
+            log.info(f"  Capital realloc {sym}: ${cfg['capital']} → ${new_cap} (perf=${perf:+.4f})")
+            cfg["capital"] = new_cap
+
+def place_grid(symbol, range_low, range_high, num_grids, capital, current_price):
+    spacing = (range_high - range_low) / num_grids
+    # Enforce minimum spacing = 0.4% of price (2x fee rate untuk net profit)
+    min_spacing = current_price * 0.004
+    if spacing < min_spacing:
+        # Expand range atau kurangi num_grids
+        spacing = min_spacing
+        range_high = range_low + spacing * num_grids
+        log.info(f"  ⚠️ {symbol}: spacing too small, expanded range to {range_low:.4f}-{range_high:.4f}")
+    per_level = capital / num_grids
+    placed = 0
+    for i in range(num_grids + 1):
+        price = range_low + i * spacing
+        qty   = per_level / price
+        side  = "BUY" if price < current_price else "SELL" if price > current_price else None
+        if not side: continue
+        try:
+            place_limit_order(symbol, side, price, qty)
+            placed += 1
+        except Exception as e:
+            log.warning(f"  Order fail {side}@{price:.2f}: {e}")
+    log.info(f"  ✅ {placed}/{num_grids} orders placed | {symbol} | range:{range_low:.0f}-{range_high:.0f}")
+    return placed
+
+def load_state():
+    try: return json.load(open(DATA_FILE))
+    except: return {"grids":{},"last_ai_check":None,"total_fills":0,
+                    "start_time":datetime.now(timezone.utc).isoformat()}
+
+def save_state(state):
+    os.makedirs("data", exist_ok=True)
+    json.dump(state, open(DATA_FILE,"w"), indent=2, default=str)
+
+def check_fills_and_pnl(state):
+    """Check filled orders dan hitung realized PnL per grid pair"""
+    if "fills_log" not in state:
+        state["fills_log"] = []
+    if "realized_pnl" not in state:
+        state["realized_pnl"] = 0.0
+    if "total_rebalances" not in state:
+        state["total_rebalances"] = 0
+    if "last_prices" not in state:
+        state["last_prices"] = {}
+
+    for symbol in ASSETS:
+        try:
+            # Update live price
+            price_data = api_get("/ticker/price", {"symbol": symbol})
+            state["last_prices"][symbol] = float(price_data["price"])
+
+            # Ambil filled orders (my trades)
+            trades = api_get("/myTrades", {"symbol": symbol, "limit": 10}, auth=True)
+            # Deep copy grid — preserve ALL fields including orders_placed
+            grid = dict(state["grids"].get(symbol, {}))
+            # Use seen_trade_ids (persists across resets) + fills_log
+            if "seen_trade_ids" not in state:
+                state["seen_trade_ids"] = {}
+            if symbol not in state["seen_trade_ids"]:
+                state["seen_trade_ids"][symbol] = []
+            known = set(state["seen_trade_ids"][symbol])
+
+            # Track inventory per asset
+            if "inventory" not in state:
+                state["inventory"] = {}
+            inv = state["inventory"].get(symbol, 0.0)
+
+            for t in trades:
+                tid = t["id"]
+                if tid in known:
+                    continue
+                # New fill!
+                side = "BUY" if t["isBuyer"] else "SELL"
+                price = float(t["price"])
+                qty   = float(t["qty"])
+                fee   = float(t.get("commission", 0))
+                ts    = datetime.fromtimestamp(t["time"]/1000, tz=timezone.utc)
+
+                # Update inventory
+                if side == "BUY":
+                    inv = round(inv + qty, 8)
+                else:
+                    inv = round(inv - qty, 8)
+                state["inventory"][symbol] = inv
+
+                fill = {
+                    "tradeId": tid, "symbol": symbol,
+                    "side": side, "price": price, "qty": qty,
+                    "fee": fee, "time": ts.strftime("%H:%M:%S"), "timestamp": ts.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "pnl": None, "inventory": inv
+                }
+
+                # Pair BUY+SELL untuk hitung PnL
+                if side == "SELL":
+                    # FIFO pairing — ambil buy PERTAMA (oldest) yang belum dipair
+                    buys = [f for f in state["fills_log"]
+                            if f.get("symbol")==symbol and f.get("side")=="BUY" and f.get("pnl") is None]
+                    if buys:
+                        buy = buys[0]  # FIFO: oldest unpaired buy
+                        pnl = round((price - buy["price"]) * min(qty, buy["qty"]) - fee, 4)
+                        fill["pnl"] = pnl
+                        buy["pnl"] = 0  # mark as paired
+                        state["realized_pnl"] = round(state.get("realized_pnl", 0) + pnl, 4)
+                        if "asset_pnl" not in state:
+                            state["asset_pnl"] = {}
+                        state["asset_pnl"][symbol] = round(
+                            state["asset_pnl"].get(symbol, 0) + pnl, 4)
+                        # Win rate tracking
+                        if "win_loss" not in state:
+                            state["win_loss"] = {"wins":0,"losses":0,"total_win":0.0,"total_loss":0.0,"best":0.0,"worst":0.0}
+                        wl = state["win_loss"]
+                        if pnl > 0:
+                            wl["wins"]      = wl.get("wins",0) + 1
+                            wl["total_win"] = round(wl.get("total_win",0) + pnl, 4)
+                            wl["best"]      = round(max(wl.get("best",0), pnl), 4)
+                        else:
+                            wl["losses"]    = wl.get("losses",0) + 1
+                            wl["total_loss"]= round(wl.get("total_loss",0) + pnl, 4)
+                            wl["worst"]     = round(min(wl.get("worst",0), pnl), 4)
+                        if "realized_pnl" not in grid:
+                            grid["realized_pnl"] = 0
+                        grid["realized_pnl"] = round(grid.get("realized_pnl", 0) + pnl, 4)
+
+                state["fills_log"].append(fill)
+                state["total_fills"] = state.get("total_fills", 0) + 1
+                state["seen_trade_ids"][symbol].append(tid)
+                # Keep seen_trade_ids trim (last 500 per symbol)
+                state["seen_trade_ids"][symbol] = state["seen_trade_ids"][symbol][-500:]
+                # Daily stop loss check per asset
+                asset_daily_pnl = state["asset_pnl"].get(symbol, 0) - state.get("asset_daily_start", {}).get(symbol, 0)
+                asset_capital   = GRID_CONFIG.get(symbol, {}).get("capital", 100)
+                if asset_capital > 0 and asset_daily_pnl < -(asset_capital * 0.015):  # -1.5% daily stop
+                    log.warning(f"  🔥 {symbol}: daily loss {asset_daily_pnl:.4f} > 1.5% — pausing")
+                    state["grids"][symbol]["active"] = False
+                    state["grids"][symbol]["reason"] = f"daily_stoploss: {asset_daily_pnl:.4f}"
+                short2 = symbol.replace("USDT","")
+                # Hanya notif SELL dengan PnL — skip BUY spam
+                if side == "SELL" and fill.get("pnl") is not None:
+                    pnl  = fill["pnl"]
+                    icon = "\U0001f7e2" if pnl >= 0 else "\U0001f534"
+                    tg(f"{icon} <b>TRADE CLOSED</b> \u2014 {short2}\n"
+                       f"\u26a1 {qty:.4f} @ ${price:,.2f}\n"
+                       f"\U0001f4b0 PnL: <b>${pnl:+.4f}</b>\n"
+                       f"\U0001f4ca Total fills: {state['total_fills']:,}")
+                if "fills" not in grid:
+                    grid["fills"] = 0
+                grid["fills"] = grid.get("fills", 0) + 1
+                # Update grid — preserve orders_placed dan field lain
+                state["grids"][symbol] = {
+                    **state["grids"].get(symbol, {}),
+                    "realized_pnl": grid.get("realized_pnl", 0),
+                    "fills": grid.get("fills", 0),
+                }
+                log.info(f"  🔥 FILL: {symbol} {side} {qty} @ ${price:,.2f} | PnL: {fill.get('pnl','pending')}")
+
+        except Exception as e:
+            log.warning(f"  Fill check error {symbol}: {e}")
+
+def detect_extreme_event(analyses, state) -> dict:
+    """
+    Detect flash crash, volume spike, BB explosion.
+    Returns: {"event": None|"FLASH_CRASH"|"VOLUME_SPIKE"|"BB_EXPLOSION", "detail": str}
+    """
+    prev_prices = state.get("prev_prices", {})
+    prev_bb     = state.get("prev_bb_width", {})
+
+    events = []
+    for a in analyses:
+        sym   = a["symbol"]
+        price = a["price"]
+        bb    = a["bb_width"]
+        short = sym.replace("USDT","")
+
+        # 1. Flash crash/pump — harga berubah >5% dari cycle sebelumnya
+        prev_price = prev_prices.get(sym, price)
+        price_change = abs(price - prev_price) / prev_price if prev_price > 0 else 0
+        if price_change > FLASH_CRASH_PCT:
+            direction = "PUMP 🔥" if price > prev_price else "CRASH 🔥"
+            events.append({
+                "event": "FLASH_CRASH",
+                "sym": short,
+                "detail": f"{short} {direction} {price_change:.1%} in 15min (${prev_price:.4f}→${price:.4f})"
+            })
+
+        # 2. BB width explosion — volatility tiba-tiba meledak
+        prev_bb_width = prev_bb.get(sym, bb)
+        if prev_bb_width > 0 and bb > prev_bb_width * BB_EXPLOSION_MULT:
+            events.append({
+                "event": "BB_EXPLOSION",
+                "sym": short,
+                "detail": f"{short} BB exploded {bb/prev_bb_width:.1f}x ({prev_bb_width:.3f}→{bb:.3f})"
+            })
+
+    # Update previous values
+    state["prev_prices"]   = {a["symbol"]: a["price"] for a in analyses}
+    state["prev_bb_width"] = {a["symbol"]: a["bb_width"] for a in analyses}
+
+    if events:
+        # Return most severe event
+        crashes = [e for e in events if e["event"] == "FLASH_CRASH"]
+        bb_exp  = [e for e in events if e["event"] == "BB_EXPLOSION"]
+        if crashes:
+            return crashes[0]
+        return bb_exp[0]
+
+    return {"event": None, "detail": ""}
+
+def check_risk(state) -> str:
+    """
+    Returns: 'OK', 'DAILY_LOSS', 'DRAWDOWN', atau 'OK_TARGET_HIT'
+    """
+    total_capital = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+    realized_pnl  = state.get("realized_pnl", 0)
+
+    # Daily loss check — reset setiap hari
+    wib   = timezone(timedelta(hours=7))
+    today = datetime.now(wib).strftime("%Y-%m-%d")
+    if state.get("daily_reset_date") != today:
+        # Save yesterday to history before reset
+        prev_date  = state.get("daily_reset_date")
+        prev_start = state.get("daily_start_pnl", 0)
+        prev_fills = state.get("daily_start_fills", 0)
+        if prev_date:
+            day_pnl   = round(realized_pnl - prev_start, 4)
+            day_fills = state.get("total_fills", 0) - prev_fills
+            if "daily_pnl_history" not in state:
+                state["daily_pnl_history"] = {}
+            state["daily_pnl_history"][prev_date] = {
+                "pnl":        day_pnl,
+                "fills":      day_fills,
+                "cumulative": round(realized_pnl, 4),
+                "roi_pct":    round(day_pnl / 500 * 100, 3)
+            }
+            log.info(f"  Daily snapshot saved: {prev_date} PnL=${day_pnl:+.4f} fills={day_fills}")
+        state["daily_reset_date"] = today
+        state["daily_start_pnl"]  = realized_pnl
+        apply_compound(state)  # Compound 50% profit ke capital
+        state["daily_start_fills"] = state.get("total_fills", 0)
+        state["daily_peak_pnl"]   = realized_pnl
+
+    daily_start = state.get("daily_start_pnl", 0)
+    daily_pnl   = realized_pnl - daily_start
+    daily_pct   = daily_pnl / total_capital
+
+    # Update daily peak
+    if realized_pnl > state.get("daily_peak_pnl", realized_pnl):
+        state["daily_peak_pnl"] = realized_pnl
+
+    # Max drawdown dari peak
+    peak_pnl  = state.get("daily_peak_pnl", realized_pnl)
+    drawdown  = (peak_pnl - realized_pnl) / total_capital
+
+    if daily_pct < -MAX_DAILY_LOSS_PCT:
+        msg = f"🔥 DAILY LOSS LIMIT: {daily_pct:.1%} (limit {MAX_DAILY_LOSS_PCT:.0%})"
+        log.warning(msg)
+        tg(f"🔥 <b>EMERGENCY STOP</b>\nDaily loss: <b>{daily_pct:.1%}</b>\nAll grids paused")
+        return "DAILY_LOSS"
+
+    if drawdown > MAX_DRAWDOWN_PCT:
+        msg = f"🔥 MAX DRAWDOWN: {drawdown:.1%} (limit {MAX_DRAWDOWN_PCT:.0%})"
+        log.warning(msg)
+        tg(f"🔥 <b>DRAWDOWN STOP</b>\nDrawdown: <b>{drawdown:.1%}</b>\nAll grids paused")
+        return "DRAWDOWN"
+
+    return "OK"
+
+def check_range_breach(state, analyses):
+    """
+    Trailing grid + range breach protection.
+    - Kalau harga di top/bottom 20% range → trail (geser range)
+    - Kalau harga keluar range + 15% buffer → cancel + rebalance
+    """
+    for a in analyses:
+        sym   = a["symbol"]
+        price = a["price"]
+        grid  = state.get("grids", {}).get(sym, {})
+        if not grid.get("active"): continue
+        rl, rh = grid.get("range_low", 0), grid.get("range_high", 0)
+        if not rl or not rh: continue
+
+        cfg        = GRID_CONFIG.get(sym, {})
+        range_size = rh - rl
+        pos_pct    = (price - rl) / range_size if range_size > 0 else 0.5
+
+        # ── TRAILING: harga di top 15% atau bottom 15% ──
+        if pos_pct > 0.85 or pos_pct < 0.15:
+            # Geser range ke tengah harga sekarang
+            half    = range_size / 2
+            if price < 0.001:   p_dec = 7
+            elif price < 0.01:  p_dec = 6
+            elif price < 0.1:   p_dec = 5
+            elif price < 1:     p_dec = 4
+            elif price < 10:    p_dec = 3
+            else:               p_dec = 2
+            new_rl  = round(price - half, p_dec)
+            new_rh  = round(price + half, p_dec)
+            direction = "⬆️ UP" if pos_pct > 0.85 else "⬇️ DOWN"
+        # Strong trend warning (trend from analyses)
+        a_data = next((x for x in analyses if x["symbol"] == sym), {})
+        trend  = a_data.get("trend", "NEUTRAL")
+        if pos_pct > 0.80 and trend == "UP":
+            log.info(f"  ⚠️ {sym}: strong uptrend at {pos_pct:.0%} — consider waiting for pullback")
+        elif pos_pct < 0.20 and trend == "DOWN":
+            log.info(f"  ⚠️ {sym}: strong downtrend at {pos_pct:.0%} — reducing exposure")
+            log.info(f"  🔥 TRAILING {sym}: {direction} | {rl:.4f}-{rh:.4f} → {new_rl:.4f}-{new_rh:.4f}")
+            tg(f"🔥 <b>TRAILING GRID</b> — {sym.replace('USDT','')} {direction}\n"
+               f"Old: {rl}-{rh}\nNew: {new_rl}-{new_rh}")
+            cancel_open_orders(sym)
+            placed = place_grid(sym, new_rl, new_rh,
+                                cfg.get("num_grids", 10), cfg.get("capital", 100), price)
+            state["grids"][sym] = {
+                **grid,
+                "range_low": new_rl, "range_high": new_rh,
+                "orders_placed": placed,
+                "last_trail": datetime.now(timezone.utc).isoformat(),
+            }
+            continue
+
+        # ── RANGE BREACH: harga keluar range + buffer 15% ──
+        buffer = range_size * RANGE_BREACH_PCT
+        if price < rl - buffer or price > rh + buffer:
+            log.warning(f"  ⚠️  {sym} RANGE BREACH: price {price} outside {rl}-{rh}")
+            tg(f"⚠️ <b>RANGE BREACH</b> — {sym.replace('USDT','')}\n"
+               f"Price: ${price} outside ${rl}-${rh}\nGrid cancelled, will rebalance")
+            cancel_open_orders(sym)
+            state["grids"][sym] = {"active": False,
+                                   "reason": f"Range breach: {price:.4f} outside {rl}-{rh}"}
+            state["last_ai_check"] = None
+
+
+_last_update_id = 0
+
+def check_telegram_commands(state):
+    global _last_update_id
+    token   = os.environ.get("TELEGRAM_TOKEN", "")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
+    if not token or not chat_id:
+        return
+    try:
+        r = requests.get(
+            f"https://api.telegram.org/bot{token}/getUpdates",
+            params={"offset": _last_update_id + 1, "timeout": 2, "limit": 5},
+            timeout=5
+        )
+        updates = r.json().get("result", [])
+        for upd in updates:
+            _last_update_id = upd["update_id"]
+            msg = upd.get("message", {})
+            if str(msg.get("chat", {}).get("id", "")) != str(chat_id):
+                continue
+            text = msg.get("text", "").strip().lower()
+            log.info(f"  Telegram cmd: {text}")
+            if text == "/stop":
+                for sym in list(state.get("grids", {}).keys()):
+                    cancel_open_orders(sym)
+                    state["grids"][sym]["active"] = False
+                    state["grids"][sym]["reason"] = "manual_stop"
+                state["emergency_stop"] = True
+                tg("EMERGENCY STOP\nAll grids cancelled\nSend /start to resume\n#zerovant")
+                log.warning("  EMERGENCY STOP via Telegram")
+            elif text == "/start":
+                state["emergency_stop"] = False
+                for sym in list(state.get("grids", {}).keys()):
+                    state["grids"][sym]["active"] = True
+                    state["grids"][sym]["reason"] = "manual_start"
+                state["last_ai_check"] = None
+                tg("BOT RESUMED\nAll grids reactivated\n#zerovant")
+                log.info("  BOT RESUMED via Telegram")
+            elif text == "/status":
+                fs     = state.get("fee_simulation", {})
+                net    = float(fs.get("simulated_pnl", 0))
+                fills  = state.get("total_fills", 0)
+                wl     = state.get("win_loss", {})
+                wins   = wl.get("wins", 0)
+                losses = wl.get("losses", 0)
+                wr     = wins / (wins + losses) * 100 if wins + losses > 0 else 0
+                active = sum(1 for g in state.get("grids", {}).values() if g.get("active"))
+                snap   = state.get("today_snapshot", {}) or {}
+                today  = float(snap.get("pnl", 0))
+                tg(
+                    "BOT STATUS\n"
+                    + f"Net PnL: ${net:+.2f}\n"
+                    + f"Today: ${today:+.4f}\n"
+                    + f"WR: {wr:.1f}% ({wins}W/{losses}L)\n"
+                    + f"Fills: {fills:,}\n"
+                    + f"Active grids: {active}/5\n"
+                    + "#zerovant"
+                )
+            elif text == "/pause":
+                for sym in list(state.get("grids", {}).keys()):
+                    cancel_open_orders(sym)
+                    state["grids"][sym]["active"] = False
+                    state["grids"][sym]["reason"] = "manual_pause"
+                tg("BOT PAUSED\nSend /resume to continue\n#zerovant")
+            elif text == "/resume":
+                for sym in list(state.get("grids", {}).keys()):
+                    state["grids"][sym]["active"] = True
+                    state["grids"][sym]["reason"] = "manual_resume"
+                state["last_ai_check"] = None
+                tg("BOT RESUMED\n#zerovant")
+            elif text == "/help":
+                tg(
+                    "ZEROVANT CLAW COMMANDS\n"
+                    "/status - cek performa\n"
+                    "/stop - emergency stop semua grid\n"
+                    "/start - resume setelah stop\n"
+                    "/pause - pause sementara\n"
+                    "/resume - resume setelah pause\n"
+                    "/help - tampilkan ini"
+                )
+    except Exception as e:
+        log.debug(f"  Telegram poll error: {e}")
+
+def run():
+    log.info("="*55)
+    log.info("  ZEROVANT GRID v1.0 — AI Adaptive Multi-Asset")
+    log.info(f"  Assets: {', '.join(ASSETS)}")
+    log.info("="*55)
+    state = load_state()
+    tg("⚡ <b>ZEROVANT GRID</b> started\n🔥 Assets: " + ", ".join(ASSETS) + "\n🔥 AI rebalance: every 1h")
+    # Init daily tracking
+    today_init = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    if "daily_pnl_history" not in state:
+        state["daily_pnl_history"] = {}
+    if "daily_start_pnl" not in state:
+        state["daily_start_pnl"] = state.get("realized_pnl", 0)
+        rebalance_capital(state)
+        log.info("  Capital rebalanced based on performance")
+    # Always backfill stats on startup
+    backfill_stats(state)
+    if "daily_start_fills" not in state:
+        state["daily_start_fills"] = state.get("total_fills", 0)
+    if "last_snapshot_date" not in state:
+        state["last_snapshot_date"] = today_init
+    save_state(state)
+    cycle = 0
+    while True:
+        cycle += 1
+        # Reload state dari file — agar perubahan dari tg_bot (pause/resume/stop) terbaca
+        state = load_state()
+        now = datetime.now(timezone.utc)
+        log.info(f"\n── Cycle #{cycle} | {now.strftime('%H:%M:%S UTC')} ──────────")
+        # Refresh derived stats every 4 cycles
+        if cycle % 4 == 0:
+            backfill_stats(state)
+        analyses = []
+        for symbol in ASSETS:
+            try:
+                a = market_analysis(symbol)
+                analyses.append(a)
+                log.info(f"  {symbol}: ${a['price']:.2f} | {a['vol_regime']} | {a['trend']} | BB:{a['bb_width']:.3f}")
+                # Save current price to grid state for dashboard
+                if "grids" not in state:
+                    state["grids"] = {}
+                if symbol not in state["grids"]:
+                    state["grids"][symbol] = {}
+                state["grids"][symbol]["current_price"] = float(a["price"])
+                # Aggressive rebalance trigger
+                g  = state["grids"][symbol]
+                rl = float(g.get("range_low") or 0)
+                rh = float(g.get("range_high") or 0)
+                cp = float(a["price"])
+                if rh > rl:
+                    pos_pct = (cp - rl) / (rh - rl)
+                    if pos_pct > 0.88 or pos_pct < 0.08:
+                        # Cooldown check — skip jika rebalance < 90 menit lalu
+                        lr = g.get("last_rebalance_time")
+                        skip = False
+                        if lr:
+                            try:
+                                elapsed = (now - datetime.fromisoformat(lr)).total_seconds()
+                                if elapsed < 5400:
+                                    log.info(f"  ⏳ {symbol}: rebalance cooldown {elapsed/60:.0f}/90min")
+                                    skip = True
+                            except: pass
+                        if not skip:
+                            log.info(f"  ⚡ {symbol}: price at {pos_pct:.0%} of range — needs rebalance")
+                            g["last_rebalance"] = None
+            except Exception as e:
+                log.error(f"  Analysis fail {symbol}: {e}")
+        if not analyses:
+            time.sleep(CYCLE_MINUTES * 60); continue
+        last = state.get("last_ai_check")
+        ai_elapsed = (now - datetime.fromisoformat(last)).total_seconds() if last else 99999
+        if not last or ai_elapsed > AI_REBALANCE_H * 3600:
+            log.info("  🔥 AI evaluating grid parameters...")
+            global _current_state
+            _current_state = state
+            decisions = ai_grid_decision(analyses, state.get("grids", {}))
+            state["last_ai_check"] = now.isoformat()
+            state["total_rebalances"] = state.get("total_rebalances", 0) + 1
+            if "ai_log" not in state: state["ai_log"] = []
+            for a in analyses:
+                sym = a["symbol"]
+                d   = decisions.get(sym, {})
+                action = d.get("action", "KEEP")
+                log.info(f"  {sym}: {action} — {d.get('reason','')}")
+                state["ai_log"].append({
+                    "type": "ai",
+                    "action": action,
+                    "symbol": sym.replace("USDT",""),
+                    "reason": d.get("reason","")[:70],
+                    "msg": f"[{now.strftime('%H:%M')}] {sym.replace('USDT','')}: {action} — {d.get('reason','')[:70]}"
+                })
+                short = sym.replace('USDT','')
+                if action in ("REBALANCE","KEEP"):
+                    tg(f"🔥 <b>AI REBALANCE</b> — {short}\n🔥 Action: {action}\n🔥 {d.get('reason','')[:80]}")
+                elif action == "CANCEL":
+                    tg(f"⏸️ <b>GRID PAUSED</b> — {short}\n🔥 {d.get('reason','')[:80]}")
+                cancel_open_orders(sym)
+                if action in ("REBALANCE","KEEP") and d.get("range_low",0) > 0:
+                    price = a["price"]
+                    cfg   = GRID_CONFIG[sym]
+
+                    # ALWAYS use backtest-optimized num_grids — ignore AI suggestion
+                    num_grids = cfg["num_grids"]
+
+                    # Range: use AI suggestion but cap at target_range × 1.2
+                    rl, rh = d["range_low"], d["range_high"]
+                    max_range = price * cfg["range_pct"] * 1.2
+                    actual_range = rh - rl
+                    if actual_range > max_range or rl <= 0 or rh <= rl:
+                        half = price * cfg["range_pct"] / 2
+                        if price < 0.001:   p_dec = 7
+                        elif price < 0.01:  p_dec = 6
+                        elif price < 0.1:   p_dec = 5
+                        elif price < 1:     p_dec = 4
+                        elif price < 10:    p_dec = 3
+                        else:               p_dec = 2
+                        rl = round(price - half, p_dec)
+                        rh = round(price + half, p_dec)
+                        log.info(f"  ⚠️  Range capped to {cfg['range_pct']*100:.0f}%: {rl}-{rh}")
+                    # Final sanity — jika range masih invalid, hitung dari price
+                    price_now = a["price"]
+                    if rl <= 0 or rh <= 0 or rh <= rl:
+                        half = price_now * cfg["range_pct"] / 2
+                        if price_now < 0.001:   p_dec = 7
+                        elif price_now < 0.01:  p_dec = 6
+                        elif price_now < 0.1:   p_dec = 5
+                        elif price_now < 1:     p_dec = 4
+                        elif price_now < 10:    p_dec = 3
+                        else:                   p_dec = 2
+                        rl = round(price_now - half, p_dec)
+                        rh = round(price_now + half, p_dec)
+                        log.info(f"  🔥 Range rebuilt from price: {rl}-{rh}")
+                    d["range_low"], d["range_high"] = rl, rh
+                    # Force num_grids from config — ignore AI
+                    num_grids = cfg["num_grids"]
+                    placed = place_grid(sym, rl, rh,
+                               num_grids, cfg["capital"], a["price"])
+                    state["grids"][sym] = {
+                        **d, "active": True,
+                        "last_rebalance": now.isoformat(),
+                        "orders_placed": placed,
+                        "realized_pnl": state["grids"].get(sym, {}).get("realized_pnl", 0),
+                        "fills": state["grids"].get(sym, {}).get("fills", 0),
+                    }
+                else:
+                    state["grids"][sym] = {"active":False, "reason":d.get("reason","")}
+            save_state(state)
+        for sym in ASSETS:
+            try:
+                n = len(api_get("/openOrders", {"symbol": sym}, auth=True))
+                log.info(f"  {sym}: {n} open orders")
+                # Aggressive rebalance — price out of comfort zone
+                g  = state["grids"].get(sym, {})
+                cp = g.get("current_price") or 0
+                rl = float(g.get("range_low") or 0)
+                rh = float(g.get("range_high") or 0)
+                if cp and rh > rl:
+                    pos_pct = (float(cp) - rl) / (rh - rl)
+                    if pos_pct > 0.88 or pos_pct < 0.08:
+                        lr = state["grids"][sym].get("last_rebalance_time")
+                        skip = False
+                        if lr:
+                            try:
+                                elapsed = (now - datetime.fromisoformat(lr)).total_seconds()
+                                if elapsed < 5400:
+                                    log.info(f"  ⏳ {sym}: cooldown {elapsed/60:.0f}/90min")
+                                    skip = True
+                            except: pass
+                        if not skip:
+                            log.info(f"  ⚡ {sym}: price at {pos_pct:.0%} of range — forcing rebalance")
+                            state["grids"][sym]["last_rebalance"] = None
+            except Exception as e:
+                log.warning(f"  Check fail {sym}: {e}")
+
+        # Emergency stop check
+        if state.get('emergency_stop'):
+            log.info('  🛑 Emergency stop active — skipping cycle')
+            check_telegram_commands(state)
+            time.sleep(60)
+            continue
+        if state.get('emergency_stop'):
+            log.info('  Emergency stop active')
+            check_telegram_commands(state)
+            time.sleep(60)
+            continue
+        # ── EXTREME EVENT CHECK ─────────────────────
+        extreme = detect_extreme_event(analyses, state)
+        if extreme["event"]:
+            ev   = extreme["event"]
+            det  = extreme["detail"]
+            log.warning(f"  🔥 EXTREME EVENT: {ev} — {det}")
+
+            # Check apakah masih dalam cooldown
+            last_extreme = state.get("last_extreme_event_time")
+            in_cooldown  = False
+            if last_extreme:
+                elapsed = (now - datetime.fromisoformat(last_extreme)).total_seconds() / 60
+                in_cooldown = elapsed < COOLDOWN_MINUTES
+
+            if not in_cooldown:
+                # Cancel SEMUA grids
+                for sym in ASSETS:
+                    cancel_open_orders(sym)
+                    state["grids"][sym] = {
+                        "active": False,
+                        "reason": f"{ev}: {det[:60]}"
+                    }
+                state["last_extreme_event_time"] = now.isoformat()
+                state["last_ai_check"] = None  # Force rebalance setelah cooldown
+
+                tg(f"🔥 <b>EXTREME EVENT DETECTED</b>\n"
+                   f"Type: <b>{ev}</b>\n"
+                   f"Detail: {det}\n"
+                   f"Action: All grids cancelled\n"
+                   f"Cooldown: {COOLDOWN_MINUTES} minutes")
+
+                log.warning(f"  🔥 ALL GRIDS CANCELLED — cooldown {COOLDOWN_MINUTES}min")
+                save_state(state)
+                time.sleep(COOLDOWN_MINUTES * 60)
+                continue
+            else:
+                remaining = COOLDOWN_MINUTES - elapsed
+                log.info(f"  ⏳ Cooldown active: {remaining:.0f}min remaining")
+
+        # ── RISK CHECK ──────────────────────────────
+        risk_status = check_risk(state)
+        if risk_status in ("DAILY_LOSS", "DRAWDOWN"):
+            # Emergency: cancel semua grids
+            for sym in ASSETS:
+                cancel_open_orders(sym)
+                state["grids"][sym] = {"active": False, "reason": risk_status}
+            save_state(state)
+            log.warning(f"  🔥 EMERGENCY STOP: {risk_status} — sleeping 1 hour")
+            time.sleep(3600)
+            continue
+
+        # Range breach check
+        check_range_breach(state, analyses)
+
+        # Check fills dan update PnL
+        check_fills_and_pnl(state)
+        save_state(state)
+        # Daily summary setiap 96 cycle (~24 jam)
+        if cycle % 96 == 0:
+            pnl = state.get("realized_pnl", 0)
+            fills = state.get("total_fills", 0)
+            active_n = sum(1 for g in state.get("grids",{}).values() if g.get("active"))
+            tg(f"🔥 <b>DAILY SUMMARY</b>\n🔥 Realized PnL: <b>${pnl:+.2f}</b>\n🔥 Total Fills: {fills}\n🔥 Active Grids: {active_n}/3\n🔥 Cycles: {cycle}")
+        # Update equity history untuk chart
+        current_equity = round(500 + state.get("realized_pnl", 0), 2)
+        if "equity_history" not in state or state["equity_history"][0] == 1800:
+            state["equity_history"] = [500.0]
+        cycle_count = state.get("cycle_count", 0) + 1
+        state["cycle_count"] = cycle_count
+        last_eq = state["equity_history"][-1] if state["equity_history"] else 500.0
+        if current_equity != last_eq or cycle_count % 2 == 0:
+            state["equity_history"].append(current_equity)
+        if len(state["equity_history"]) > 500:
+            state["equity_history"] = state["equity_history"][:100:2] + state["equity_history"][-400:]
+
+        # Update AI rebalances count
+        if "total_rebalances" not in state:
+            state["total_rebalances"] = 0
+
+        # Update open orders count di state
+        total_open = 0
+        for sym in ASSETS:
+            try:
+                n = len(api_get("/openOrders", {"symbol": sym}, auth=True))
+                if sym in state["grids"] and state["grids"][sym].get("active"):
+                    state["grids"][sym]["open_orders"] = n
+                    total_open += n
+            except: pass
+        state["total_open_orders"] = total_open
+
+        # AI log
+        if "ai_log" not in state:
+            state["ai_log"] = []
+
+        save_state(state)
+        # Update today_snapshot setiap cycle
+        realized  = float(state.get("realized_pnl", 0))
+        day_start = float(state.get("daily_start_pnl", realized))
+        today_gross = round(realized - day_start, 4)
+        fills_today = state.get("total_fills", 0) - state.get("daily_start_fills", 0)
+        state["today_snapshot"] = {
+            "pnl":     today_gross,
+            "net_pnl": round(today_gross * 0.85, 4),
+            "fills":   fills_today
+        }
+        check_telegram_commands(state)
+        log.info(f"  Sleep {CYCLE_MINUTES}min...")
+        time.sleep(CYCLE_MINUTES * 60)
+
+def backfill_stats(state):
+    """Recalculate all derived stats from fills_log"""
+    import math
+    fills = state.get("fills_log", [])
+    sells = [f for f in fills if f.get("side")=="SELL" and f.get("pnl") not in (None, 0)]
+
+    # Win/loss
+    wl = {"wins":0,"losses":0,"total_win":0.0,"total_loss":0.0,"best":0.0,"worst":0.0}
+    for f in sells:
+        pnl = f.get("pnl", 0)
+        if pnl > 0:
+            wl["wins"] += 1; wl["total_win"] = round(wl["total_win"]+pnl,4); wl["best"] = round(max(wl["best"],pnl),4)
+        else:
+            wl["losses"] += 1; wl["total_loss"] = round(wl["total_loss"]+pnl,4); wl["worst"] = round(min(wl["worst"],pnl),4)
+    state["win_loss"] = wl
+
+    # Fee simulation
+    TAKER = 0.001
+    real_pnl = 0.0; rw = 0; rl = 0
+    for f in sells:
+        gross = f.get("pnl", 0)
+        fee   = float(f.get("price",0)) * float(f.get("qty",0)) * TAKER * 2
+        net   = gross - fee
+        if net > 0: rw += 1
+        else: rl += 1
+        real_pnl += net
+    gross_pnl  = round(sum(f.get("pnl",0) for f in sells), 4)
+    fee_impact = round(real_pnl - gross_pnl, 4)
+    state["fee_simulation"] = {
+        "fee_rate": 0.001, "simulated_pnl": round(real_pnl,4),
+        "gross_pnl": gross_pnl,
+        "fee_impact": fee_impact,
+        "real_win_rate": round(rw/(rw+rl)*100,1) if (rw+rl)>0 else 0,
+        "real_wins": rw, "real_losses": rl
+    }
+
+    # Sharpe + MaxDD
+    equity = state.get("equity_history",[500])
+    if len(equity) > 2:
+        returns = [(equity[i]-equity[i-1])/equity[i-1] for i in range(1,len(equity))]
+        avg_r = sum(returns)/len(returns)
+        std_r = math.sqrt(sum((r-avg_r)**2 for r in returns)/len(returns))
+        sharpe = (avg_r/std_r)*math.sqrt(365*96) if std_r > 0 else 0
+        peak = equity[0]; max_dd = 0.0
+        for e in equity:
+            if e > peak: peak = e
+            dd = (peak-e)/peak*100
+            if dd > max_dd: max_dd = dd
+        state["sharpe_ratio"]     = round(sharpe, 2)
+        state["max_drawdown_pct"] = round(max_dd, 4)
+
+    log.info(f"  Stats backfilled: WR={wl['wins']}/{wl['wins']+wl['losses']} fee_net=${real_pnl:.4f} sharpe={state.get('sharpe_ratio','?')}")
+
+if __name__ == "__main__":
+    run()
