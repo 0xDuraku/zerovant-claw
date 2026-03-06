@@ -197,6 +197,8 @@ DAILY_PROFIT_TARGET = 0.02   # Optional: lock profit kalau sudah +2% hari ini
 
 # Flash crash / news protection
 FLASH_CRASH_PCT     = 0.05   # Cancel semua kalau 1 candle bergerak >5%
+TRAILING_STOP_PCT   = 0.03   # Geser grid ke atas kalau harga naik >3% dari range_low
+TRAILING_LOCK_PCT   = 0.015  # Lock profit — range_low naik mengikuti harga - 1.5%
 VOLUME_SPIKE_MULT   = 5.0    # Volume spike = volume > 5x rata-rata 20 candle
 BB_EXPLOSION_MULT   = 2.5    # BB width explode = >2.5x dari BB sebelumnya
 COOLDOWN_MINUTES    = 30     # Pause trading setelah extreme event
@@ -619,6 +621,57 @@ def check_fills_and_pnl(state):
 
         except Exception as e:
             log.warning(f"  Fill check error {symbol}: {e}")
+
+def check_trailing_stop(state):
+    """
+    Trailing stop per grid — geser range_low ke atas saat harga naik jauh.
+    Tujuan: lock profit, hindari harga balik ke bawah range lama.
+    """
+    grids = state.get("grids", {})
+    prices = state.get("last_prices", {})
+    triggered = []
+
+    for symbol, grid in grids.items():
+        if not grid.get("active", False):
+            continue
+        price = prices.get(symbol, 0)
+        if price <= 0:
+            continue
+
+        range_low  = grid.get("range_low", 0)
+        range_high = grid.get("range_high", 0)
+        if range_low <= 0 or range_high <= 0:
+            continue
+
+        range_size = range_high - range_low
+        # Harga naik >3% dari range_low
+        price_vs_low = (price - range_low) / range_low if range_low > 0 else 0
+
+        if price_vs_low > TRAILING_STOP_PCT:
+            # Geser range_low ke price - 1.5% (lock profit di bawah harga)
+            new_low  = price * (1 - TRAILING_LOCK_PCT)
+            new_high = new_low + range_size  # pertahankan lebar range
+
+            # Jangan geser kalau new_low lebih kecil dari range_low saat ini
+            if new_low <= range_low:
+                continue
+
+            log.info(f"  &#128200; TRAILING STOP {symbol}: range_low {range_low:.4f} -> {new_low:.4f} (price={price:.4f}, +{price_vs_low:.1%})")
+
+            state["grids"][symbol]["range_low"]  = round(new_low, 4)
+            state["grids"][symbol]["range_high"] = round(new_high, 4)
+            state["grids"][symbol]["trailing_triggered"] = True
+            state["grids"][symbol]["trailing_count"] = grid.get("trailing_count", 0) + 1
+
+            triggered.append({
+                "symbol": symbol,
+                "old_low": range_low,
+                "new_low": round(new_low, 4),
+                "price": price,
+                "gain_pct": round(price_vs_low * 100, 2)
+            })
+
+    return triggered
 
 def detect_extreme_event(analyses, state) -> dict:
     """
@@ -1116,6 +1169,12 @@ def run():
 
         # Check fills dan update PnL
         check_fills_and_pnl(state)
+
+        # Trailing stop — lock profit saat harga naik jauh
+        trailing = check_trailing_stop(state)
+        if trailing:
+            for t in trailing:
+                log.info(f"  �� TRAILING locked: {t['symbol']} +{t['gain_pct']}% | new_low={t['new_low']}")
         save_state(state)
         # Daily summary setiap 96 cycle (~24 jam)
         if cycle % 96 == 0:
