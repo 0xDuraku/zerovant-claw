@@ -528,6 +528,15 @@ def check_fills_and_pnl(state):
                 qty   = float(t["qty"])
                 fee   = float(t.get("commission", 0))
                 ts    = datetime.fromtimestamp(t["time"]/1000, tz=timezone.utc)
+                # Slippage detection
+                order_price = float(t.get("price", price))
+                slippage_pct = abs(price - order_price) / order_price if order_price > 0 else 0
+                if slippage_pct > 0.005:  # >0.5% slippage — log warning
+                    log.warning(f"  ⚠️ SLIPPAGE {symbol} {side}: order={order_price:.4f} fill={price:.4f} slip={slippage_pct:.2%}")
+                # Partial fill detection
+                is_partial = qty < float(t.get("origQty", qty)) * 0.99 if t.get("origQty") else False
+                if is_partial:
+                    log.info(f"  ⚡ PARTIAL FILL {symbol} {side}: {qty}/{t.get('origQty')} @ {price:.4f}")
 
                 # Update inventory
                 if side == "BUY":
@@ -540,11 +549,13 @@ def check_fills_and_pnl(state):
                     "tradeId": tid, "symbol": symbol,
                     "side": side, "price": price, "qty": qty,
                     "fee": fee, "time": ts.strftime("%H:%M:%S"), "timestamp": ts.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                    "pnl": None, "inventory": inv
+                    "pnl": None, "inventory": inv,
+                    "slippage_pct": round(slippage_pct, 5),
+                    "is_partial": is_partial
                 }
 
-                # Pair BUY+SELL untuk hitung PnL
-                if side == "SELL":
+                # Pair BUY+SELL untuk hitung PnL — skip partial fills
+                if side == "SELL" and not is_partial:
                     # FIFO pairing — ambil buy PERTAMA (oldest) yang belum dipair
                     buys = [f for f in state["fills_log"]
                             if f.get("symbol")==symbol and f.get("side")=="BUY" and f.get("pnl") is None]
