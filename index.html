@@ -132,6 +132,7 @@ nav {
   background: rgba(255,85,0,0.15); border: 1px solid rgba(255,85,0,0.3);
   color: var(--ora2); font-size: 10px; font-family: 'Space Mono', monospace;
 }
+@media(max-width:480px) { .nav-badge { display: none; } }
 
 /* MAIN */
 .page { position: relative; z-index: 1; padding-top: 88px; }
@@ -571,7 +572,10 @@ footer {
           <div class="sys-row"><span class="sys-key">max_dd &lt;5%</span><span class="sys-val ok" id="sys-dc">✓ --</span></div>
           <div class="sys-row"><span class="sys-key">14d testnet</span><span class="sys-val wn" id="sys-days">⏳ -/14</span></div>
           <div class="sys-row"><span class="sys-key">emergency_stop</span><span class="sys-val ok">✓ ready</span></div>
-          <div class="sys-row"><span class="sys-key">slippage</span><span class="sys-val wn">⏳ pending</span></div>
+          <div class="sys-row"><span class="sys-key">slippage</span><span class="sys-val ok">&#10003; active</span></div>
+          <div class="sys-row"><span class="sys-key">partial_fill</span><span class="sys-val ok">&#10003; active</span></div>
+          <div class="sys-row"><span class="sys-key">watchdog</span><span class="sys-val ok">&#10003; active</span></div>
+          <div class="sys-row"><span class="sys-key">auto_backup</span><span class="sys-val ok">&#10003; active</span></div>
         </div>
       </div>
       <div class="card">
