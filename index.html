@@ -576,6 +576,7 @@ footer {
           <div class="sys-row"><span class="sys-key">partial_fill</span><span class="sys-val ok">&#10003; active</span></div>
           <div class="sys-row"><span class="sys-key">watchdog</span><span class="sys-val ok">&#10003; active</span></div>
           <div class="sys-row"><span class="sys-key">auto_backup</span><span class="sys-val ok">&#10003; active</span></div>
+          <div class="sys-row"><span class="sys-key">trailing_stop</span><span class="sys-val ok">&#10003; active (3%)</span></div>
         </div>
       </div>
       <div class="card">
@@ -702,6 +703,11 @@ footer {
         <div style="font-size:24px;margin-bottom:8px;">&#9889;</div>
         <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Partial Fill</div>
         <div style="font-size:12px;color:var(--muted);line-height:1.5;">Order yang hanya terfill sebagian tidak dihitung sebagai trade closed. PnL tetap akurat.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128200;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Trailing Stop</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Jika harga naik >3% dari range_low, grid otomatis geser ke atas untuk lock profit dan hindari reversal.</div>
       </div>
     </div>
   </div>
