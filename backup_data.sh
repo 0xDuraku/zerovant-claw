@@ -1,27 +1,23 @@
 #!/bin/bash
+# Safe backup — tidak pakai git checkout, pakai worktree terpisah
 cd /root/zerovantclaw
 
-# Copy data ke temp
-cp -r data /tmp/zerovant-data-tmp
+BACKUP_DIR="/tmp/zerovant-backup-worktree"
 
-# Switch ke backup branch
-git checkout data-backup
+# Buat worktree jika belum ada
+if [ ! -d "$BACKUP_DIR" ]; then
+  git worktree add $BACKUP_DIR data-backup
+fi
 
-# Update data
-rm -rf data
-cp -r /tmp/zerovant-data-tmp data
-rm -rf /tmp/zerovant-data-tmp
+# Copy data ke worktree
+cp -r /root/zerovantclaw/data $BACKUP_DIR/
+cp /var/www/zerovantclaw/index.html $BACKUP_DIR/ 2>/dev/null || true
+cp /var/www/zerovantclaw/mascot.png $BACKUP_DIR/ 2>/dev/null || true
 
-# Commit & push
-git add -f data/
+# Commit & push dari worktree (tidak ganggu main)
+cd $BACKUP_DIR
+git add -f .
 git commit -m "backup $(date '+%Y-%m-%d %H:%M')" --allow-empty
 git push origin data-backup
 
-# Backup website juga
-cp /var/www/zerovantclaw/index.html /root/zerovantclaw/index.html
-cp /var/www/zerovantclaw/mascot.png /root/zerovantclaw/mascot.png 2>/dev/null || true
-git add index.html mascot.png
-
-# Balik ke main
-git checkout main
 echo "Backup done: $(date)"
