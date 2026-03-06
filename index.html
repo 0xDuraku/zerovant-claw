@@ -116,6 +116,8 @@ nav {
   color: var(--txt);
 }
 .nav-brand span { color: var(--ora); }
+.nav-brand-text { display: inline; }
+@media(max-width: 480px) { .nav-brand-text { display: none; } }
 .nav-tabs { display: flex; gap: 4px; }
 .nav-tab {
   padding: 6px 14px; border-radius: 8px;
@@ -130,6 +132,7 @@ nav {
   background: rgba(255,85,0,0.15); border: 1px solid rgba(255,85,0,0.3);
   color: var(--ora2); font-size: 10px; font-family: 'Space Mono', monospace;
 }
+@media(max-width:480px) { .nav-badge { display: none; } }
 
 /* MAIN */
 .page { position: relative; z-index: 1; padding-top: 88px; }
@@ -394,7 +397,7 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <div class="nav-brand"><img src="/mascot.png" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;filter:drop-shadow(0 0 6px rgba(255,85,0,0.5));">Zerovant <span>Claw</span></div>
+  <div class="nav-brand"><img src="/mascot.png" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;margin-right:6px;filter:drop-shadow(0 0 6px rgba(255,85,0,0.5));"><span class="nav-brand-text">Zerovant <span>Claw</span></span></div>
   <div class="nav-tabs">
     <button class="nav-tab on" onclick="showTab('main')">Overview</button>
     <button class="nav-tab" onclick="showTab('assets')">Assets</button>
@@ -569,7 +572,10 @@ footer {
           <div class="sys-row"><span class="sys-key">max_dd &lt;5%</span><span class="sys-val ok" id="sys-dc">✓ --</span></div>
           <div class="sys-row"><span class="sys-key">14d testnet</span><span class="sys-val wn" id="sys-days">⏳ -/14</span></div>
           <div class="sys-row"><span class="sys-key">emergency_stop</span><span class="sys-val ok">✓ ready</span></div>
-          <div class="sys-row"><span class="sys-key">slippage</span><span class="sys-val wn">⏳ pending</span></div>
+          <div class="sys-row"><span class="sys-key">slippage</span><span class="sys-val ok">&#10003; active</span></div>
+          <div class="sys-row"><span class="sys-key">partial_fill</span><span class="sys-val ok">&#10003; active</span></div>
+          <div class="sys-row"><span class="sys-key">watchdog</span><span class="sys-val ok">&#10003; active</span></div>
+          <div class="sys-row"><span class="sys-key">auto_backup</span><span class="sys-val ok">&#10003; active</span></div>
         </div>
       </div>
       <div class="card">
@@ -598,6 +604,109 @@ footer {
       </div>
     </div>
   </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div style="position:relative;z-index:1;border-top:1px solid var(--border);padding:48px 16px 32px;">
+<div style="max-width:960px;margin:0 auto;">
+
+  <div style="text-align:center;margin-bottom:32px;">
+    <div style="font-size:12px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">Under the Hood</div>
+    <div style="font-size:clamp(22px,4vw,36px);font-weight:800;letter-spacing:-1px;">How It Works</div>
+  </div>
+
+  <!-- ROW 1: Grid Trading -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:11px;color:var(--ora);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;font-weight:600;">01 — Grid Trading Mechanism</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128257;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Price Grid</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Range dibagi jadi 10 level harga. BUY order di bawah harga, SELL order di atas harga.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128257;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Auto Cycle</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Setiap kali harga naik-turun melewati level grid, bot otomatis profit dari selisih harga.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128257;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Profit per Grid</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Spacing minimum 0.4% per level untuk cover biaya fee 0.1% dan tetap profit bersih.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#9878;&#65039;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">5 Assets</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">ETH, SOL, BNB, DOGE, XRP berjalan paralel untuk diversifikasi risiko dan peluang profit.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: AI Decision -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:11px;color:var(--ora);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;font-weight:600;">02 — AI Decision Flow</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128257;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Market Analysis</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Setiap 15 menit bot analisa ATR, Bollinger Bands, EMA20/50 untuk deteksi trend dan volatilitas.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128257;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Venice AI</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">AI memutuskan apakah perlu rebalance grid, adjust range, atau hold berdasarkan kondisi pasar.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128257;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Adaptive Range</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Range grid menyesuaikan otomatis — lebih tight saat volatilitas rendah, lebih lebar saat tinggi.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#9201;&#65039;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">AI Cooldown</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">AI hanya rebalance setiap 1 jam untuk hindari overtrading dan biaya gas berlebihan.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Risk Management -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:11px;color:var(--ora);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;font-weight:600;">03 — Risk Management</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128257;️</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Daily Loss Limit</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Bot otomatis berhenti jika kerugian harian melebihi 5% dari kapital untuk proteksi modal.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#9889;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Flash Crash Guard</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Deteksi pergerakan harga >5% dalam 15 menit. Grid di-pause otomatis saat flash crash terdeteksi.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128257;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Max Drawdown</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Batas maksimal drawdown 10% dari peak equity. Bot stop dan alert Telegram dikirim otomatis.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128257;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Auto Compound</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">50% dari profit harian otomatis di-reinvest setiap 00:00 WIB untuk efek compounding.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#128268;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Slippage Guard</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Deteksi otomatis jika fill price berbeda >0.5% dari order price. Warning langsung di log.</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;">
+        <div style="font-size:24px;margin-bottom:8px;">&#9889;</div>
+        <div style="font-weight:700;margin-bottom:4px;font-size:13px;">Partial Fill</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Order yang hanya terfill sebagian tidak dihitung sebagai trade closed. PnL tetap akurat.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
 </div>
 
 <!-- FOOTER -->
