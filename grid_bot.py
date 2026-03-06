@@ -297,17 +297,56 @@ def compute_bb_width(candles, period=20):
     return round((std * 2) / mean, 4)
 
 def market_analysis(symbol):
-    candles = get_klines(symbol, "15m", 100)
-    price   = candles[-1]["close"]
-    atr     = compute_atr(candles)
-    bb_w    = compute_bb_width(candles)
-    ema20   = sum(c["close"] for c in candles[-20:]) / 20
-    ema50   = sum(c["close"] for c in candles[-50:]) / 50
-    trend   = "UP" if ema20 > ema50 else "DOWN"
+    # 15m — primary timeframe (entry/exit precision)
+    c15  = get_klines(symbol, "15m", 100)
+    # 1h  — medium timeframe (trend confirmation)
+    c1h  = get_klines(symbol, "1h", 50)
+    # 4h  — macro timeframe (major trend direction)
+    c4h  = get_klines(symbol, "4h", 30)
+
+    price   = c15[-1]["close"]
+    atr     = compute_atr(c15)
+    bb_w    = compute_bb_width(c15)
+
+    # 15m trend
+    ema20   = sum(c["close"] for c in c15[-20:]) / 20
+    ema50   = sum(c["close"] for c in c15[-50:]) / 50
+    trend15 = "UP" if ema20 > ema50 else "DOWN"
+
+    # 1h trend
+    ema20_1h = sum(c["close"] for c in c1h[-20:]) / 20
+    ema50_1h = sum(c["close"] for c in c1h[-min(50,len(c1h)):]) / min(50,len(c1h))
+    trend1h  = "UP" if ema20_1h > ema50_1h else "DOWN"
+
+    # 4h trend (macro)
+    ema10_4h = sum(c["close"] for c in c4h[-10:]) / 10
+    ema20_4h = sum(c["close"] for c in c4h[-20:]) / 20
+    trend4h  = "UP" if ema10_4h > ema20_4h else "DOWN"
+
+    # Confluence — berapa timeframe setuju
+    up_count = [trend15, trend1h, trend4h].count("UP")
+    if up_count >= 2:
+        trend_confluent = "UP"
+    elif up_count <= 1:
+        trend_confluent = "DOWN"
+    else:
+        trend_confluent = "NEUTRAL"
+
+    # Volatility dari 1h BB untuk filter noise
+    bb_w_1h = compute_bb_width(c1h)
     vol     = "HIGH" if bb_w > 0.04 else ("MEDIUM" if bb_w > 0.02 else "LOW")
-    return {"symbol":symbol,"price":price,"atr":round(atr,2),
-            "atr_pct":round(atr/price,4),"bb_width":bb_w,
-            "trend":trend,"vol_regime":vol,"ema20":round(ema20,2),"ema50":round(ema50,2)}
+
+    return {
+        "symbol": symbol, "price": price,
+        "atr": round(atr,2), "atr_pct": round(atr/price,4),
+        "bb_width": bb_w, "bb_width_1h": bb_w_1h,
+        "trend": trend_confluent,
+        "trend15": trend15, "trend1h": trend1h, "trend4h": trend4h,
+        "up_count": up_count,
+        "vol_regime": vol,
+        "ema20": round(ema20,2), "ema50": round(ema50,2),
+        "ema20_1h": round(ema20_1h,2), "ema20_4h": round(ema20_4h,2)
+    }
 
 def call_venice_ai(prompt_text):
     """Call Venice AI — OpenAI compatible, no data retention"""
@@ -965,7 +1004,7 @@ def run():
             try:
                 a = market_analysis(symbol)
                 analyses.append(a)
-                log.info(f"  {symbol}: ${a['price']:.2f} | {a['vol_regime']} | {a['trend']} | BB:{a['bb_width']:.3f}")
+                log.info(f"  {symbol}: ${a['price']:.2f} | {a['vol_regime']} | 15m:{a['trend15']} 1h:{a['trend1h']} 4h:{a['trend4h']} [{a['up_count']}/3] | BB:{a['bb_width']:.3f}")
                 # Save current price to grid state for dashboard
                 if "grids" not in state:
                     state["grids"] = {}
