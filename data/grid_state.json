@@ -2,8 +2,8 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 1900,
-      "range_high": 2074,
+      "range_low": 1949.8764,
+      "range_high": 2123.8764,
       "num_grids": 20,
       "reason": "Low volatility and downtrend. Grid spacing is 3.74% / 20 = 0.187% which is less than 0.4%. Expanding range to ensure minimum 0.4% spacing.",
       "active": true,
@@ -12,12 +12,14 @@
       "realized_pnl": 1.8534,
       "fills": 82,
       "open_orders": 10,
-      "current_price": 1980.68
+      "current_price": 1981.6,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 80,
-      "range_high": 91,
+      "range_low": 83.8038,
+      "range_high": 94.8038,
       "num_grids": 20,
       "reason": "Low volatility and downtrend. Grid spacing is 1.09% / 20 = 0.0545% which is less than 0.4%. Expanding range to ensure minimum 0.4% spacing.",
       "active": true,
@@ -26,12 +28,14 @@
       "realized_pnl": -1.6367,
       "fills": 3,
       "open_orders": 11,
-      "current_price": 85.11
+      "current_price": 85.08,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "BNBUSDT": {
       "action": "REBALANCE",
-      "range_low": 605.93,
-      "range_high": 656.43,
+      "range_low": 620.0674,
+      "range_high": 670.5674,
       "num_grids": 20,
       "reason": "Low volatility and downtrend. Grid spacing is 0.54% / 20 = 0.027% which is less than 0.4%. Expanding range to ensure minimum 0.4% spacing.",
       "active": true,
@@ -40,21 +44,23 @@
       "realized_pnl": -0.0806,
       "fills": 41,
       "open_orders": 10,
-      "current_price": 629.83
+      "current_price": 629.51,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "DOGEUSDT": {
       "active": false,
       "reason": "Low volatility and downtrend. ATR is 0, indicating very low volatility. Strong trend (ema20 close to ema50).",
       "realized_pnl": 0,
       "fills": 1,
-      "current_price": 0.09104
+      "current_price": 0.09108
     },
     "XRPUSDT": {
       "active": false,
       "reason": "Low volatility and downtrend. ATR is 0, indicating very low volatility. Strong trend (ema20 close to ema50).",
       "realized_pnl": -0.8079,
       "fills": 2,
-      "current_price": 1.3577
+      "current_price": 1.3573
     }
   },
   "last_ai_check": "2026-03-06T19:44:01.675646+00:00",
@@ -17007,11 +17013,11 @@
   "total_rebalances": 153,
   "last_prices": {
     "BTCUSDT": 65983.62,
-    "ETHUSDT": 1980.68,
-    "SOLUSDT": 85.11,
-    "BNBUSDT": 629.58,
-    "DOGEUSDT": 0.0911,
-    "XRPUSDT": 1.3577
+    "ETHUSDT": 1979.57,
+    "SOLUSDT": 85.08,
+    "BNBUSDT": 629.51,
+    "DOGEUSDT": 0.09108,
+    "XRPUSDT": 1.3573
   },
   "equity_history": [
     500.0,
@@ -21452,11 +21458,11 @@
   "last_snapshot_date": "2026-02-28",
   "today_pnl": 0.0316,
   "prev_prices": {
-    "ETHUSDT": 1980.68,
-    "SOLUSDT": 85.11,
-    "BNBUSDT": 629.83,
-    "DOGEUSDT": 0.09104,
-    "XRPUSDT": 1.3577
+    "ETHUSDT": 1981.6,
+    "SOLUSDT": 85.08,
+    "BNBUSDT": 629.51,
+    "DOGEUSDT": 0.09108,
+    "XRPUSDT": 1.3573
   },
   "prev_bb_width": {
     "ETHUSDT": 0.0065,
@@ -23836,7 +23842,7 @@
       331956
     ]
   },
-  "cycle_count": 474,
+  "cycle_count": 475,
   "win_loss": {
     "wins": 421,
     "losses": 221,
@@ -23854,7 +23860,7 @@
     "real_wins": 379,
     "real_losses": 263
   },
-  "sharpe_ratio": 38.33,
+  "sharpe_ratio": 38.28,
   "max_drawdown_pct": 1.5006,
   "asset_daily_start": {
     "XRPUSDT": -1.0032,
