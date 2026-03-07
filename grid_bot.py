@@ -753,6 +753,8 @@ def check_trailing_stop(state):
                 "price": price,
                 "gain_pct": round(price_vs_low * 100, 2)
             })
+            short = symbol.replace("USDT","")
+            tg(f"&#128200; <b>TRAILING STOP</b> — {short}\nPrice: <b>${price:.4f}</b> (+{price_vs_low:.1%} from low)\nRange: {range_low:.4f}-{range_high:.4f} → {round(new_low,4):.4f}-{round(new_high,4):.4f}\nLock #{grid.get('trailing_count',0)+1}")
 
     return triggered
 
