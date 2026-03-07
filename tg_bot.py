@@ -203,7 +203,7 @@ def build_daily_report():
 
     return (
         f"📊 <b>DAILY REPORT — {wib}</b>\n"
-        f"─" * 22 + "\n"
+        "──────────────────────\n"
         f"\n💰 <b>Portfolio</b>\n"
         f"  Balance:  <b>${balance:.2f}</b>\n"
         f"  All-time: <b>${net:+.2f}</b> ({net/capital*100:+.1f}%)\n"
