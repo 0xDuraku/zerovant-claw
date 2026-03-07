@@ -200,6 +200,8 @@ USE_VENICE    = bool(VENICE_KEY)  # Auto-switch ke Venice jika key tersedia
 ASSETS = ["ETHUSDT", "SOLUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT"]
 # ── RISK MANAGEMENT ────────────────────────────────────
 MAX_DAILY_LOSS_PCT  = 0.05   # Stop semua grid kalau loss >5% modal hari ini
+ASSET_STOP_LOSS_PCT = 0.15   # Pause asset kalau rugi >15% dari capital asset tsb
+ASSET_STOP_COOLDOWN = 4      # Jam cooldown sebelum asset bisa aktif lagi
 RANGE_BREACH_PCT    = 0.15   # Cancel grid kalau harga keluar range >15%
 MAX_DRAWDOWN_PCT    = 0.10   # Emergency stop kalau drawdown >10% dari peak
 DAILY_PROFIT_TARGET = 0.02   # Optional: lock profit kalau sudah +2% hari ini
@@ -828,6 +830,54 @@ def detect_extreme_event(analyses, state) -> dict:
 
     return {"event": None, "detail": ""}
 
+def check_asset_stop_loss(state):
+    """
+    Stop loss per asset — pause grid jika rugi >15% dari capital asset.
+    Auto-resume setelah cooldown 4 jam.
+    """
+    asset_pnl = state.get("asset_pnl", {})
+    grids     = state.get("grids", {})
+    now       = datetime.now(timezone.utc)
+    paused    = []
+    resumed   = []
+
+    for sym, cfg in GRID_CONFIG.items():
+        grid = grids.get(sym, {})
+        if not grid: continue
+
+        capital   = cfg["capital"]
+        pnl       = float(asset_pnl.get(sym, 0))
+        loss_pct  = pnl / capital if capital > 0 else 0
+
+        # Cek cooldown — auto resume setelah 4 jam
+        sl_paused_at = grid.get("sl_paused_at")
+        if sl_paused_at and not grid.get("active", True):
+            paused_dt = datetime.fromisoformat(sl_paused_at)
+            hours_passed = (now - paused_dt).total_seconds() / 3600
+            if hours_passed >= ASSET_STOP_COOLDOWN:
+                state["grids"][sym]["active"] = True
+                state["grids"][sym]["sl_paused_at"] = None
+                log.info(f"  &#9989; {sym} STOP LOSS cooldown done — resuming")
+                resumed.append(sym.replace("USDT",""))
+
+        # Cek stop loss
+        if loss_pct < -ASSET_STOP_LOSS_PCT and grid.get("active", True):
+            log.warning(f"  &#128721; ASSET STOP LOSS {sym}: {loss_pct:.1%} loss (limit {ASSET_STOP_LOSS_PCT:.0%})")
+            state["grids"][sym]["active"] = False
+            state["grids"][sym]["sl_paused_at"] = now.isoformat()
+            cancel_open_orders(sym)
+            paused.append(f"{sym.replace('USDT','')}: {loss_pct:.1%}")
+
+    if paused:
+        tg(f"&#128721; <b>ASSET STOP LOSS</b>\n" +
+           "\n".join(paused) +
+           f"\nAuto-resume in {ASSET_STOP_COOLDOWN}h")
+
+    if resumed:
+        tg(f"&#9989; <b>ASSET RESUMED</b>\n" +
+           ", ".join(resumed) +
+           "\nCooldown complete")
+
 def check_risk(state) -> str:
     """
     Returns: 'OK', 'DAILY_LOSS', 'DRAWDOWN', atau 'OK_TARGET_HIT'
@@ -1295,6 +1345,8 @@ def run():
         if trailing:
             for t in trailing:
                 log.info(f"  �� TRAILING locked: {t['symbol']} +{t['gain_pct']}% | new_low={t['new_low']}")
+        # Stop loss per asset
+        check_asset_stop_loss(state)
         # Check milestones
         check_milestones(state)
         save_state(state)
