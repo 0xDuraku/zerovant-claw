@@ -615,6 +615,11 @@ footer {
 <div id="tab-analytics" class="page" style="display:none">
   <div class="section">
     <div class="sec-title">Per-Asset Analytics</div>
+    <div class="sec-title" style="margin-top:16px">Capital Allocation</div>
+    <div class="card" style="margin-bottom:12px;padding:14px">
+      <div id="allocation-section"><div style="color:var(--muted);font-size:12px">Loading...</div></div>
+    </div>
+    <div class="sec-title">Per-Asset Analytics</div>
     <div id="analytics-list"></div>
   </div>
 </div>
@@ -1041,6 +1046,37 @@ function renderTrades(fills) {
   }).join('');
 }
 
+function renderAllocation(d) {
+  const el = document.getElementById('allocation-section');
+  if (!el) return;
+  const alloc = (d.capital_allocation||{}).allocation || {};
+  const apnl  = d.asset_pnl || {};
+  const an    = d.analytics || {};
+  const total = Object.values(alloc).reduce((a,b)=>a+b,0) || 500;
+  const syms  = ['ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','XRPUSDT'];
+  const colors= {'ETHUSDT':'#6366f1','SOLUSDT':'#f59e0b','BNBUSDT':'#eab308','DOGEUSDT':'#f97316','XRPUSDT':'#06b6d4'};
+  if (!Object.keys(alloc).length) { el.innerHTML='<div style="color:var(--muted);font-size:12px">No allocation data yet</div>'; return; }
+  el.innerHTML = `<div style="margin-bottom:14px">` +
+    syms.filter(s=>alloc[s]).map(sym => {
+      const sh  = sym.replace('USDT','');
+      const cap = alloc[sym]||0;
+      const pct = cap/total*100;
+      const pnl = parseFloat(apnl[sym]||0);
+      const wr  = (an[sym]||{}).wr||0;
+      const col = colors[sym]||'#888';
+      return `<div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:12px;font-weight:700">${sh}</span>
+          <span style="font-size:11px;color:var(--muted)">$${cap} · ${pct.toFixed(0)}% · WR ${wr}%</span>
+        </div>
+        <div style="background:var(--bg3);border-radius:4px;height:8px;overflow:hidden">
+          <div style="background:${col};width:${pct}%;height:100%;border-radius:4px;transition:width 0.5s"></div>
+        </div>
+      </div>`;
+    }).join('') + `</div>
+    <div style="font-size:10px;color:var(--muted)">Method: Risk-Adjusted Sharpe · Auto-rebalances daily</div>`;
+}
+
 function renderAnalytics(analytics) {
   const el = document.getElementById('analytics-list');
   if (!el) return;
@@ -1168,6 +1204,7 @@ async function load() {
     renderAI(d.ai_log||[]);
     renderTrades(d.fills_log||[]);
     renderAnalytics(d.analytics||{});
+    renderAllocation(d);
 
     // System
     document.getElementById('sys-es').textContent  = es?'TRUE':'false';
