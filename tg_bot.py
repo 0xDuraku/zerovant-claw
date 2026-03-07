@@ -413,7 +413,7 @@ def handle_callback(callback_id, data, chat_id, msg_id):
         edit(chat_id, msg_id, build_ailog(), BACK_KB)
     elif data == "cb_history":
         edit(chat_id, msg_id, build_history(), BACK_KB)
-    elif cb == "cb_weekly":
+    elif data == "cb_weekly":
         edit(chat_id, msg_id, build_weekly(), BACK_KB)
     elif data == "cb_controls":
         edit(chat_id, msg_id, "\u2699 <b>BOT CONTROLS</b>\nPilih aksi:", CONTROLS_KB)
