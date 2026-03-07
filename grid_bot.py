@@ -1024,15 +1024,16 @@ def check_range_breach(state, analyses):
             log.info(f"  ⚠️ {sym}: strong uptrend at {pos_pct:.0%} — consider waiting for pullback")
         elif pos_pct < 0.20 and trend == "DOWN":
             log.info(f"  WARNING {sym}: strong downtrend at {pos_pct:.0%} — reducing exposure")
-            placed = place_grid(sym, new_rl, new_rh,
-                                cfg.get("num_grids", 10), cfg.get("capital", 100), price)
-            state["grids"][sym] = {
-                **grid,
-                "range_low": new_rl, "range_high": new_rh,
-                "orders_placed": placed,
-                "last_trail": datetime.now(timezone.utc).isoformat(),
-            }
-            continue
+            if 'new_rl' in dir() or 'new_rl' in locals():
+                placed = place_grid(sym, new_rl, new_rh,
+                                    cfg.get("num_grids", 10), cfg.get("capital", 100), price)
+                state["grids"][sym] = {
+                    **grid,
+                    "range_low": new_rl, "range_high": new_rh,
+                    "orders_placed": placed,
+                    "last_trail": datetime.now(timezone.utc).isoformat(),
+                }
+                continue
 
         # ── RANGE BREACH: harga keluar range + buffer 15% ──
         buffer = range_size * RANGE_BREACH_PCT
@@ -1243,6 +1244,33 @@ def run():
                 if sym in state.get("grids", {}):
                     state["grids"][sym]["ai_confidence"] = confidence
                     state["grids"][sym]["capital_sizing"] = sizing_label
+
+                # Override AI CANCEL jika performance masih bagus
+                analytics = state.get("analytics", {})
+                a_data   = analytics.get(sym, {})
+                pf_live  = float(a_data.get("profit_factor", 0))
+                wr_live  = float(a_data.get("wr", 0))
+                if action == "CANCEL" and pf_live >= 1.0 and wr_live >= 45:
+                    log.info(f"  &#9888; {sym}: AI said CANCEL but PF={pf_live} WR={wr_live}% — overriding to REBALANCE")
+                    action = "REBALANCE"
+                    if not d.get("range_low") or d.get("range_low", 0) <= 0:
+                        cfg_tmp = GRID_CONFIG[sym]
+                        half = a["price"] * cfg_tmp["range_pct"] / 2
+                        d["range_low"]  = round(a["price"] - half, 4)
+                        d["range_high"] = round(a["price"] + half, 4)
+
+                # Jika asset belum ada grid aktif, force init meskipun action KEEP
+                current_grid = state.get("grids", {}).get(sym, {})
+                has_active_grid = current_grid.get("active") and float(current_grid.get("range_low") or 0) > 0
+                if action == "KEEP" and not has_active_grid:
+                    log.info(f"  &#128257; {sym}: KEEP but no active grid — forcing REBALANCE init")
+                    action = "REBALANCE"
+                    # Build range from price if AI didn't provide
+                    if not d.get("range_low") or d.get("range_low", 0) <= 0:
+                        cfg_tmp = GRID_CONFIG[sym]
+                        half = a["price"] * cfg_tmp["range_pct"] / 2
+                        d["range_low"]  = round(a["price"] - half, 4)
+                        d["range_high"] = round(a["price"] + half, 4)
 
                 if action in ("REBALANCE","KEEP") and d.get("range_low",0) > 0:
                     price = a["price"]
