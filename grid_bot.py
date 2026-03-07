@@ -182,8 +182,17 @@ def apply_compound(state):
 
 # ── CONFIG ──────────────────────────────────────────────
 TESTNET_BASE  = "https://testnet.binance.vision/api/v3"
-API_KEY       = os.environ.get("BINANCE_TESTNET_API_KEY", "")
-API_SECRET    = os.environ.get("BINANCE_TESTNET_SECRET", "")
+MAINNET_BASE  = "https://api.binance.com/api/v3"
+MAINNET_MODE  = os.environ.get("BINANCE_MODE", "testnet").lower() == "mainnet"
+BASE_URL      = MAINNET_BASE if MAINNET_MODE else TESTNET_BASE
+
+if MAINNET_MODE:
+    API_KEY    = os.environ.get("BINANCE_MAINNET_API_KEY", "")
+    API_SECRET = os.environ.get("BINANCE_MAINNET_SECRET", "")
+else:
+    API_KEY    = os.environ.get("BINANCE_TESTNET_API_KEY", "")
+    API_SECRET = os.environ.get("BINANCE_TESTNET_SECRET", "")
+
 ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 VENICE_KEY    = os.environ.get("VENICE_API_KEY", "")
 USE_VENICE    = bool(VENICE_KEY)  # Auto-switch ke Venice jika key tersedia
@@ -207,13 +216,21 @@ COOLDOWN_MINUTES    = 30     # Pause trading setelah extreme event
 # DOGE/XRP/SOL overweighted (highest ROI), BTC underweighted (lowest ROI per $)
 # $500 real capital — BTC removed (min notional too high for small capital)
 # Reallocated BTC+BNB share to DOGE/XRP/SOL (higher ROI anyway)
-GRID_CONFIG = {
-    "ETHUSDT":  {"capital": 80,  "num_grids": 10, "range_pct": 0.10},  # 16%
-    "SOLUSDT":  {"capital": 110, "num_grids": 10, "range_pct": 0.12},  # 22%
-    "BNBUSDT":  {"capital": 60,  "num_grids": 10, "range_pct": 0.08},  # 12%
-    "DOGEUSDT": {"capital": 150, "num_grids": 10, "range_pct": 0.10},  # 30%
-    "XRPUSDT":  {"capital": 100, "num_grids": 10, "range_pct": 0.12},  # 20%
+GRID_CONFIG_TESTNET = {
+    "ETHUSDT":  {"capital": 80,  "num_grids": 10, "range_pct": 0.10},
+    "SOLUSDT":  {"capital": 110, "num_grids": 10, "range_pct": 0.12},
+    "BNBUSDT":  {"capital": 60,  "num_grids": 10, "range_pct": 0.08},
+    "DOGEUSDT": {"capital": 150, "num_grids": 10, "range_pct": 0.10},
+    "XRPUSDT":  {"capital": 100, "num_grids": 10, "range_pct": 0.12},
 }
+GRID_CONFIG_MAINNET = {
+    "ETHUSDT":  {"capital": 20,  "num_grids": 10, "range_pct": 0.10},
+    "SOLUSDT":  {"capital": 22,  "num_grids": 10, "range_pct": 0.12},
+    "BNBUSDT":  {"capital": 12,  "num_grids": 10, "range_pct": 0.08},
+    "DOGEUSDT": {"capital": 30,  "num_grids": 10, "range_pct": 0.10},
+    "XRPUSDT":  {"capital": 16,  "num_grids": 10, "range_pct": 0.12},
+}
+GRID_CONFIG = GRID_CONFIG_MAINNET if MAINNET_MODE else GRID_CONFIG_TESTNET
 # Total: $500 | BTC removed (min order $5, $30/10grids=$3 too small)
 # Expected monthly: ~$55/month = 11% monthly ROI
 CYCLE_MINUTES  = 15
@@ -238,7 +255,7 @@ def api_get(endpoint, params={}, auth=False):
     if auth:
         params["timestamp"] = int(time.time() * 1000)
         params = sign(params)
-    resp = requests.get(f"{TESTNET_BASE}{endpoint}", params=params,
+    resp = requests.get(f"{BASE_URL}{endpoint}", params=params,
                         headers={"X-MBX-APIKEY": API_KEY}, timeout=10)
     resp.raise_for_status()
     return resp.json()
@@ -246,7 +263,7 @@ def api_get(endpoint, params={}, auth=False):
 def api_post(endpoint, params):
     params["timestamp"] = int(time.time() * 1000)
     params = sign(params)
-    resp = requests.post(f"{TESTNET_BASE}{endpoint}", params=params,
+    resp = requests.post(f"{BASE_URL}{endpoint}", params=params,
                          headers={"X-MBX-APIKEY": API_KEY}, timeout=10)
     resp.raise_for_status()
     return resp.json()
@@ -267,7 +284,7 @@ def cancel_open_orders(symbol):
             params = {"symbol": symbol, "orderId": o["orderId"],
                       "timestamp": int(time.time() * 1000)}
             params = sign(params)
-            requests.delete(f"{TESTNET_BASE}/order", params=params,
+            requests.delete(f"{BASE_URL}/order", params=params,
                            headers={"X-MBX-APIKEY": API_KEY}, timeout=10)
         log.info(f"  Cancelled {len(orders)} orders: {symbol}")
     except Exception as e:
