@@ -354,6 +354,8 @@ def build_ailog():
         else:
             icon = "\u2139"
         lines.append(f"{icon} <b>{sym}</b>: {action}\n   {reason}")
+    wib = datetime.now(timezone(timedelta(hours=7))).strftime("%H:%M")
+    lines.append(f"\n<i>Updated {wib} WIB</i>")
     return "\n".join(lines) if logs else "No AI log yet"
 
 # ── ACTIONS ──────────────────────────────────────────
