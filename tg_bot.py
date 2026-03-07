@@ -78,7 +78,8 @@ MAIN_MENU_KB = {"inline_keyboard": [
     [{"text": "\u2699 Controls",      "callback_data": "cb_controls"},
      {"text": "\U0001f4c5 History",   "callback_data": "cb_history"}],
     [{"text": "\U0001f4b9 Compound",  "callback_data": "cb_compound"},
-     {"text": "\U0001f504 Refresh",   "callback_data": "cb_refresh_main"}],
+     {"text": "\U0001f4ca Weekly",    "callback_data": "cb_weekly"}],
+    [{"text": "\U0001f504 Refresh",   "callback_data": "cb_refresh_main"}],
 ]}
 
 CONTROLS_KB = {"inline_keyboard": [
@@ -412,6 +413,8 @@ def handle_callback(callback_id, data, chat_id, msg_id):
         edit(chat_id, msg_id, build_ailog(), BACK_KB)
     elif data == "cb_history":
         edit(chat_id, msg_id, build_history(), BACK_KB)
+    elif cb == "cb_weekly":
+        edit(chat_id, msg_id, build_weekly(), BACK_KB)
     elif data == "cb_controls":
         edit(chat_id, msg_id, "\u2699 <b>BOT CONTROLS</b>\nPilih aksi:", CONTROLS_KB)
     elif data == "cb_refresh_back":
