@@ -819,9 +819,13 @@ function fmtTime(ts) {
   } catch { return ''; }
 }
 
+let _lastEq = null;
 function drawChart(eq) {
+  if (eq && eq.length >= 2) _lastEq = eq;
   const c = document.getElementById('eq-canvas');
-  if (!c || !eq || eq.length < 2) return;
+  if (!c || !_lastEq || _lastEq.length < 2) return;
+  eq = _lastEq;
+  if (c.offsetWidth === 0) { setTimeout(() => drawChart(eq), 100); return; }
   const dpr = window.devicePixelRatio || 1;
   c.width  = c.offsetWidth * dpr;
   c.height = c.offsetHeight * dpr;
