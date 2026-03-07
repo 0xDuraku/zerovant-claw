@@ -79,7 +79,8 @@ MAIN_MENU_KB = {"inline_keyboard": [
      {"text": "\U0001f4c5 History",   "callback_data": "cb_history"}],
     [{"text": "\U0001f4b9 Compound",  "callback_data": "cb_compound"},
      {"text": "\U0001f4ca Weekly",    "callback_data": "cb_weekly"}],
-    [{"text": "\U0001f504 Refresh",   "callback_data": "cb_refresh_main"}],
+    [{"text": "\U0001f4cb Daily",     "callback_data": "cb_daily"},
+     {"text": "\U0001f504 Refresh",   "callback_data": "cb_refresh_main"}],
 ]}
 
 CONTROLS_KB = {"inline_keyboard": [
@@ -145,6 +146,78 @@ def build_status():
         f"\U0001f7e2 Active Grids: {active}/5\n"
         f"\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n"
         + ("\U0001f6d1 EMERGENCY STOP ACTIVE" if es else "\u2705 Bot running normally")
+    )
+
+def build_daily_report():
+    s       = load_state()
+    fs      = s.get("fee_simulation", {})
+    wl      = s.get("win_loss", {})
+    wins    = wl.get("wins", 0)
+    losses  = wl.get("losses", 0)
+    wr      = wins/(wins+losses)*100 if wins+losses > 0 else 0
+    net     = float(fs.get("simulated_pnl", 0))
+    capital = 500
+    balance = capital + net
+    realized   = float(s.get("realized_pnl", 0))
+    day_start  = float(s.get("daily_start_pnl", realized))
+    today      = round(realized - day_start, 4)
+    sharpe     = float(s.get("sharpe_ratio", 0))
+    max_dd     = float(s.get("max_drawdown_pct", 0))
+    fills      = s.get("total_fills", 0)
+    snap       = s.get("today_snapshot", {}) or {}
+    analytics  = s.get("analytics", {})
+    asset_pnl  = s.get("asset_pnl", {})
+    grids      = s.get("grids", {})
+    prices     = s.get("last_prices", {})
+    wib        = datetime.now(timezone(timedelta(hours=7))).strftime("%d %b %Y %H:%M")
+    NL = chr(10)
+
+    # Per-asset section
+    asset_lines = []
+    for sym in ["ETHUSDT","SOLUSDT","BNBUSDT","DOGEUSDT","XRPUSDT"]:
+        sh    = sym.replace("USDT","")
+        g     = grids.get(sym, {})
+        a     = analytics.get(sym, {})
+        pnl   = float(asset_pnl.get(sym, 0))
+        price = float(prices.get(sym, 0))
+        awr   = a.get("wr", 0)
+        pf    = a.get("profit_factor", 0)
+        tr    = a.get("total_trades", 0)
+        act   = g.get("active", False)
+        conf  = float(g.get("ai_confidence", 0))
+        sizing = g.get("capital_sizing", "?")
+        icon  = "🟢" if act else "🔴"
+        asset_lines.append(
+            f"{icon} <b>{sh}</b> ${price:.4f} | PnL: ${pnl:+.2f}\n"
+            f"   WR:{awr}% PF:{pf} trades:{tr} | AI:{conf:.0%} {sizing}"
+        )
+
+    # Daily history last 3 days
+    hist = s.get("daily_pnl_history", {})
+    hist_lines = []
+    for d in sorted(hist.keys())[-3:]:
+        dp = float(hist[d].get("pnl",0))
+        df = hist[d].get("fills",0)
+        ic = "🟢" if dp >= 0 else "🔴"
+        hist_lines.append(f"  {ic} {d}: ${dp:+.4f} ({df}f)")
+
+    return (
+        f"📊 <b>DAILY REPORT — {wib}</b>\n"
+        f"─" * 22 + "\n"
+        f"\n💰 <b>Portfolio</b>\n"
+        f"  Balance:  <b>${balance:.2f}</b>\n"
+        f"  All-time: <b>${net:+.2f}</b> ({net/capital*100:+.1f}%)\n"
+        f"  Today:    <b>${today:+.4f}</b> ({snap.get('fills',0)} fills)\n"
+        f"\n🎯 <b>Performance</b>\n"
+        f"  Win Rate: <b>{wr:.1f}%</b> ({wins}W/{losses}L)\n"
+        f"  Sharpe:   <b>{sharpe:.2f}</b>\n"
+        f"  Max DD:   <b>{max_dd:.2f}%</b>\n"
+        f"  Fills:    <b>{fills:,}</b>\n"
+        f"\n📆 <b>Per Asset</b>\n"
+        + NL.join(asset_lines) +
+        f"\n\n📅 <b>Last 3 Days</b>\n"
+        + NL.join(hist_lines) +
+        f"\n\n🤖 Zerovant Labs · Venice AI"
     )
 
 def build_grids():
@@ -380,6 +453,8 @@ def handle_command(text):
         send("\u25b6 <b>Bot RESUMED</b>\nSemua grid aktif kembali.", BACK_KB)
     elif cmd == "/report":
         send(build_status(), BACK_KB)
+    elif cmd == "/daily":
+        send(build_daily_report(), BACK_KB)
     elif cmd == "/weekly":
         send(build_weekly(), BACK_KB)
     elif cmd == "/compound":
@@ -415,6 +490,8 @@ def handle_callback(callback_id, data, chat_id, msg_id):
         edit(chat_id, msg_id, build_history(), BACK_KB)
     elif data == "cb_weekly":
         edit(chat_id, msg_id, build_weekly(), BACK_KB)
+    elif data == "cb_daily":
+        edit(chat_id, msg_id, build_daily_report(), BACK_KB)
     elif data == "cb_controls":
         edit(chat_id, msg_id, "\u2699 <b>BOT CONTROLS</b>\nPilih aksi:", CONTROLS_KB)
     elif data == "cb_refresh_back":
