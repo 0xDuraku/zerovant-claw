@@ -444,8 +444,8 @@ def rule_based_grid_params(analyses, state=None):
             continue
         # Use backtest-optimized config per asset
         cfg = GRID_CONFIG.get(symbol, {})
-        num_grids = cfg.get("num_grids", 10)
         target_range = cfg.get("range_pct", 0.10)
+
         # Dynamic width based on volatility
         if vol == "HIGH":
             range_pct = min(target_range * 1.3, max(target_range, atr_pct * 2.0))
@@ -453,6 +453,32 @@ def rule_based_grid_params(analyses, state=None):
             range_pct = target_range
         else:
             range_pct = min(target_range * 0.85, max(target_range * 0.7, atr_pct * 1.5))
+
+        # Dynamic grid spacing — spacing harus min 0.4% untuk cover fee
+        # Lebih banyak grid saat volatility tinggi (lebih banyak crossing)
+        # Lebih sedikit grid saat volatility rendah (hindari terlalu rapat)
+        min_spacing = 0.004  # 0.4% minimum
+        max_spacing = 0.025  # 2.5% maximum
+        if vol == "HIGH":
+            # Volatility tinggi — spacing lebih lebar, lebih banyak grid
+            ideal_spacing = max(min_spacing, atr_pct * 0.8)
+            num_grids = min(20, max(8, int(range_pct / ideal_spacing)))
+        elif vol == "MEDIUM":
+            ideal_spacing = max(min_spacing, atr_pct * 1.0)
+            num_grids = min(15, max(6, int(range_pct / ideal_spacing)))
+        else:
+            # Volatility rendah — spacing lebih ketat, lebih sedikit grid
+            ideal_spacing = max(min_spacing, atr_pct * 1.2)
+            num_grids = min(12, max(5, int(range_pct / ideal_spacing)))
+
+        # Clamp spacing agar tidak terlalu kecil atau besar
+        actual_spacing = range_pct / num_grids
+        if actual_spacing < min_spacing:
+            num_grids = max(5, int(range_pct / min_spacing))
+        elif actual_spacing > max_spacing:
+            num_grids = max(5, int(range_pct / max_spacing))
+
+        log.info(f"  &#9881; {symbol} dynamic grid: {num_grids} grids, spacing={range_pct/num_grids:.2%}, vol={vol}")
         # Asymmetric grid — bias toward trend
         if trend == "DOWN":
             buy_side  = range_pct * 0.62  # more room below — catch bounces
@@ -874,11 +900,7 @@ def check_range_breach(state, analyses):
         if pos_pct > 0.80 and trend == "UP":
             log.info(f"  ⚠️ {sym}: strong uptrend at {pos_pct:.0%} — consider waiting for pullback")
         elif pos_pct < 0.20 and trend == "DOWN":
-            log.info(f"  ⚠️ {sym}: strong downtrend at {pos_pct:.0%} — reducing exposure")
-            log.info(f"  🔥 TRAILING {sym}: {direction} | {rl:.4f}-{rh:.4f} → {new_rl:.4f}-{new_rh:.4f}")
-            tg(f"🔥 <b>TRAILING GRID</b> — {sym.replace('USDT','')} {direction}\n"
-               f"Old: {rl}-{rh}\nNew: {new_rl}-{new_rh}")
-            cancel_open_orders(sym)
+            log.info(f"  WARNING {sym}: strong downtrend at {pos_pct:.0%} — reducing exposure")
             placed = place_grid(sym, new_rl, new_rh,
                                 cfg.get("num_grids", 10), cfg.get("capital", 100), price)
             state["grids"][sym] = {
