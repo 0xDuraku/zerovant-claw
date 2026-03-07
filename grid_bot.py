@@ -1295,6 +1295,8 @@ def run():
         if trailing:
             for t in trailing:
                 log.info(f"  �� TRAILING locked: {t['symbol']} +{t['gain_pct']}% | new_low={t['new_low']}")
+        # Check milestones
+        check_milestones(state)
         save_state(state)
         # Daily summary setiap 96 cycle (~24 jam)
         if cycle % 96 == 0:
