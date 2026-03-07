@@ -118,7 +118,8 @@ nav {
 .nav-brand span { color: var(--ora); }
 .nav-brand-text { display: inline; }
 @media(max-width: 480px) { .nav-brand-text { display: none; } }
-.nav-tabs { display: flex; gap: 4px; }
+.nav-tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+.nav-tabs::-webkit-scrollbar { display: none; }
 .nav-tab {
   padding: 6px 14px; border-radius: 8px;
   font-size: 12px; font-weight: 500; cursor: pointer;
@@ -282,7 +283,8 @@ canvas { width: 100% !important; display: block; border-radius: 8px; }
 .pos-fill { height: 100%; background: linear-gradient(90deg, var(--ora), var(--ora2)); border-radius: 2px; }
 
 /* PNL BARS */
-.pnl-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.pnl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+@media(min-width:640px) { .pnl-grid { grid-template-columns: repeat(5, 1fr); } }
 .pnl-col { display: flex; flex-direction: column; align-items: center; }
 .pnl-asset-name { font-size: 10px; font-weight: 700; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px; }
 .pnl-bar-wrap { height: 60px; display: flex; align-items: flex-end; width: 100%; justify-content: center; margin-bottom: 6px; }
