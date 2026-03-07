@@ -2,85 +2,73 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 1950,
-      "range_high": 2020,
-      "num_grids": 15,
-      "reason": "Low volatility and mixed trends. Grid spacing is 0.45% of price.",
+      "range_low": 1960,
+      "range_high": 2000,
+      "num_grids": 20,
+      "reason": "Low volatility and mixed trends. 20 grids with 0.4% spacing.",
       "active": true,
-      "last_rebalance": "2026-03-07T03:50:02.018967+00:00",
+      "last_rebalance": "2026-03-07T04:42:06.851338+00:00",
       "orders_placed": 11,
       "realized_pnl": 2.0188,
       "fills": 91,
-      "open_orders": 8,
-      "current_price": 1968.56
+      "open_orders": 11
     },
     "SOLUSDT": {
       "action": "REBALANCE",
       "range_low": 82,
       "range_high": 87,
-      "num_grids": 12,
-      "reason": "Low volatility and strong downtrend. Grid spacing is 0.42% of price.",
+      "num_grids": 15,
+      "reason": "Low volatility and downtrend. 15 grids with 0.4% spacing.",
       "active": true,
-      "last_rebalance": "2026-03-07T03:50:02.018967+00:00",
+      "last_rebalance": "2026-03-07T04:42:06.851338+00:00",
       "orders_placed": 11,
       "realized_pnl": 0,
       "fills": 1,
-      "open_orders": 10,
-      "current_price": 84.19
+      "open_orders": 11
     },
     "BNBUSDT": {
       "action": "REBALANCE",
-      "range_low": 616.1667,
-      "range_high": 666.3668,
-      "num_grids": 15,
-      "reason": "Low volatility and strong downtrend. Grid spacing is 0.42% of price.",
+      "range_low": 617.989,
+      "range_high": 667.989,
+      "num_grids": 12,
+      "reason": "High volatility and downtrend. 12 grids with 0.4% spacing.",
       "active": true,
-      "last_rebalance": "2026-03-07T03:50:02.018967+00:00",
-      "orders_placed": 10,
+      "last_rebalance": "2026-03-07T04:42:06.851338+00:00",
+      "orders_placed": 11,
       "realized_pnl": -0.0092,
       "fills": 54,
       "trailing_triggered": true,
-      "trailing_count": 2,
-      "open_orders": 10,
-      "current_price": 625.22,
-      "last_trail": "2026-03-07T04:06:15.198667+00:00"
+      "trailing_count": 1,
+      "open_orders": 11
     },
     "DOGEUSDT": {
       "action": "REBALANCE",
-      "range_low": 0.0896,
-      "range_high": 0.0961,
-      "num_grids": 12,
-      "reason": "Low volatility and mixed trends. Grid spacing is 0.45% of price.",
+      "range_low": 0.089,
+      "range_high": 0.093,
+      "num_grids": 10,
+      "reason": "Low volatility and mixed trends. 10 grids with 0.4% spacing.",
       "active": true,
-      "last_rebalance": "2026-03-07T03:50:02.018967+00:00",
+      "last_rebalance": "2026-03-07T04:42:06.851338+00:00",
       "orders_placed": 10,
       "realized_pnl": -5.1554,
       "fills": 6,
-      "trailing_triggered": true,
-      "trailing_count": 2,
-      "open_orders": 10,
-      "current_price": 0.09086,
-      "last_trail": "2026-03-07T04:06:30.055789+00:00"
+      "open_orders": 10
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.3426,
-      "range_high": 1.3491,
-      "num_grids": 15,
-      "reason": "Low volatility and mixed trends. Grid spacing is 0.42% of price.",
+      "range_low": 1.34,
+      "range_high": 1.39,
+      "num_grids": 10,
+      "reason": "Low volatility and mixed trends. 10 grids with 0.4% spacing.",
       "active": true,
-      "last_rebalance": "2026-03-07T03:50:02.018967+00:00",
-      "orders_placed": 0,
-      "realized_pnl": -1.586,
-      "fills": 17,
-      "trailing_triggered": true,
-      "trailing_count": 2,
-      "open_orders": 0,
-      "current_price": 1.3627,
-      "last_trail": "2026-03-07T04:06:37.726036+00:00"
+      "last_rebalance": "2026-03-07T04:42:06.851338+00:00",
+      "orders_placed": 11,
+      "realized_pnl": 0,
+      "fills": 0,
+      "open_orders": 11
     }
   },
-  "last_ai_check": "2026-03-07T03:50:02.018967+00:00",
+  "last_ai_check": "2026-03-07T04:42:06.851338+00:00",
   "total_fills": 1585,
   "start_time": "2026-02-26T16:39:11.916659+00:00",
   "fills_log": [
@@ -17727,14 +17715,14 @@
     }
   ],
   "realized_pnl": 44.5718,
-  "total_rebalances": 157,
+  "total_rebalances": 158,
   "last_prices": {
     "BTCUSDT": 65983.62,
-    "ETHUSDT": 1970.87,
-    "SOLUSDT": 84.24,
-    "BNBUSDT": 625.55,
-    "DOGEUSDT": 0.09095,
-    "XRPUSDT": 1.363
+    "ETHUSDT": 1978.05,
+    "SOLUSDT": 84.35,
+    "BNBUSDT": 627.4,
+    "DOGEUSDT": 0.091,
+    "XRPUSDT": 1.3644
   },
   "equity_history": [
     500.0,
@@ -18104,9 +18092,10 @@
     544.44,
     544.44,
     544.57,
+    544.57,
     544.57
   ],
-  "total_open_orders": 38,
+  "total_open_orders": 54,
   "ai_log": [
     {
       "type": "ai",
@@ -22272,6 +22261,41 @@
       "symbol": "XRP",
       "reason": "Low volatility and mixed trends. Grid spacing is 0.42% of price.",
       "msg": "[03:50] XRP: REBALANCE \u2014 Low volatility and mixed trends. Grid spacing is 0.42% of price."
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "Low volatility and mixed trends. 20 grids with 0.4% spacing.",
+      "msg": "[04:42] ETH: REBALANCE \u2014 Low volatility and mixed trends. 20 grids with 0.4% spacing."
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "SOL",
+      "reason": "Low volatility and downtrend. 15 grids with 0.4% spacing.",
+      "msg": "[04:42] SOL: REBALANCE \u2014 Low volatility and downtrend. 15 grids with 0.4% spacing."
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "BNB",
+      "reason": "High volatility and downtrend. 12 grids with 0.4% spacing.",
+      "msg": "[04:42] BNB: REBALANCE \u2014 High volatility and downtrend. 12 grids with 0.4% spacing."
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "DOGE",
+      "reason": "Low volatility and mixed trends. 10 grids with 0.4% spacing.",
+      "msg": "[04:42] DOGE: REBALANCE \u2014 Low volatility and mixed trends. 10 grids with 0.4% spacing."
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "XRP",
+      "reason": "Low volatility and mixed trends. 10 grids with 0.4% spacing.",
+      "msg": "[04:42] XRP: REBALANCE \u2014 Low volatility and mixed trends. 10 grids with 0.4% spacing."
     }
   ],
   "inventory": {
@@ -22333,17 +22357,17 @@
   "last_snapshot_date": "2026-02-28",
   "today_pnl": 0.0316,
   "prev_prices": {
-    "ETHUSDT": 1968.56,
-    "SOLUSDT": 84.19,
-    "BNBUSDT": 625.22,
-    "DOGEUSDT": 0.09086,
-    "XRPUSDT": 1.3627
+    "ETHUSDT": 1978.42,
+    "SOLUSDT": 84.36,
+    "BNBUSDT": 627.4,
+    "DOGEUSDT": 0.091,
+    "XRPUSDT": 1.3644
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0049,
-    "SOLUSDT": 0.0045,
+    "ETHUSDT": 0.0048,
+    "SOLUSDT": 0.0048,
     "BNBUSDT": 0.0032,
-    "DOGEUSDT": 0.005,
+    "DOGEUSDT": 0.0052,
     "XRPUSDT": 0.0037
   },
   "last_extreme_event_time": "2026-03-05T03:10:31.897976+00:00",
@@ -24741,7 +24765,7 @@
       333602
     ]
   },
-  "cycle_count": 498,
+  "cycle_count": 500,
   "win_loss": {
     "wins": 430,
     "losses": 237,
