@@ -63,6 +63,7 @@ def set_menu_button():
                           {"command": "pause",   "description": "Pause trading"},
                           {"command": "resume",  "description": "Resume trading"},
                           {"command": "report",  "description": "Daily report sekarang"},
+                         {"command": "weekly",  "description": "Weekly performance report"},
                       ]}, timeout=8)
     except Exception as e:
         log.error(f"menu button error: {e}")
@@ -214,6 +215,56 @@ def build_history():
         lines.append(f"{icon} TODAY LIVE: <b>${today_pnl:+.4f}</b> ({snap.get('fills', 0)} fills)")
     return "\n".join(lines)
 
+def build_weekly():
+    s    = load_state()
+    hist = s.get("daily_pnl_history", {})
+    wl   = s.get("win_loss", {})
+    fs   = s.get("fee_simulation", {})
+
+    # Ambil 7 hari terakhir
+    dates = sorted(hist.keys())[-7:]
+    week_pnl   = sum(float(hist[d].get("pnl", 0)) for d in dates)
+    week_fills = sum(hist[d].get("fills", 0) for d in dates)
+    best_day   = max(dates, key=lambda d: float(hist[d].get("pnl", 0))) if dates else "-"
+    worst_day  = min(dates, key=lambda d: float(hist[d].get("pnl", 0))) if dates else "-"
+    best_pnl   = float(hist[best_day].get("pnl", 0)) if best_day != "-" else 0
+    worst_pnl  = float(hist[worst_day].get("pnl", 0)) if worst_day != "-" else 0
+
+    wins   = wl.get("wins", 0)
+    losses = wl.get("losses", 0)
+    wr     = wins / (wins + losses) * 100 if wins + losses > 0 else 0
+    net    = float(fs.get("simulated_pnl", 0))
+    sharpe = float(s.get("sharpe_ratio", 0))
+    total_fills = s.get("total_fills", 0)
+
+    lines = [
+        "📊 <b>WEEKLY PERFORMANCE REPORT</b>",
+        "─" * 22,
+        f"📅 Period: <b>{dates[0] if dates else '-'} → {dates[-1] if dates else '-'}</b>",
+        "",
+        "💰 <b>PnL Summary</b>",
+        f"  Week PnL:   <b>${week_pnl:+.4f}</b>",
+        f"  All-time:   <b>${net:+.4f}</b>",
+        f"  Best day:   🟢 {best_day} <b>${best_pnl:+.4f}</b>",
+        f"  Worst day:  🔴 {worst_day} <b>${worst_pnl:+.4f}</b>",
+        "",
+        "🎯 <b>Performance Metrics</b>",
+        f"  Win Rate:   <b>{wr:.1f}%</b> ({wins}W / {losses}L)",
+        f"  Sharpe:     <b>{sharpe:.2f}</b>",
+        f"  Week Fills: <b>{week_fills}</b>",
+        f"  Total Fills:<b>{total_fills}</b>",
+        "",
+        "📆 <b>Daily Breakdown</b>",
+    ]
+    for d in dates:
+        pnl   = float(hist[d].get("pnl", 0))
+        fills = hist[d].get("fills", 0)
+        icon  = "🟢" if pnl >= 0 else "🔴"
+        lines.append(f"  {icon} {d}: <b>${pnl:+.4f}</b> ({fills}f)")
+
+    lines += ["", "🤖 Powered by Venice AI · Zerovant Labs"]
+    return "\n".join(lines)
+
 def build_ailog():
     s    = load_state()
     logs = s.get("ai_log", [])[-8:]
@@ -328,6 +379,8 @@ def handle_command(text):
         send("\u25b6 <b>Bot RESUMED</b>\nSemua grid aktif kembali.", BACK_KB)
     elif cmd == "/report":
         send(build_status(), BACK_KB)
+    elif cmd == "/weekly":
+        send(build_weekly(), BACK_KB)
     elif cmd == "/compound":
         send(build_compound(), BACK_KB)
     elif cmd == "/help":
@@ -340,6 +393,7 @@ def handle_command(text):
             "/pause - Pause sementara\n"
             "/resume - Resume trading\n"
             "/report - Daily report\n"
+            "/weekly - Weekly performance report\n"
             "/help - Bantuan ini",
             BACK_KB
         )
