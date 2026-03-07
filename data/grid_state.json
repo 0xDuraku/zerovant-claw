@@ -2,76 +2,62 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 1950,
-      "range_high": 2010,
-      "num_grids": 15,
-      "confidence": 0.65,
-      "reason": "The market is in a downtrend but has a short-term uptrend. The volatility is low, so a tighter range with more grids is appropriate. The grid spacing is set to 0.4% of the price to cover fees and ensure a net profit.",
+      "range_low": 1942.0161,
+      "range_high": 2142.0161,
+      "num_grids": 12,
+      "confidence": 0.85,
+      "reason": "WR 80% tighten range",
       "active": true,
-      "last_rebalance": "2026-03-07T15:39:26.273760+00:00",
-      "orders_placed": 11,
+      "last_rebalance": "2026-03-07T17:44:07.291220+00:00",
+      "orders_placed": 10,
       "realized_pnl": 3.0879,
-      "fills": 105,
-      "open_orders": 10,
-      "current_price": 1980.91
+      "fills": 106,
+      "trailing_triggered": true,
+      "trailing_count": 3,
+      "open_orders": 30,
+      "current_price": 1970.81,
+      "last_trail": "2026-03-07T18:15:19.271313+00:00"
     },
     "SOLUSDT": {
       "active": false,
-      "reason": "The market is in a strong downtrend with the EMA20 far from the EMA50. The volatility is low, but the trend is too strong to place grids effectively.",
-      "current_price": 83.96
+      "reason": "PF 1.64 < 1.0",
+      "current_price": 83.33,
+      "sl_paused_at": null
     },
     "BNBUSDT": {
       "action": "REBALANCE",
-      "range_low": 610,
-      "range_high": 640,
-      "num_grids": 10,
-      "confidence": 0.7,
-      "reason": "The market is in a downtrend with low volatility. A wider range with fewer grids is appropriate. The grid spacing is set to 0.4% of the price to cover fees and ensure a net profit.",
-      "active": true,
-      "last_rebalance": "2026-03-07T15:39:26.273760+00:00",
-      "orders_placed": 0,
+      "range_low": null,
+      "range_high": null,
+      "num_grids": 14,
+      "confidence": 0.75,
+      "reason": "WR 69.6% tighten range",
+      "active": false,
+      "last_rebalance": null,
+      "orders_placed": 10,
       "realized_pnl": 0.0756,
       "fills": 2,
-      "open_orders": 0,
-      "current_price": 625.01
+      "trailing_triggered": true,
+      "trailing_count": 2,
+      "open_orders": 10,
+      "current_price": 621.98,
+      "last_trail": "2026-03-07T18:15:22.533993+00:00",
+      "sl_paused_at": null
     },
     "DOGEUSDT": {
-      "action": "REBALANCE",
-      "range_low": 0.0884,
-      "range_high": 0.0984,
-      "num_grids": 10,
-      "confidence": 0.55,
-      "reason": "The market is in a downtrend with low volatility. A tighter range with more grids is appropriate. The grid spacing is set to 0.4% of the price to cover fees and ensure a net profit.",
-      "active": true,
-      "last_rebalance": "2026-03-07T15:39:26.273760+00:00",
-      "orders_placed": 11,
-      "realized_pnl": -1.01,
-      "fills": 1,
-      "trailing_triggered": true,
-      "trailing_count": 1,
-      "open_orders": 10,
-      "current_price": 0.09054
+      "active": false,
+      "reason": "PF 1.16 < 1.0",
+      "current_price": 0.09,
+      "sl_paused_at": null
     },
     "XRPUSDT": {
-      "action": "REBALANCE",
-      "range_low": 1.336,
-      "range_high": 1.436,
-      "num_grids": 10,
-      "confidence": 0.6,
-      "reason": "The market is in a downtrend with low volatility. A wider range with fewer grids is appropriate. The grid spacing is set to 0.4% of the price to cover fees and ensure a net profit.",
-      "active": true,
-      "last_rebalance": "2026-03-07T15:39:26.273760+00:00",
-      "orders_placed": 11,
-      "realized_pnl": -0.376,
-      "fills": 12,
-      "trailing_triggered": true,
-      "trailing_count": 1,
-      "open_orders": 10,
-      "current_price": 1.3644
+      "active": false,
+      "reason": "PF 1.28 < 1.0",
+      "current_price": 1.3555,
+      "sl_paused_at": null
     }
   },
-  "last_ai_check": "2026-03-07T15:39:26.273760+00:00",
-  "total_fills": 1630,
+  "last_ai_check": null,
+  "total_fills": 1631,
   "start_time": "2026-02-26T16:39:11.916659+00:00",
   "fills_log": [
     {
@@ -18344,17 +18330,31 @@
       "inventory": -11.7,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 1596779,
+      "symbol": "ETHUSDT",
+      "side": "BUY",
+      "price": 1980.0,
+      "qty": 0.004,
+      "fee": 0.0,
+      "time": "17:57:40",
+      "timestamp": "2026-03-07T17:57:40Z",
+      "pnl": null,
+      "inventory": -0.0082,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
   "realized_pnl": 42.2881,
-  "total_rebalances": 164,
+  "total_rebalances": 165,
   "last_prices": {
     "BTCUSDT": 65983.62,
-    "ETHUSDT": 1980.91,
-    "SOLUSDT": 83.96,
-    "BNBUSDT": 625.01,
-    "DOGEUSDT": 0.09054,
-    "XRPUSDT": 1.3644
+    "ETHUSDT": 1971.59,
+    "SOLUSDT": 83.33,
+    "BNBUSDT": 621.98,
+    "DOGEUSDT": 0.09,
+    "XRPUSDT": 1.3555
   },
   "equity_history": [
     500.0,
@@ -18754,9 +18754,10 @@
     543.3,
     543.3,
     542.29,
+    542.29,
     542.29
   ],
-  "total_open_orders": 30,
+  "total_open_orders": 40,
   "ai_log": [
     {
       "type": "ai",
@@ -23167,11 +23168,46 @@
       "symbol": "XRP",
       "reason": "The market is in a downtrend with low volatility. A wider range with f",
       "msg": "[15:39] XRP: REBALANCE \u2014 The market is in a downtrend with low volatility. A wider range with f"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "WR 80% tighten range",
+      "msg": "[17:44] ETH: REBALANCE \u2014 WR 80% tighten range"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "SOL",
+      "reason": "PF 1.64 < 1.0",
+      "msg": "[17:44] SOL: CANCEL \u2014 PF 1.64 < 1.0"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "BNB",
+      "reason": "WR 69.6% tighten range",
+      "msg": "[17:44] BNB: REBALANCE \u2014 WR 69.6% tighten range"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "DOGE",
+      "reason": "PF 1.16 < 1.0",
+      "msg": "[17:44] DOGE: CANCEL \u2014 PF 1.16 < 1.0"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "XRP",
+      "reason": "PF 1.28 < 1.0",
+      "msg": "[17:44] XRP: CANCEL \u2014 PF 1.28 < 1.0"
     }
   ],
   "inventory": {
     "DOGEUSDT": 3046.0,
-    "ETHUSDT": -0.0122,
+    "ETHUSDT": -0.0082,
     "SOLUSDT": -0.444,
     "XRPUSDT": -11.7,
     "BNBUSDT": -0.371
@@ -23234,18 +23270,18 @@
   "last_snapshot_date": "2026-02-28",
   "today_pnl": 0.0316,
   "prev_prices": {
-    "ETHUSDT": 1980.91,
-    "SOLUSDT": 83.96,
-    "BNBUSDT": 625.01,
-    "DOGEUSDT": 0.09054,
-    "XRPUSDT": 1.3644
+    "ETHUSDT": 1970.81,
+    "SOLUSDT": 83.33,
+    "BNBUSDT": 621.98,
+    "DOGEUSDT": 0.09,
+    "XRPUSDT": 1.3555
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0032,
-    "SOLUSDT": 0.0068,
-    "BNBUSDT": 0.0049,
-    "DOGEUSDT": 0.0053,
-    "XRPUSDT": 0.0042
+    "ETHUSDT": 0.0043,
+    "SOLUSDT": 0.0069,
+    "BNBUSDT": 0.0057,
+    "DOGEUSDT": 0.0051,
+    "XRPUSDT": 0.0044
   },
   "last_extreme_event_time": "2026-03-05T03:10:31.897976+00:00",
   "asset_pnl": {
@@ -23260,7 +23296,6 @@
   "start_date": "2026-02-28",
   "seen_trade_ids": {
     "ETHUSDT": [
-      1229371,
       1229381,
       1229383,
       1229384,
@@ -23759,7 +23794,8 @@
       1591661,
       1591867,
       1591887,
-      1593266
+      1593266,
+      1596779
     ],
     "SOLUSDT": [
       316976,
@@ -25663,7 +25699,7 @@
       334943
     ]
   },
-  "cycle_count": 548,
+  "cycle_count": 551,
   "win_loss": {
     "wins": 441,
     "losses": 247,
@@ -25681,7 +25717,7 @@
     "real_wins": 397,
     "real_losses": 291
   },
-  "sharpe_ratio": 28.41,
+  "sharpe_ratio": 28.37,
   "max_drawdown_pct": 3.242,
   "asset_daily_start": {
     "XRPUSDT": -1.0032,
