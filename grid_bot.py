@@ -523,19 +523,40 @@ def rebalance_capital(state):
     """Rebalance capital allocation based on performance — run daily"""
     asset_pnl = state.get("asset_pnl", {})
     if not asset_pnl or len(asset_pnl) < 2: return
-    total_pnl = sum(v for v in asset_pnl.values() if v > 0)
-    if total_pnl <= 0: return
     total_cap = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+
+    # Hitung score per asset: PnL + win rate
+    fills_log = state.get("fills_log", [])
+    scores = {}
+    for sym in GRID_CONFIG:
+        pnl   = asset_pnl.get(sym, 0)
+        sells = [f for f in fills_log if f.get("symbol")==sym and f.get("side")=="SELL" and f.get("pnl") is not None]
+        wins  = sum(1 for f in sells if float(f.get("pnl",0)) > 0)
+        wr    = wins / len(sells) if sells else 0.5
+        # Score = normalized PnL + win rate bonus
+        scores[sym] = max(0.1, pnl * 0.7 + wr * 0.3)
+
+    total_score = sum(scores.values())
+    if total_score <= 0: return
+
+    changes = []
     for sym, cfg in GRID_CONFIG.items():
-        perf  = asset_pnl.get(sym, 0)
-        share = perf / total_pnl if total_pnl > 0 else 1/len(GRID_CONFIG)
-        # Scale: winner gets max 1.4x base, loser gets min 0.6x base
-        base  = total_cap / len(GRID_CONFIG)
-        ratio = max(0.6, min(1.4, 0.7 + share * len(GRID_CONFIG) * 0.7))
-        new_cap = round(base * ratio, 0)
-        if abs(new_cap - cfg["capital"]) > 10:  # only update if change >$10
-            log.info(f"  Capital realloc {sym}: ${cfg['capital']} → ${new_cap} (perf=${perf:+.4f})")
+        share   = scores[sym] / total_score
+        # Clamp allocation: min 50% base, max 150% base
+        base    = total_cap / len(GRID_CONFIG)
+        new_cap = round(max(base * 0.5, min(base * 1.5, total_cap * share)), 0)
+        old_cap = cfg["capital"]
+        if abs(new_cap - old_cap) >= 5:  # only update if change >=$5
+            log.info(f"  &#128200; Capital realloc {sym}: ${old_cap} → ${new_cap} (score={scores[sym]:.3f})")
             cfg["capital"] = new_cap
+            changes.append(f"{sym.replace('USDT','')}: ${old_cap:.0f}→${new_cap:.0f}")
+
+    if changes:
+        state["last_rebalance_capital"] = datetime.now(timezone.utc).isoformat()
+        tg(f"&#9878; <b>CAPITAL REBALANCE</b>\n"
+           f"Based on performance scores:\n" +
+           "\n".join(changes) +
+           f"\nTotal: ${total_cap:.0f}")
 
 def place_grid(symbol, range_low, range_high, num_grids, capital, current_price):
     spacing = (range_high - range_low) / num_grids
@@ -1281,6 +1302,9 @@ def run():
             fills = state.get("total_fills", 0)
             active_n = sum(1 for g in state.get("grids",{}).values() if g.get("active"))
             tg(f"🔥 <b>DAILY SUMMARY</b>\n🔥 Realized PnL: <b>${pnl:+.2f}</b>\n🔥 Total Fills: {fills}\n🔥 Active Grids: {active_n}/3\n🔥 Cycles: {cycle}")
+            # Auto-rebalance capital berdasarkan performance
+            rebalance_capital(state)
+            save_state(state)
         # Update equity history untuk chart
         current_equity = round(500 + state.get("realized_pnl", 0), 2)
         if "equity_history" not in state or state["equity_history"][0] == 1800:
