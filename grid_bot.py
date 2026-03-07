@@ -419,10 +419,11 @@ def ai_grid_decision(analyses, current_grids):
 
 Respond ONLY in JSON (no markdown):
 {{
-  "BTCUSDT": {{"action":"REBALANCE","range_low":80000,"range_high":90000,"num_grids":20,"reason":"..."}},
-  "ETHUSDT": {{"action":"REBALANCE","range_low":2200,"range_high":2600,"num_grids":18,"reason":"..."}},
-  "SOLUSDT": {{"action":"CANCEL","range_low":0,"range_high":0,"num_grids":0,"reason":"..."}}
-}}"""
+  "BTCUSDT": {{"action":"REBALANCE","range_low":80000,"range_high":90000,"num_grids":20,"confidence":0.85,"reason":"..."}},
+  "ETHUSDT": {{"action":"REBALANCE","range_low":2200,"range_high":2600,"num_grids":18,"confidence":0.60,"reason":"..."}},
+  "SOLUSDT": {{"action":"CANCEL","range_low":0,"range_high":0,"num_grids":0,"confidence":0.90,"reason":"..."}}
+}}
+confidence: 0.0-1.0 scale. High (>0.8) = strong signal, deploy full capital. Medium (0.5-0.8) = moderate, deploy 75%. Low (<0.5) = uncertain, deploy 50%."""
     try:
         raw = call_ai(prompt)
         text = raw.strip().strip("```json").strip("```").strip()
@@ -1103,6 +1104,24 @@ def run():
                 elif action == "CANCEL":
                     tg(f"⏸️ <b>GRID PAUSED</b> — {short}\n🔥 {d.get('reason','')[:80]}")
                 cancel_open_orders(sym)
+                # Position sizing berdasarkan AI confidence
+                confidence = float(d.get("confidence", 0.75))
+                base_capital = GRID_CONFIG.get(sym, {}).get("capital", 100)
+                if confidence >= 0.80:
+                    allocated_capital = base_capital * 1.0   # full capital
+                    sizing_label = "FULL"
+                elif confidence >= 0.50:
+                    allocated_capital = base_capital * 0.75  # 75%
+                    sizing_label = "REDUCED"
+                else:
+                    allocated_capital = base_capital * 0.50  # 50%
+                    sizing_label = "MINIMAL"
+                log.info(f"  &#127919; {sym} confidence={confidence:.0%} → {sizing_label} capital (${allocated_capital:.0f})")
+                # Save confidence to state
+                if sym in state.get("grids", {}):
+                    state["grids"][sym]["ai_confidence"] = confidence
+                    state["grids"][sym]["capital_sizing"] = sizing_label
+
                 if action in ("REBALANCE","KEEP") and d.get("range_low",0) > 0:
                     price = a["price"]
                     cfg   = GRID_CONFIG[sym]
@@ -1142,7 +1161,7 @@ def run():
                     # Force num_grids from config — ignore AI
                     num_grids = cfg["num_grids"]
                     placed = place_grid(sym, rl, rh,
-                               num_grids, cfg["capital"], a["price"])
+                               num_grids, allocated_capital, a["price"])
                     state["grids"][sym] = {
                         **d, "active": True,
                         "last_rebalance": now.isoformat(),
