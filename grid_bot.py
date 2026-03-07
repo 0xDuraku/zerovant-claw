@@ -521,6 +521,35 @@ def rule_based_grid_params(analyses, state=None):
         }
     return result
 
+def compute_analytics(state):
+    """Compute per-asset performance analytics dari fills_log"""
+    fills = state.get("fills_log", [])
+    analytics = {}
+    for sym in ASSETS:
+        sells = [f for f in fills if f.get("symbol")==sym and f.get("side")=="SELL" and f.get("pnl") is not None]
+        buys  = [f for f in fills if f.get("symbol")==sym and f.get("side")=="BUY"]
+        if not sells:
+            analytics[sym] = {"wins":0,"losses":0,"wr":0,"avg_win":0,"avg_loss":0,"best":0,"worst":0,"avg_pnl":0,"total_trades":0}
+            continue
+        wins   = [f for f in sells if float(f.get("pnl",0)) > 0]
+        losses = [f for f in sells if float(f.get("pnl",0)) <= 0]
+        pnls   = [float(f.get("pnl",0)) for f in sells]
+        analytics[sym] = {
+            "wins":        len(wins),
+            "losses":      len(losses),
+            "wr":          round(len(wins)/len(sells)*100, 1),
+            "avg_win":     round(sum(float(f["pnl"]) for f in wins)/len(wins), 4) if wins else 0,
+            "avg_loss":    round(sum(float(f["pnl"]) for f in losses)/len(losses), 4) if losses else 0,
+            "best":        round(max(pnls), 4),
+            "worst":       round(min(pnls), 4),
+            "avg_pnl":     round(sum(pnls)/len(pnls), 4),
+            "total_trades":len(sells),
+            "total_buys":  len(buys),
+            "profit_factor": round(abs(sum(float(f["pnl"]) for f in wins) / sum(float(f["pnl"]) for f in losses)), 2) if losses and sum(float(f["pnl"]) for f in losses) != 0 else 99,
+        }
+    state["analytics"] = analytics
+    return analytics
+
 def rebalance_capital(state):
     """Rebalance capital allocation based on performance — run daily"""
     asset_pnl = state.get("asset_pnl", {})
@@ -1345,6 +1374,9 @@ def run():
         if trailing:
             for t in trailing:
                 log.info(f"  �� TRAILING locked: {t['symbol']} +{t['gain_pct']}% | new_low={t['new_low']}")
+        # Compute analytics setiap 4 cycle (1 jam)
+        if cycle % 4 == 0:
+            compute_analytics(state)
         # Stop loss per asset
         check_asset_stop_loss(state)
         # Check milestones
