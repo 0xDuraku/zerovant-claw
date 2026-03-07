@@ -406,26 +406,46 @@ def call_ai(prompt_text):
 def ai_grid_decision(analyses, current_grids):
     if not ANTHROPIC_KEY:
         return rule_based_grid_params(analyses, _current_state)
-    prompt = f"""You are a grid trading AI. Given market conditions, output optimal grid parameters.
-    
-    MARKET CONDITIONS:
-    {json.dumps(analyses, indent=2)}
-    
-    Rules:
-    - HIGH volatility → wider range, fewer grids
-    - LOW volatility → tighter range, more grids
-    - Strong trend (ema20 far from ema50) → consider CANCEL
-    - Grid spacing MUST be minimum 0.4% of price (covers 0.1% buy fee + 0.1% sell fee + 0.2% net profit)
-    - If calculated spacing < 0.4%, expand range or reduce grids
-- Never place grids closer than 0.4% apart
+    # Build performance context untuk auto-tune
+    analytics = (_current_state or {}).get("analytics", {})
+    asset_pnl = (_current_state or {}).get("asset_pnl", {})
+    perf_lines = []
+    for sym in ASSETS:
+        a   = analytics.get(sym, {})
+        pnl = asset_pnl.get(sym, 0)
+        g   = current_grids.get(sym, {})
+        wr  = a.get("wr", 0)
+        pf  = a.get("profit_factor", 0)
+        trades = a.get("total_trades", 0)
+        g_rh = float(g.get("range_high") or 0)
+        g_rl = float(g.get("range_low") or 0)
+        g_ng = float(g.get("num_grids") or 1)
+        g_pr = float(g.get("current_price") or 1)
+        spacing_pct = ((g_rh - g_rl) / g_ng / g_pr * 100) if g_rh > g_rl else 0
+        perf_lines.append(f"  {sym}: WR={wr}% PF={pf} trades={trades} pnl=${pnl:+.2f} spacing={spacing_pct:.2f}%")
+
+    prompt = f"""You are a grid trading AI with live performance data. Auto-tune grid parameters.
+
+MARKET CONDITIONS (Multi-Timeframe):
+{json.dumps(analyses, indent=2)}
+
+LIVE PERFORMANCE DATA:
+{chr(10).join(perf_lines)}
+
+AUTO-TUNE RULES:
+1. WR < 50% → widen range by 20%, reduce num_grids
+2. WR > 75% → tighten range by 10%, increase num_grids
+3. PF < 1.0 → CANCEL until market improves
+4. spacing < 0.4% → MUST expand range or reduce grids
+5. All 3 TF same direction DOWN → reduce exposure or CANCEL
+6. HIGH vol → range * 1.3, fewer grids | LOW vol → range * 0.85, more grids
 
 Respond ONLY in JSON (no markdown):
 {{
-  "BTCUSDT": {{"action":"REBALANCE","range_low":80000,"range_high":90000,"num_grids":20,"confidence":0.85,"reason":"..."}},
-  "ETHUSDT": {{"action":"REBALANCE","range_low":2200,"range_high":2600,"num_grids":18,"confidence":0.60,"reason":"..."}},
-  "SOLUSDT": {{"action":"CANCEL","range_low":0,"range_high":0,"num_grids":0,"confidence":0.90,"reason":"..."}}
+  "ETHUSDT": {{"action":"REBALANCE","range_low":1900,"range_high":2100,"num_grids":12,"confidence":0.85,"reason":"WR 80% tighten range"}},
+  "SOLUSDT": {{"action":"KEEP","range_low":0,"range_high":0,"num_grids":0,"confidence":0.60,"reason":"params optimal"}}
 }}
-confidence: 0.0-1.0 scale. High (>0.8) = strong signal, deploy full capital. Medium (0.5-0.8) = moderate, deploy 75%. Low (<0.5) = uncertain, deploy 50%."""
+confidence: 0.0-1.0. Actions: REBALANCE, KEEP, CANCEL."""
     try:
         raw = call_ai(prompt)
         text = raw.strip().strip("```json").strip("```").strip()
