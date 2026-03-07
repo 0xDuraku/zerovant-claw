@@ -118,11 +118,13 @@ nav {
 .nav-brand span { color: var(--ora); }
 .nav-brand-text { display: inline; }
 @media(max-width: 480px) { .nav-brand-text { display: none; } }
-.nav-tabs { display: flex; gap: 4px; }
+.nav-tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+.nav-tabs::-webkit-scrollbar { display: none; }
 .nav-tab {
-  padding: 6px 14px; border-radius: 8px;
-  font-size: 12px; font-weight: 500; cursor: pointer;
-  color: var(--muted); transition: all 0.2s; border: none;
+  padding: 6px 12px; border-radius: 8px;
+  font-size: 11px; font-weight: 500; cursor: pointer;
+  color: var(--muted); transition: all 0.2s;
+  white-space: nowrap; flex-shrink: 0; border: none;
   background: transparent;
 }
 .nav-tab:hover { color: var(--txt); background: var(--bg3); }
@@ -282,7 +284,8 @@ canvas { width: 100% !important; display: block; border-radius: 8px; }
 .pos-fill { height: 100%; background: linear-gradient(90deg, var(--ora), var(--ora2)); border-radius: 2px; }
 
 /* PNL BARS */
-.pnl-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.pnl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+@media(min-width:640px) { .pnl-grid { grid-template-columns: repeat(5, 1fr); } }
 .pnl-col { display: flex; flex-direction: column; align-items: center; }
 .pnl-asset-name { font-size: 10px; font-weight: 700; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px; }
 .pnl-bar-wrap { height: 60px; display: flex; align-items: flex-end; width: 100%; justify-content: center; margin-bottom: 6px; }
@@ -1042,48 +1045,46 @@ function renderAnalytics(analytics) {
   const el = document.getElementById('analytics-list');
   if (!el) return;
   const syms = ['ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','XRPUSDT'];
-  el.innerHTML = syms.map(sym => {
+  // Sort by win rate
+  const sorted = [...syms].sort((a,b) => ((analytics[b]||{}).wr||0) - ((analytics[a]||{}).wr||0));
+  el.innerHTML = sorted.map(sym => {
     const a  = (analytics||{})[sym] || {};
     const sh = sym.replace('USDT','');
     const wr = a.wr || 0;
-    const wc = wr >= 60 ? '#22c55e' : wr >= 50 ? '#f59e0b' : '#ef4444';
+    const wc = wr >= 65 ? '#22c55e' : wr >= 50 ? '#f59e0b' : '#ef4444';
     const pf = a.profit_factor || 0;
-    const pfc = pf >= 1.5 ? '#22c55e' : pf >= 1.0 ? '#f59e0b' : '#ef4444';
-    return `<div class="card" style="margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <div style="font-weight:800;font-size:15px">${sh}</div>
-        <div style="font-size:11px;color:var(--muted)">${a.total_trades||0} trades · ${a.total_buys||0} buys</div>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px">
-        <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center">
-          <div style="font-size:18px;font-weight:800;color:${wc}">${wr}%</div>
+    const pfc = pf >= 2 ? '#22c55e' : pf >= 1.0 ? '#f59e0b' : '#ef4444';
+    const avgPnl = a.avg_pnl || 0;
+    return `<div class="card" style="margin-bottom:10px;padding:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:36px;height:36px;border-radius:8px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">${sh}</div>
+          <div>
+            <div style="font-weight:800;font-size:14px">${sym}</div>
+            <div style="font-size:10px;color:var(--muted)">${a.total_trades||0} sells · ${a.total_buys||0} buys</div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:20px;font-weight:800;color:${wc}">${wr}%</div>
           <div style="font-size:10px;color:var(--muted)">Win Rate</div>
         </div>
-        <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center">
-          <div style="font-size:18px;font-weight:800;color:${pfc}">${pf}</div>
-          <div style="font-size:10px;color:var(--muted)">Profit Factor</div>
-        </div>
-        <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center">
-          <div style="font-size:18px;font-weight:800">${a.wins||0}W/${a.losses||0}L</div>
-          <div style="font-size:10px;color:var(--muted)">W/L Ratio</div>
-        </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
-        <div style="background:var(--bg3);border-radius:8px;padding:8px">
-          <div style="font-size:10px;color:var(--muted);margin-bottom:2px">Avg Win</div>
-          <div style="font-size:13px;font-weight:700;color:#22c55e">+$${(a.avg_win||0).toFixed(4)}</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:${pfc}">${pf}x</div>
+          <div style="font-size:9px;color:var(--muted)">Prof.Factor</div>
         </div>
-        <div style="background:var(--bg3);border-radius:8px;padding:8px">
-          <div style="font-size:10px;color:var(--muted);margin-bottom:2px">Avg Loss</div>
-          <div style="font-size:13px;font-weight:700;color:#ef4444">${(a.avg_loss||0).toFixed(4)}</div>
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:${avgPnl>=0?'#22c55e':'#ef4444'}">${avgPnl>=0?'+':''}$${avgPnl.toFixed(3)}</div>
+          <div style="font-size:9px;color:var(--muted)">Avg PnL</div>
         </div>
-        <div style="background:var(--bg3);border-radius:8px;padding:8px">
-          <div style="font-size:10px;color:var(--muted);margin-bottom:2px">Best Trade</div>
-          <div style="font-size:13px;font-weight:700;color:#22c55e">+$${(a.best||0).toFixed(4)}</div>
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:#22c55e">+$${(a.best||0).toFixed(3)}</div>
+          <div style="font-size:9px;color:var(--muted)">Best</div>
         </div>
-        <div style="background:var(--bg3);border-radius:8px;padding:8px">
-          <div style="font-size:10px;color:var(--muted);margin-bottom:2px">Worst Trade</div>
-          <div style="font-size:13px;font-weight:700;color:#ef4444">${(a.worst||0).toFixed(4)}</div>
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:#ef4444">$${(a.worst||0).toFixed(3)}</div>
+          <div style="font-size:9px;color:var(--muted)">Worst</div>
         </div>
       </div>
     </div>`;
