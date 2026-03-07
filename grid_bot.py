@@ -219,18 +219,18 @@ COOLDOWN_MINUTES    = 30     # Pause trading setelah extreme event
 # $500 real capital — BTC removed (min notional too high for small capital)
 # Reallocated BTC+BNB share to DOGE/XRP/SOL (higher ROI anyway)
 GRID_CONFIG_TESTNET = {
-    "ETHUSDT":  {"capital": 80,  "num_grids": 10, "range_pct": 0.10},
-    "SOLUSDT":  {"capital": 110, "num_grids": 10, "range_pct": 0.12},
-    "BNBUSDT":  {"capital": 60,  "num_grids": 10, "range_pct": 0.08},
-    "DOGEUSDT": {"capital": 150, "num_grids": 10, "range_pct": 0.10},
-    "XRPUSDT":  {"capital": 100, "num_grids": 10, "range_pct": 0.12},
+    "ETHUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.10},
+    "SOLUSDT":  {"capital": 70, "num_grids": 10, "range_pct": 0.12},
+    "BNBUSDT":  {"capital": 120,  "num_grids": 10, "range_pct": 0.08},
+    "DOGEUSDT": {"capital": 50, "num_grids": 10, "range_pct": 0.10},
+    "XRPUSDT":  {"capital": 60, "num_grids": 10, "range_pct": 0.12},
 }
 GRID_CONFIG_MAINNET = {
-    "ETHUSDT":  {"capital": 20,  "num_grids": 10, "range_pct": 0.10},
-    "SOLUSDT":  {"capital": 22,  "num_grids": 10, "range_pct": 0.12},
-    "BNBUSDT":  {"capital": 12,  "num_grids": 10, "range_pct": 0.08},
-    "DOGEUSDT": {"capital": 30,  "num_grids": 10, "range_pct": 0.10},
-    "XRPUSDT":  {"capital": 16,  "num_grids": 10, "range_pct": 0.12},
+    "ETHUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.10},
+    "SOLUSDT":  {"capital": 70,  "num_grids": 10, "range_pct": 0.12},
+    "BNBUSDT":  {"capital": 120,  "num_grids": 10, "range_pct": 0.08},
+    "DOGEUSDT": {"capital": 50,  "num_grids": 10, "range_pct": 0.10},
+    "XRPUSDT":  {"capital": 60,  "num_grids": 10, "range_pct": 0.12},
 }
 GRID_CONFIG = GRID_CONFIG_MAINNET if MAINNET_MODE else GRID_CONFIG_TESTNET
 # Total: $500 | BTC removed (min order $5, $30/10grids=$3 too small)
