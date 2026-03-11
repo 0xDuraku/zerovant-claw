@@ -219,18 +219,18 @@ COOLDOWN_MINUTES    = 30     # Pause trading setelah extreme event
 # $500 real capital — BTC removed (min notional too high for small capital)
 # Reallocated BTC+BNB share to DOGE/XRP/SOL (higher ROI anyway)
 GRID_CONFIG_TESTNET = {
-    "ETHUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.10},
-    "SOLUSDT":  {"capital": 70, "num_grids": 10, "range_pct": 0.12},
-    "BNBUSDT":  {"capital": 120,  "num_grids": 10, "range_pct": 0.08},
-    "DOGEUSDT": {"capital": 50, "num_grids": 10, "range_pct": 0.10},
-    "XRPUSDT":  {"capital": 60, "num_grids": 10, "range_pct": 0.12},
+    "ETHUSDT":  {"capital": 350,  "num_grids": 10, "range_pct": 0.10},
+    "SOLUSDT":  {"capital": 50, "num_grids": 10, "range_pct": 0.12},
+    "BNBUSDT":  {"capital": 100,  "num_grids": 10, "range_pct": 0.08},
+    "DOGEUSDT": {"capital": 0, "num_grids": 10, "range_pct": 0.10},
+    "XRPUSDT":  {"capital": 0, "num_grids": 10, "range_pct": 0.12},
 }
 GRID_CONFIG_MAINNET = {
-    "ETHUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.10},
-    "SOLUSDT":  {"capital": 70,  "num_grids": 10, "range_pct": 0.12},
-    "BNBUSDT":  {"capital": 120,  "num_grids": 10, "range_pct": 0.08},
-    "DOGEUSDT": {"capital": 50,  "num_grids": 10, "range_pct": 0.10},
-    "XRPUSDT":  {"capital": 60,  "num_grids": 10, "range_pct": 0.12},
+    "ETHUSDT":  {"capital": 350,  "num_grids": 10, "range_pct": 0.10},
+    "SOLUSDT":  {"capital": 50,  "num_grids": 10, "range_pct": 0.12},
+    "BNBUSDT":  {"capital": 100,  "num_grids": 10, "range_pct": 0.08},
+    "DOGEUSDT": {"capital": 0,  "num_grids": 10, "range_pct": 0.10},
+    "XRPUSDT":  {"capital": 0,  "num_grids": 10, "range_pct": 0.12},
 }
 GRID_CONFIG = GRID_CONFIG_MAINNET if MAINNET_MODE else GRID_CONFIG_TESTNET
 # Total: $500 | BTC removed (min order $5, $30/10grids=$3 too small)
@@ -634,9 +634,27 @@ def place_grid(symbol, range_low, range_high, num_grids, capital, current_price)
     return placed
 
 def load_state():
-    try: return json.load(open(DATA_FILE))
-    except: return {"grids":{},"last_ai_check":None,"total_fills":0,
-                    "start_time":datetime.now(timezone.utc).isoformat()}
+    try:
+        s = json.load(open(DATA_FILE))
+        if s.get("total_fills", 0) > 0 or s.get("realized_pnl", 0) > 0:
+            # Simpan local backup
+            import os
+            backup_dir = "/tmp/zerovant-state-backup"
+            os.makedirs(backup_dir, exist_ok=True)
+            json.dump(s, open(f"{backup_dir}/grid_state.json","w"), indent=2, default=str)
+            return s
+        # State kosong — coba restore dari local backup
+        import os
+        backup_dir = "/tmp/zerovant-state-backup"
+        if os.path.exists(f"{backup_dir}/grid_state.json"):
+            s2 = json.load(open(f"{backup_dir}/grid_state.json"))
+            if s2.get("total_fills", 0) > 0:
+                log.warning(f"  ⚠️ Empty state detected! Restoring {s2.get('total_fills')} fills from local backup")
+                return s2
+        return s
+    except:
+        return {"grids":{},"last_ai_check":None,"total_fills":0,
+                "start_time":datetime.now(timezone.utc).isoformat()}
 
 def save_state(state):
     os.makedirs("data", exist_ok=True)
