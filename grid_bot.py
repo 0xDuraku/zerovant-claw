@@ -644,13 +644,28 @@ def load_state():
             json.dump(s, open(f"{backup_dir}/grid_state.json","w"), indent=2, default=str)
             return s
         # State kosong — coba restore dari local backup
-        import os
+        import os, subprocess
         backup_dir = "/tmp/zerovant-state-backup"
         if os.path.exists(f"{backup_dir}/grid_state.json"):
             s2 = json.load(open(f"{backup_dir}/grid_state.json"))
             if s2.get("total_fills", 0) > 0:
-                log.warning(f"  ⚠️ Empty state detected! Restoring {s2.get('total_fills')} fills from local backup")
+                log.warning(f"  ⚠️ Empty state! Restoring {s2.get('total_fills')} fills from /tmp backup")
+                json.dump(s2, open(DATA_FILE,"w"), indent=2, default=str)
                 return s2
+        # Fallback: restore dari git data-backup branch
+        try:
+            r = subprocess.run(
+                ["git","-C","/tmp/zerovant-backup","show","HEAD:data/grid_state.json"],
+                capture_output=True, text=True, timeout=15
+            )
+            if r.returncode == 0:
+                s3 = json.loads(r.stdout)
+                if s3.get("total_fills", 0) > 0:
+                    log.warning(f"  ⚠️ Restoring {s3.get('total_fills')} fills from git backup!")
+                    json.dump(s3, open(DATA_FILE,"w"), indent=2, default=str)
+                    return s3
+        except Exception as e:
+            log.error(f"  Git restore failed: {e}")
         return s
     except:
         return {"grids":{},"last_ai_check":None,"total_fills":0,
@@ -658,6 +673,17 @@ def load_state():
 
 def save_state(state):
     os.makedirs("data", exist_ok=True)
+    # Buat backup sebelum overwrite, tapi hanya kalau fills > 0
+    if os.path.exists(DATA_FILE):
+        try:
+            existing = json.load(open(DATA_FILE))
+            if existing.get("total_fills", 0) > state.get("total_fills", 0):
+                log.warning(f"  WARN: saving state with fewer fills ({state.get('total_fills')}) than existing ({existing.get('total_fills')}) — keeping backup")
+            if existing.get("total_fills", 0) > 10:
+                import shutil
+                shutil.copy2(DATA_FILE, DATA_FILE + ".bak")
+        except:
+            pass
     json.dump(state, open(DATA_FILE,"w"), indent=2, default=str)
 
 def check_fills_and_pnl(state):
