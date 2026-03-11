@@ -14,7 +14,8 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "current_price": 2064.14,
-      "open_orders": 0
+      "open_orders": 0,
+      "capital": 350
     },
     "SOLUSDT": {
       "action": "REBALANCE",
@@ -30,7 +31,8 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "current_price": 86.37,
-      "open_orders": 0
+      "open_orders": 0,
+      "capital": 50
     },
     "BNBUSDT": {
       "action": "REBALANCE",
@@ -44,7 +46,8 @@
       "realized_pnl": 0.0458,
       "fills": 10,
       "current_price": 648.83,
-      "open_orders": 0
+      "open_orders": 0,
+      "capital": 100
     },
     "DOGEUSDT": {
       "action": "REBALANCE",
@@ -52,13 +55,15 @@
       "range_high": 0.09675,
       "num_grids": 5,
       "reason": "LOW vol, UP trend, ATR=1.33%",
-      "active": true,
+      "active": false,
       "last_rebalance": "2026-03-11T16:31:50.217176+00:00",
       "orders_placed": 0,
       "realized_pnl": 0.0972,
       "fills": 2,
       "current_price": 0.09291,
-      "open_orders": 0
+      "open_orders": 0,
+      "capital": 0,
+      "paused_reason": "Low WR - reallocated to ETH"
     },
     "XRPUSDT": {
       "action": "REBALANCE",
@@ -66,7 +71,7 @@
       "range_high": 1.4832,
       "num_grids": 11,
       "reason": "LOW vol, UP trend, ATR=0.63%",
-      "active": true,
+      "active": false,
       "last_rebalance": "2026-03-11T16:31:50.217176+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
@@ -74,7 +79,9 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "current_price": 1.3887,
-      "open_orders": 0
+      "open_orders": 0,
+      "capital": 0,
+      "paused_reason": "Low WR - reallocated to ETH"
     }
   },
   "last_ai_check": "2026-03-11T16:31:50.217176+00:00",
@@ -34285,14 +34292,14 @@
     }
   },
   "capital_allocation": {
-    "last_updated": "2026-03-08",
-    "method": "risk_adjusted_sharpe",
+    "last_updated": "2026-03-11",
+    "method": "focused_best_performer",
     "allocation": {
-      "DOGEUSDT": 50,
-      "ETHUSDT": 200,
-      "SOLUSDT": 70,
-      "BNBUSDT": 120,
-      "XRPUSDT": 60
+      "ETHUSDT": 350,
+      "BNBUSDT": 100,
+      "SOLUSDT": 50,
+      "DOGEUSDT": 0,
+      "XRPUSDT": 0
     }
   },
   "last_rebalance_capital": "2026-03-08T22:07:52.713123+00:00"
