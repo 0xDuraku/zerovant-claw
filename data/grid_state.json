@@ -11,24 +11,27 @@
       "last_rebalance": "2026-03-12T06:58:25.928220+00:00",
       "orders_placed": 11,
       "realized_pnl": 3.047,
-      "fills": 10,
-      "open_orders": 11
+      "fills": 11,
+      "open_orders": 10,
+      "current_price": 2034.33
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 84.0599,
-      "range_high": 94.0599,
+      "range_low": 84.2471,
+      "range_high": 94.2471,
       "num_grids": 12,
       "confidence": 0.65,
       "reason": "Widen range by 20% and reduce num_grids due to WR < 50%",
       "active": true,
       "last_rebalance": "2026-03-12T06:58:25.928220+00:00",
-      "orders_placed": 0,
+      "orders_placed": 4,
       "realized_pnl": -0.0478,
       "fills": 4,
       "trailing_triggered": true,
-      "trailing_count": 1,
-      "open_orders": 0
+      "trailing_count": 5,
+      "open_orders": 7,
+      "current_price": 85.53,
+      "last_trail": "2026-03-12T07:29:47.411936+00:00"
     },
     "BNBUSDT": {
       "action": "REBALANCE",
@@ -41,15 +44,16 @@
       "last_rebalance": "2026-03-12T06:58:25.928220+00:00",
       "orders_placed": 11,
       "realized_pnl": 0.0458,
-      "fills": 10,
+      "fills": 11,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "open_orders": 11
+      "open_orders": 10,
+      "current_price": 645.66
     },
     "DOGEUSDT": {
       "action": "CANCEL",
-      "range_low": 0.0907,
-      "range_high": 0.0999,
+      "range_low": 80.53,
+      "range_high": 90.53,
       "num_grids": 0,
       "confidence": 0.0,
       "reason": "PF < 1.0",
@@ -59,13 +63,15 @@
       "realized_pnl": 0.0972,
       "fills": 2,
       "trailing_triggered": true,
-      "trailing_count": 1,
-      "open_orders": 0
+      "trailing_count": 4,
+      "open_orders": 0,
+      "current_price": 0.09242,
+      "last_trail": "2026-03-12T07:29:50.996001+00:00"
     },
     "XRPUSDT": {
       "action": "CANCEL",
-      "range_low": 1.3516,
-      "range_high": 1.5162,
+      "range_low": 1.3544,
+      "range_high": 1.5194,
       "num_grids": 0,
       "confidence": 0.0,
       "reason": "PF < 1.0",
@@ -75,12 +81,14 @@
       "realized_pnl": 0,
       "fills": 0,
       "trailing_triggered": true,
-      "trailing_count": 1,
-      "open_orders": 0
+      "trailing_count": 5,
+      "open_orders": 0,
+      "current_price": 1.3755,
+      "last_trail": "2026-03-12T07:29:54.194284+00:00"
     }
   },
   "last_ai_check": "2026-03-12T06:58:25.928220+00:00",
-  "total_fills": 2100,
+  "total_fills": 2102,
   "start_time": "2026-02-26T16:39:11.916659+00:00",
   "fills_log": [
     {
@@ -24933,17 +24941,45 @@
       "inventory": -0.816,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 1847416,
+      "symbol": "ETHUSDT",
+      "side": "BUY",
+      "price": 2029.0,
+      "qty": 0.0172,
+      "fee": 0.0,
+      "time": "07:05:47",
+      "timestamp": "2026-03-12T07:05:47Z",
+      "pnl": null,
+      "inventory": -0.0572,
+      "slippage_pct": 0.0,
+      "is_partial": false
+    },
+    {
+      "tradeId": 336514,
+      "symbol": "BNBUSDT",
+      "side": "SELL",
+      "price": 645.0,
+      "qty": 0.012,
+      "fee": 0.0,
+      "time": "07:02:34",
+      "timestamp": "2026-03-12T07:02:34Z",
+      "pnl": null,
+      "inventory": -0.565,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
   "realized_pnl": 94.7758,
   "total_rebalances": 221,
   "last_prices": {
     "BTCUSDT": 65983.62,
-    "ETHUSDT": 2029.62,
-    "SOLUSDT": 85.34,
-    "BNBUSDT": 644.57,
-    "DOGEUSDT": 0.09209,
-    "XRPUSDT": 1.3722
+    "ETHUSDT": 2033.85,
+    "SOLUSDT": 85.53,
+    "BNBUSDT": 645.66,
+    "DOGEUSDT": 0.09238,
+    "XRPUSDT": 1.375
   },
   "equity_history": [
     500.0,
@@ -25440,9 +25476,11 @@
     594.78,
     594.78,
     594.78,
+    594.78,
+    594.78,
     594.78
   ],
-  "total_open_orders": 22,
+  "total_open_orders": 27,
   "ai_log": [
     {
       "type": "ai",
@@ -31852,10 +31890,10 @@
   ],
   "inventory": {
     "DOGEUSDT": 3195.0,
-    "ETHUSDT": -0.0744,
+    "ETHUSDT": -0.0572,
     "SOLUSDT": -0.816,
     "XRPUSDT": -3.5,
-    "BNBUSDT": -0.553
+    "BNBUSDT": -0.565
   },
   "daily_reset_date": "2026-03-12",
   "daily_start_pnl": 94.7758,
@@ -31939,18 +31977,18 @@
   "last_snapshot_date": "2026-02-28",
   "today_pnl": 0.0316,
   "prev_prices": {
-    "ETHUSDT": 2029.32,
-    "SOLUSDT": 85.34,
-    "BNBUSDT": 644.57,
-    "DOGEUSDT": 0.09209,
-    "XRPUSDT": 1.3722
+    "ETHUSDT": 2034.33,
+    "SOLUSDT": 85.53,
+    "BNBUSDT": 645.66,
+    "DOGEUSDT": 0.09242,
+    "XRPUSDT": 1.3755
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0053,
-    "SOLUSDT": 0.0062,
-    "BNBUSDT": 0.003,
-    "DOGEUSDT": 0.0031,
-    "XRPUSDT": 0.0043
+    "ETHUSDT": 0.0032,
+    "SOLUSDT": 0.0037,
+    "BNBUSDT": 0.0023,
+    "DOGEUSDT": 0.003,
+    "XRPUSDT": 0.0035
   },
   "last_extreme_event_time": "2026-03-11T16:21:40.550775+00:00",
   "asset_pnl": {
@@ -31965,7 +32003,6 @@
   "start_date": "2026-02-28",
   "seen_trade_ids": {
     "ETHUSDT": [
-      1378084,
       1378345,
       1378349,
       1379413,
@@ -32464,7 +32501,8 @@
       1747694,
       1747695,
       1747696,
-      1747697
+      1747697,
+      1847416
     ],
     "SOLUSDT": [
       324278,
@@ -32969,7 +33007,6 @@
       597750
     ],
     "BNBUSDT": [
-      228224,
       228283,
       228288,
       228289,
@@ -33468,7 +33505,8 @@
       331922,
       332212,
       332219,
-      332225
+      332225,
+      336514
     ],
     "DOGEUSDT": [
       432755,
@@ -34461,7 +34499,7 @@
       343779
     ]
   },
-  "cycle_count": 1047,
+  "cycle_count": 1051,
   "win_loss": {
     "wins": 573,
     "losses": 323,
@@ -34479,7 +34517,7 @@
     "real_wins": 522,
     "real_losses": 374
   },
-  "sharpe_ratio": 30.22,
+  "sharpe_ratio": 30.19,
   "max_drawdown_pct": 4.1038,
   "asset_daily_start": {
     "XRPUSDT": -1.0032,
@@ -34536,7 +34574,7 @@
       "worst": -0.2893,
       "avg_pnl": 0.2627,
       "total_trades": 298,
-      "total_buys": 322,
+      "total_buys": 323,
       "profit_factor": 23.89
     },
     "SOLUSDT": {
