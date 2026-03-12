@@ -655,7 +655,7 @@ def load_state():
         # Fallback: restore dari git data-backup branch
         try:
             r = subprocess.run(
-                ["git","-C","/tmp/zerovant-backup","show","HEAD:data/grid_state.json"],
+                ["git","-C","/root/zerovant-backup","show","HEAD:data/grid_state.json"],
                 capture_output=True, text=True, timeout=15
             )
             if r.returncode == 0:
