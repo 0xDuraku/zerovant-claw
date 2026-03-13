@@ -1033,6 +1033,144 @@ def check_risk(state) -> str:
 
     return "OK"
 
+
+def check_balance_change(state):
+    """
+    Deteksi perubahan balance mendadak (user tarik/kurangi dana).
+    Jika balance turun >15% dari expected → pause semua grid + alert.
+    Jika balance naik >10% → auto adjust capital + alert.
+    """
+    try:
+        # Ambil USDT balance dari Binance
+        ts  = int(time.time() * 1000)
+        params = {"timestamp": ts}
+        params["signature"] = hmac.new(
+            API_SECRET.encode(), urlencode(params).encode(), hashlib.sha256
+        ).hexdigest()
+        r = requests.get(
+            f"{BASE_URL}/account",
+            headers={"X-MBX-APIKEY": API_KEY},
+            params=params, timeout=10
+        )
+        if r.status_code != 200: return
+        balances = {b["asset"]: float(b["free"]) + float(b["locked"])
+                    for b in r.json().get("balances", [])
+                    if float(b["free"]) + float(b["locked"]) > 0}
+        usdt_balance = balances.get("USDT", 0)
+
+        # Expected capital
+        expected = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+        last_known = float(state.get("last_known_balance", expected))
+
+        if last_known == 0:
+            state["last_known_balance"] = usdt_balance
+            return
+
+        change_pct = (usdt_balance - last_known) / last_known
+
+        if change_pct < -0.15:
+            # Balance turun >15% — pause semua grid
+            log.warning(f"  ⚠️ BALANCE DROP detected! {last_known:.2f} → {usdt_balance:.2f} ({change_pct*100:.1f}%)")
+            for sym in GRID_CONFIG:
+                if state.get("grids", {}).get(sym, {}).get("active"):
+                    state["grids"][sym]["active"] = False
+                    state["grids"][sym]["balance_paused"] = True
+            tg(f"⚠️ <b>BALANCE DROP DETECTED</b>\n"
+               f"Expected: <b>${last_known:.2f}</b>\n"
+               f"Current:  <b>${usdt_balance:.2f}</b>\n"
+               f"Change: <b>{change_pct*100:.1f}%</b>\n"
+               f"All grids paused. Top up balance or contact support.")
+            state["last_known_balance"] = usdt_balance
+
+        elif change_pct > 0.10:
+            # Balance naik >10% — auto adjust capital
+            log.info(f"  �� BALANCE INCREASE detected! {last_known:.2f} → {usdt_balance:.2f} ({change_pct*100:+.1f}%)")
+            ratio = usdt_balance / last_known
+            for sym, cfg in GRID_CONFIG.items():
+                cfg["capital"] = round(cfg["capital"] * ratio, 2)
+                if state.get("grids", {}).get(sym, {}).get("balance_paused"):
+                    state["grids"][sym]["active"] = True
+                    state["grids"][sym]["balance_paused"] = False
+            new_total = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+            state["total_capital"] = new_total
+            tg(f"�� <b>BALANCE UPDATED</b>\n"
+               f"Previous: <b>${last_known:.2f}</b>\n"
+               f"New: <b>${usdt_balance:.2f}</b>\n"
+               f"Capital auto-adjusted to ${new_total:.2f}")
+            state["last_known_balance"] = usdt_balance
+
+    except Exception as e:
+        log.error(f"  check_balance_change error: {e}")
+
+
+def check_balance_change(state):
+    """
+    Deteksi perubahan balance mendadak (user tarik/kurangi dana).
+    Jika balance turun >15% dari expected → pause semua grid + alert.
+    Jika balance naik >10% → auto adjust capital + alert.
+    """
+    try:
+        # Ambil USDT balance dari Binance
+        ts  = int(time.time() * 1000)
+        params = {"timestamp": ts}
+        params["signature"] = hmac.new(
+            API_SECRET.encode(), urlencode(params).encode(), hashlib.sha256
+        ).hexdigest()
+        r = requests.get(
+            f"{BASE_URL}/account",
+            headers={"X-MBX-APIKEY": API_KEY},
+            params=params, timeout=10
+        )
+        if r.status_code != 200: return
+        balances = {b["asset"]: float(b["free"]) + float(b["locked"])
+                    for b in r.json().get("balances", [])
+                    if float(b["free"]) + float(b["locked"]) > 0}
+        usdt_balance = balances.get("USDT", 0)
+
+        # Expected capital
+        expected = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+        last_known = float(state.get("last_known_balance", expected))
+
+        if last_known == 0:
+            state["last_known_balance"] = usdt_balance
+            return
+
+        change_pct = (usdt_balance - last_known) / last_known
+
+        if change_pct < -0.15:
+            # Balance turun >15% — pause semua grid
+            log.warning(f"  ⚠️ BALANCE DROP detected! {last_known:.2f} → {usdt_balance:.2f} ({change_pct*100:.1f}%)")
+            for sym in GRID_CONFIG:
+                if state.get("grids", {}).get(sym, {}).get("active"):
+                    state["grids"][sym]["active"] = False
+                    state["grids"][sym]["balance_paused"] = True
+            tg(f"⚠️ <b>BALANCE DROP DETECTED</b>\n"
+               f"Expected: <b>${last_known:.2f}</b>\n"
+               f"Current:  <b>${usdt_balance:.2f}</b>\n"
+               f"Change: <b>{change_pct*100:.1f}%</b>\n"
+               f"All grids paused. Top up balance or contact support.")
+            state["last_known_balance"] = usdt_balance
+
+        elif change_pct > 0.10:
+            # Balance naik >10% — auto adjust capital
+            log.info(f"  �� BALANCE INCREASE detected! {last_known:.2f} → {usdt_balance:.2f} ({change_pct*100:+.1f}%)")
+            ratio = usdt_balance / last_known
+            for sym, cfg in GRID_CONFIG.items():
+                cfg["capital"] = round(cfg["capital"] * ratio, 2)
+                if state.get("grids", {}).get(sym, {}).get("balance_paused"):
+                    state["grids"][sym]["active"] = True
+                    state["grids"][sym]["balance_paused"] = False
+            new_total = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+            state["total_capital"] = new_total
+            tg(f"�� <b>BALANCE UPDATED</b>\n"
+               f"Previous: <b>${last_known:.2f}</b>\n"
+               f"New: <b>${usdt_balance:.2f}</b>\n"
+               f"Capital auto-adjusted to ${new_total:.2f}")
+            state["last_known_balance"] = usdt_balance
+
+    except Exception as e:
+        log.error(f"  check_balance_change error: {e}")
+
 def check_range_breach(state, analyses):
     """
     Trailing grid + range breach protection.
@@ -1472,6 +1610,12 @@ def run():
         # Compute analytics setiap 4 cycle (1 jam)
         if cycle % 4 == 0:
             compute_analytics(state)
+        # Balance change detection setiap 8 cycle (~2 jam)
+        if cycle % 8 == 0:
+            check_balance_change(state)
+        # Balance change detection setiap 8 cycle (~2 jam)
+        if cycle % 8 == 0:
+            check_balance_change(state)
         # Stop loss per asset
         check_asset_stop_loss(state)
         # Check milestones
