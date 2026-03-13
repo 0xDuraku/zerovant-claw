@@ -146,14 +146,17 @@ def check_daily_report(state):
         state["last_daily_report"] = today
 
 def apply_compound(state):
-    """Compound 50% profit ke capital setiap hari saat reset"""
-    fs      = state.get("fee_simulation", {})
-    net_pnl = float(fs.get("simulated_pnl", 0))
-    if net_pnl <= 0:
-        return  # Tidak compound kalau rugi
-
+    """Compound 50% daily profit ke capital setiap hari saat reset"""
+    realized   = float(state.get("realized_pnl", 0))
+    day_start  = float(state.get("daily_start_pnl", realized))
+    daily_pnl  = realized - day_start
+    net_daily  = round(daily_pnl * 0.85, 4)
+    if net_daily <= 0:
+        return
     total_cap = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
-    compound_amt = round(net_pnl * COMPOUND_RATE, 2)
+    compound_amt = round(net_daily * COMPOUND_RATE, 2)
+    if compound_amt < 0.50:
+        return
 
     # Distribusi proporsional ke semua asset
     for sym, cfg in GRID_CONFIG.items():
@@ -169,7 +172,7 @@ def apply_compound(state):
     state["grid_capitals"] = {sym: cfg["capital"] for sym, cfg in GRID_CONFIG.items()}
     state["last_compound"] = {
         "amount": compound_amt,
-        "net_pnl": net_pnl,
+        "net_pnl": net_daily,
         "new_total": new_total,
         "capitals": {sym: cfg["capital"] for sym, cfg in GRID_CONFIG.items()}
     }
@@ -177,7 +180,7 @@ def apply_compound(state):
     tg("\U0001f4b0 <b>COMPOUND EXECUTED</b>\n"
        "+ $" + str(compound_amt) + " added to capital\n"
        "New total: $" + str(round(new_total, 2)) + "\n"
-       "From net profit: $" + str(round(net_pnl, 2)) + "\n"
+       "From daily profit: $" + str(round(net_daily, 2)) + "\n"
        "#zerovant #compound")
 
 # ── CONFIG ──────────────────────────────────────────────
