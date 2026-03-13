@@ -170,6 +170,10 @@ def apply_compound(state):
     new_total = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
     state["total_capital"] = new_total
     state["grid_capitals"] = {sym: cfg["capital"] for sym, cfg in GRID_CONFIG.items()}
+    # Sync ke state["grids"] agar persistent setelah restart
+    for sym, cfg in GRID_CONFIG.items():
+        if sym in state.get("grids", {}):
+            state["grids"][sym]["capital"] = cfg["capital"]
     state["last_compound"] = {
         "amount": compound_amt,
         "net_pnl": net_daily,
