@@ -2,76 +2,71 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 2053.4,
-      "range_high": 2201.06,
-      "num_grids": 5,
-      "reason": "LOW vol, UP trend, ATR=1.07%",
+      "range_low": 2039.01,
+      "range_high": 2185.64,
+      "num_grids": 12,
+      "reason": "LOW vol, UP trend, ATR=0.27%",
       "active": true,
-      "last_rebalance": "2026-03-14T04:04:18.114960+00:00",
+      "last_rebalance": "2026-03-14T06:06:26.134673+00:00",
       "orders_placed": 0,
       "realized_pnl": 31.7251,
       "fills": 47,
-      "current_price": 2089.9,
-      "open_orders": 10
+      "current_price": 2085.42
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 86.15,
-      "range_high": 93.63,
+      "range_low": 85.48,
+      "range_high": 92.9,
       "num_grids": 12,
-      "reason": "LOW vol, UP trend, ATR=0.22%",
+      "reason": "LOW vol, UP trend, ATR=0.27%",
       "active": true,
-      "last_rebalance": "2026-03-14T04:04:18.114960+00:00",
+      "last_rebalance": "2026-03-14T06:06:26.134673+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "current_price": 88.0,
-      "open_orders": 0
+      "current_price": 87.77
     },
     "BNBUSDT": {
       "action": "REBALANCE",
-      "range_low": 645.06,
-      "range_high": 681.96,
+      "range_low": 642.3,
+      "range_high": 679.05,
       "num_grids": 12,
       "reason": "LOW vol, UP trend, ATR=0.15%",
       "active": true,
-      "last_rebalance": "2026-03-14T04:04:18.114960+00:00",
+      "last_rebalance": "2026-03-14T06:06:26.134673+00:00",
       "orders_placed": 0,
       "realized_pnl": 1.0976,
       "fills": 25,
-      "current_price": 655.22,
-      "open_orders": 10
+      "current_price": 653.88
     },
     "DOGEUSDT": {
       "action": "REBALANCE",
-      "range_low": 0.09385,
-      "range_high": 0.1006,
+      "range_low": 0.09315,
+      "range_high": 0.09984,
       "num_grids": 12,
-      "reason": "LOW vol, UP trend, ATR=0.26%",
+      "reason": "LOW vol, UP trend, ATR=0.34%",
       "active": true,
-      "last_rebalance": "2026-03-14T04:04:18.114960+00:00",
+      "last_rebalance": "2026-03-14T06:06:26.134673+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "current_price": 0.09556,
-      "open_orders": 0
+      "current_price": 0.09512
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.364,
-      "range_high": 1.482,
+      "range_low": 1.354,
+      "range_high": 1.471,
       "num_grids": 12,
-      "reason": "LOW vol, UP trend, ATR=0.19%",
+      "reason": "LOW vol, UP trend, ATR=0.18%",
       "active": true,
-      "last_rebalance": "2026-03-14T04:04:18.114960+00:00",
+      "last_rebalance": "2026-03-14T06:06:26.134673+00:00",
       "orders_placed": 0,
       "realized_pnl": 0.3181,
       "fills": 3,
-      "current_price": 1.3955,
-      "open_orders": 0
+      "current_price": 1.3925
     }
   },
-  "last_ai_check": "2026-03-14T04:04:18.114960+00:00",
+  "last_ai_check": "2026-03-14T06:06:26.134673+00:00",
   "total_fills": 2222,
   "start_time": "2026-02-26T16:39:11.916659+00:00",
   "fills_log": [
@@ -26636,14 +26631,14 @@
     }
   ],
   "realized_pnl": 140.8944,
-  "total_rebalances": 242,
+  "total_rebalances": 243,
   "last_prices": {
     "BTCUSDT": 65983.62,
-    "ETHUSDT": 2089.9,
-    "SOLUSDT": 88.0,
-    "BNBUSDT": 655.22,
-    "DOGEUSDT": 0.09556,
-    "XRPUSDT": 1.3955
+    "ETHUSDT": 2085.42,
+    "SOLUSDT": 87.76,
+    "BNBUSDT": 654.09,
+    "DOGEUSDT": 0.09512,
+    "XRPUSDT": 1.3925
   },
   "equity_history": [
     500.0,
@@ -27103,6 +27098,7 @@
     637.89,
     637.89,
     637.89,
+    640.89,
     640.89,
     640.89,
     640.89,
@@ -34260,6 +34256,41 @@
       "symbol": "XRP",
       "reason": "LOW vol, UP trend, ATR=0.19%",
       "msg": "[04:04] XRP: REBALANCE \u2014 LOW vol, UP trend, ATR=0.19%"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "LOW vol, UP trend, ATR=0.27%",
+      "msg": "[06:06] ETH: REBALANCE \u2014 LOW vol, UP trend, ATR=0.27%"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "SOL",
+      "reason": "LOW vol, UP trend, ATR=0.27%",
+      "msg": "[06:06] SOL: REBALANCE \u2014 LOW vol, UP trend, ATR=0.27%"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "BNB",
+      "reason": "LOW vol, UP trend, ATR=0.15%",
+      "msg": "[06:06] BNB: REBALANCE \u2014 LOW vol, UP trend, ATR=0.15%"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "DOGE",
+      "reason": "LOW vol, UP trend, ATR=0.34%",
+      "msg": "[06:06] DOGE: REBALANCE \u2014 LOW vol, UP trend, ATR=0.34%"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "XRP",
+      "reason": "LOW vol, UP trend, ATR=0.18%",
+      "msg": "[06:06] XRP: REBALANCE \u2014 LOW vol, UP trend, ATR=0.18%"
     }
   ],
   "inventory": {
@@ -34363,18 +34394,18 @@
   "last_snapshot_date": "2026-02-28",
   "today_pnl": 0.0316,
   "prev_prices": {
-    "ETHUSDT": 2089.9,
-    "SOLUSDT": 88.0,
-    "BNBUSDT": 655.22,
-    "DOGEUSDT": 0.09556,
-    "XRPUSDT": 1.3955
+    "ETHUSDT": 2085.42,
+    "SOLUSDT": 87.77,
+    "BNBUSDT": 653.88,
+    "DOGEUSDT": 0.09512,
+    "XRPUSDT": 1.3925
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.005,
-    "SOLUSDT": 0.0045,
+    "ETHUSDT": 0.0052,
+    "SOLUSDT": 0.0048,
     "BNBUSDT": 0.0027,
-    "DOGEUSDT": 0.0048,
-    "XRPUSDT": 0.0032
+    "DOGEUSDT": 0.0057,
+    "XRPUSDT": 0.0039
   },
   "last_extreme_event_time": "2026-03-12T14:53:56.853231+00:00",
   "asset_pnl": {
@@ -36885,7 +36916,7 @@
       363414
     ]
   },
-  "cycle_count": 1380,
+  "cycle_count": 1382,
   "win_loss": {
     "wins": 621,
     "losses": 323,
@@ -36903,7 +36934,7 @@
     "real_wins": 568,
     "real_losses": 376
   },
-  "sharpe_ratio": 24.9,
+  "sharpe_ratio": 24.82,
   "max_drawdown_pct": 4.0661,
   "asset_daily_start": {
     "XRPUSDT": -1.0032,
@@ -36987,7 +37018,7 @@
       "worst": -0.1166,
       "avg_pnl": 0.0487,
       "total_trades": 139,
-      "total_buys": 151,
+      "total_buys": 152,
       "profit_factor": 5.83
     },
     "DOGEUSDT": {
