@@ -1057,10 +1057,13 @@ def check_balance_change(state):
             params=params, timeout=10
         )
         if r.status_code != 200: return
-        balances = {b["asset"]: float(b["free"]) + float(b["locked"])
-                    for b in r.json().get("balances", [])
-                    if float(b["free"]) + float(b["locked"]) > 0}
-        usdt_balance = balances.get("USDT", 0)
+        # Hanya cek FREE USDT — token lain milik user tidak dihitung
+        free_usdt = 0.0
+        for b in r.json().get("balances", []):
+            if b["asset"] == "USDT":
+                free_usdt = float(b["free"])
+                break
+        usdt_balance = free_usdt
 
         # Expected capital
         expected = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
@@ -1126,10 +1129,13 @@ def check_balance_change(state):
             params=params, timeout=10
         )
         if r.status_code != 200: return
-        balances = {b["asset"]: float(b["free"]) + float(b["locked"])
-                    for b in r.json().get("balances", [])
-                    if float(b["free"]) + float(b["locked"]) > 0}
-        usdt_balance = balances.get("USDT", 0)
+        # Hanya cek FREE USDT — token lain milik user tidak dihitung
+        free_usdt = 0.0
+        for b in r.json().get("balances", []):
+            if b["asset"] == "USDT":
+                free_usdt = float(b["free"])
+                break
+        usdt_balance = free_usdt
 
         # Expected capital
         expected = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
