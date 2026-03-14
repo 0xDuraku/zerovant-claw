@@ -104,24 +104,27 @@ body {
 nav {
   position: fixed; top: 36px; left: 0; right: 0; z-index: 150;
   height: 52px;
-  background: rgba(12,12,15,0.9);
+  background: rgba(12,12,15,0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   display: flex; align-items: center;
-  padding: 0 20px; justify-content: space-between;
+  padding: 0 12px; gap: 8px;
 }
 .nav-brand {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800; font-size: 16px; letter-spacing: -0.5px;
-  color: var(--txt);
+  font-weight: 800; font-size: 15px; letter-spacing: -0.5px;
+  color: var(--txt); flex-shrink: 0;
 }
 .nav-brand span { color: var(--ora); }
 .nav-brand-text { display: inline; }
-@media(max-width: 480px) { .nav-brand-text { display: none; } }
-.nav-tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+.nav-tabs {
+  display: flex; gap: 2px; overflow-x: auto;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  flex-wrap: nowrap; flex: 1;
+}
 .nav-tabs::-webkit-scrollbar { display: none; }
 .nav-tab {
-  padding: 6px 12px; border-radius: 8px;
+  padding: 5px 10px; border-radius: 8px;
   font-size: 11px; font-weight: 500; cursor: pointer;
   color: var(--muted); transition: all 0.2s;
   white-space: nowrap; flex-shrink: 0; border: none;
@@ -130,11 +133,15 @@ nav {
 .nav-tab:hover { color: var(--txt); background: var(--bg3); }
 .nav-tab.on { color: var(--txt); background: var(--bg3); border: 1px solid var(--border); }
 .nav-badge {
-  padding: 3px 8px; border-radius: 6px;
+  padding: 3px 8px; border-radius: 6px; flex-shrink: 0;
   background: rgba(255,85,0,0.15); border: 1px solid rgba(255,85,0,0.3);
   color: var(--ora2); font-size: 10px; font-family: 'Space Mono', monospace;
 }
-@media(max-width:480px) { .nav-badge { display: none; } }
+@media(max-width:480px) {
+  .nav-badge { display: none; }
+  .nav-brand-sub { display: none; }
+  nav { padding: 0 8px; }
+}
 
 /* MAIN */
 .page { position: relative; z-index: 1; padding-top: 88px; }
@@ -481,7 +488,7 @@ footer {
     </div>
     <div class="card" style="margin-bottom:24px">
       <div class="card-body" style="padding:12px">
-        <canvas id="eq-canvas" height="130"></canvas>
+        <canvas id="eq-canvas" style="width:100%;height:clamp(140px,35vw,220px);display:block;border-radius:8px"></canvas>
       </div>
     </div>
 
@@ -751,34 +758,34 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  <div class="ft-logo"><img src="/mascot.png" style="width:36px;height:36px;object-fit:contain;vertical-align:middle;margin-right:8px;filter:drop-shadow(0 0 8px rgba(255,85,0,0.5));">Zerovant <span>Claw</span></div>
-  <div class="ft-sub">AI ADAPTIVE GRID TRADING · BY ZEROVANT LABS · 2026</div>
-  <div class="ft-links">
-    <a href="#" class="ft-link">Twitter</a>
-    <a href="#" class="ft-link">Telegram</a>
-    <a href="#" class="ft-link">Docs</a>
+  <div class="ft-logo">
+    <img src="/mascot.png" style="width:32px;height:32px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(255,85,0,0.5))">
+    <div>
+      <div>Zerovant <span>Claw</span></div>
+      <div style="font-size:10px;color:var(--muted);font-weight:400">by Zerovant Labs</div>
+    </div>
   </div>
-  <div class="ft-copy">© 2026 Zerovant Labs. All rights reserved.</div>
+  <div class="ft-sub">AI Adaptive Grid Trading &middot; 2026</div>
+  <div class="ft-links">
+    <a href="https://t.me/ZerovantClawBot" target="_blank" class="ft-link">Telegram</a>
+    <a href="https://app.zerovantclaw.xyz/docs" target="_blank" class="ft-link">Docs</a>
+    <a href="https://app.zerovantclaw.xyz" target="_blank" class="ft-link">Subscribe</a>
+  </div>
+  <div class="ft-copy">&copy; 2026 Zerovant Labs. Not financial advice. Trading involves risk.</div>
 </footer>
 
 <script>
-function showTab(name) {
-  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('on'));
-  const el = document.getElementById('tab-' + name);
-  if (el) el.style.display = 'block';
-  event.target.classList.add('on');
-}
 
 const SYMS = ['ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','XRPUSDT'];
 const FEE  = 0.001;
 
 function showTab(t) {
-  ['main','assets','system','trades','analytics'].forEach(id => {
-    document.getElementById('tab-'+id).style.display = t===id ? 'block' : 'none';
+  ['main','howitworks','assets','system','trades','analytics'].forEach(id => {
+    const el = document.getElementById('tab-'+id);
+    if (el) el.style.display = t===id ? 'block' : 'none';
   });
   document.querySelectorAll('.nav-tab').forEach((el,i) => {
-    el.classList.toggle('on', ['main','assets','system','trades','analytics'][i] === t);
+    el.classList.toggle('on', ['main','howitworks','assets','system','trades','analytics'][i] === t);
   });
   if (t === 'main') {
     setTimeout(() => {
@@ -865,7 +872,10 @@ function drawChart(eq) {
   if (c.offsetWidth === 0) { setTimeout(() => drawChart(eq), 100); return; }
   const dpr = window.devicePixelRatio || 1;
   c.width  = c.offsetWidth * dpr;
-  c.height = c.offsetHeight * dpr;
+  // Ensure minimum height on mobile
+  const minH = Math.max(140, c.offsetHeight);
+  c.height = minH * dpr;
+  c.style.height = minH + 'px';
   const ctx = c.getContext('2d');
   ctx.scale(dpr, dpr);
   const W = c.offsetWidth, H = c.offsetHeight;
@@ -913,6 +923,10 @@ function drawChart(eq) {
   ctx.fillStyle = '#ff7733'; ctx.font = 'bold 10px Space Mono'; ctx.textAlign = 'left';
   ctx.fillText('$'+eq[eq.length-1].toFixed(1), pl+cW+4, yp(eq[eq.length-1])+3);
 }
+
+window.addEventListener('resize', () => {
+  if (window._lastEq) drawChart(window._lastEq);
+});
 
 function renderPnl(ap, fl, caps) {
   const el   = document.getElementById('pnl-grid');
