@@ -1331,7 +1331,17 @@ def run():
     log.info(f"  Assets: {', '.join(ASSETS)}")
     log.info("="*55)
     state = load_state()
-    tg("⚡ <b>ZEROVANT GRID</b> started\n🔥 Assets: " + ", ".join(ASSETS) + "\n🔥 AI rebalance: every 1h")
+    # Sync GRID_CONFIG capital dari state saat startup
+    grid_capitals = state.get("grid_capitals", {})
+    for sym, cfg in GRID_CONFIG.items():
+        cap = None
+        if grid_capitals and grid_capitals.get(sym) and float(grid_capitals.get(sym,0)) > 0:
+            cap = float(grid_capitals[sym])
+        elif state.get("grids",{}).get(sym,{}).get("capital") and float(state["grids"][sym].get("capital",0)) > 0:
+            cap = float(state["grids"][sym]["capital"])
+        if cap:
+            cfg["capital"] = cap
+            log.info(f"  Capital restored {sym}: ${cap}")
     # Init daily tracking
     today_init = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     if "daily_pnl_history" not in state:
