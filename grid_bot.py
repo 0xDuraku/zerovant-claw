@@ -680,6 +680,11 @@ def load_state():
 
 def save_state(state):
     os.makedirs("data", exist_ok=True)
+    # Selalu sync capital dari GRID_CONFIG ke state sebelum save
+    for sym, cfg in GRID_CONFIG.items():
+        if sym in state.get("grids", {}):
+            state["grids"][sym]["capital"] = cfg["capital"]
+    state["grid_capitals"] = {sym: cfg["capital"] for sym, cfg in GRID_CONFIG.items()}
     # Buat backup sebelum overwrite, tapi hanya kalau fills > 0
     if os.path.exists(DATA_FILE):
         try:
