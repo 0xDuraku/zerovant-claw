@@ -1660,7 +1660,8 @@ def run():
             rebalance_capital(state)
             save_state(state)
         # Update equity history untuk chart
-        current_equity = round(float(state.get("total_capital", 500)) + float(state.get("fee_simulation", {}).get("simulated_pnl", 0)), 2)
+        _start_cap = float(state.get("start_capital", 500))
+        current_equity = round(_start_cap + float(state.get("fee_simulation", {}).get("simulated_pnl", 0)), 2)
         if "equity_history" not in state or state["equity_history"][0] == 1800:
             state["equity_history"] = [500.0]
         cycle_count = state.get("cycle_count", 0) + 1
