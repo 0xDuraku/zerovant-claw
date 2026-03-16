@@ -158,14 +158,18 @@ def apply_compound(state):
     if compound_amt < 0.50:
         return
 
-    # Distribusi proporsional ke semua asset
-    for sym, cfg in GRID_CONFIG.items():
-        if cfg["capital"] <= 0:
-            continue
-        share = cfg["capital"] / total_cap
+    # Distribusi proporsional ke asset yang ACTIVE saja
+    active_syms = [sym for sym, g in state.get("grids", {}).items()
+                   if g.get("active") and GRID_CONFIG.get(sym, {}).get("capital", 0) > 0]
+    active_cap = sum(GRID_CONFIG[s]["capital"] for s in active_syms if s in GRID_CONFIG)
+    if active_cap <= 0:
+        return
+    for sym in active_syms:
+        if sym not in GRID_CONFIG: continue
+        cfg = GRID_CONFIG[sym]
+        share = cfg["capital"] / active_cap
         addition = round(compound_amt * share, 2)
-        old_cap = cfg["capital"]
-        cfg["capital"] = round(old_cap + addition, 2)
+        cfg["capital"] = round(cfg["capital"] + addition, 2)
 
     new_total = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
     state["total_capital"] = new_total
