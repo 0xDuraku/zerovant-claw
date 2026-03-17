@@ -1310,11 +1310,7 @@ function updateLiveStats(d) {
     if (el_wr) el_wr.textContent = wr + '%';
     if (el_fills) el_fills.textContent = (d.total_fills || 0).toLocaleString();
     if (el_sharpe) el_sharpe.textContent = parseFloat(d.sharpe_ratio || 0).toFixed(1);
-    // Also update sidebar
-    const sb_net = document.getElementById('sb-net');
-    const sb_wr = document.getElementById('sb-wr');
-    if (sb_net) { sb_net.textContent = (net>=0?'+':'')+'$'+net.toFixed(2); sb_net.style.color = net>=0?'var(--grn)':'var(--red)'; }
-    if (sb_wr) sb_wr.textContent = wr + '%';
+    // sb-net and sb-wr updated by main load() function
   } catch(e) {}
 }
 window.addEventListener('resize', () => {
