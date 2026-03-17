@@ -1661,7 +1661,13 @@ def run():
             save_state(state)
         # Update equity history untuk chart
         _start_cap = float(state.get("start_capital", 500))
-        current_equity = round(_start_cap + float(state.get("fee_simulation", {}).get("simulated_pnl", 0)), 2)
+        _net_pnl = float(state.get("fee_simulation", {}).get("simulated_pnl", 0))
+        current_equity = round(_start_cap + _net_pnl, 2)
+        # Smooth: equity hanya naik atau turun pelan (max 5% per cycle)
+        _last_eq = state["equity_history"][-1] if state.get("equity_history") else _start_cap
+        _max_change = _last_eq * 0.05
+        if abs(current_equity - _last_eq) > _max_change:
+            current_equity = round(_last_eq + (_max_change if current_equity > _last_eq else -_max_change), 2)
         if "equity_history" not in state or state["equity_history"][0] == 1800:
             state["equity_history"] = [500.0]
         cycle_count = state.get("cycle_count", 0) + 1
