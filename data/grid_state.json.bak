@@ -2,8 +2,8 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 2286.37,
-      "range_high": 2487.2,
+      "range_low": 2325.26,
+      "range_high": 2526.09,
       "num_grids": 5,
       "reason": "LOW vol, UP trend, ATR=19.22%",
       "active": true,
@@ -11,14 +11,16 @@
       "orders_placed": 0,
       "realized_pnl": 46.1833,
       "fills": 39,
-      "current_price": 2346.46,
+      "current_price": 2355.74,
       "capital": 289.14,
-      "open_orders": 0
+      "open_orders": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 92.73,
-      "range_high": 100.77,
+      "range_low": 94.1167,
+      "range_high": 102.1567,
       "num_grids": 9,
       "reason": "LOW vol, UP trend, ATR=0.74%",
       "active": true,
@@ -26,9 +28,11 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "current_price": 95.04,
+      "current_price": 95.34,
       "capital": 41.31,
-      "open_orders": 0
+      "open_orders": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "BNBUSDT": {
       "action": "REBALANCE",
@@ -41,14 +45,14 @@
       "orders_placed": 0,
       "realized_pnl": 1.2111,
       "fills": 9,
-      "current_price": 681.01,
+      "current_price": 683.33,
       "capital": 82.61,
       "open_orders": 8
     },
     "DOGEUSDT": {
       "action": "REBALANCE",
-      "range_low": 0.1002,
-      "range_high": 0.1074,
+      "range_low": 0.1024,
+      "range_high": 0.1096,
       "num_grids": 8,
       "reason": "LOW vol, UP trend, ATR=0.71%",
       "active": true,
@@ -56,14 +60,16 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "current_price": 0.1024,
+      "current_price": 0.10368,
       "capital": 0,
-      "open_orders": 0
+      "open_orders": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.55,
-      "range_high": 1.682,
+      "range_low": 1.5808,
+      "range_high": 1.7128,
       "num_grids": 8,
       "reason": "LOW vol, UP trend, ATR=0.80%",
       "active": true,
@@ -71,9 +77,9 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "current_price": 1.5753,
+      "current_price": 1.5991,
       "trailing_triggered": true,
-      "trailing_count": 1,
+      "trailing_count": 2,
       "capital": 0,
       "open_orders": 0
     }
@@ -29488,11 +29494,11 @@
   "total_rebalances": 279,
   "last_prices": {
     "BTCUSDT": 65983.62,
-    "ETHUSDT": 2346.34,
-    "SOLUSDT": 95.04,
-    "BNBUSDT": 681.01,
-    "DOGEUSDT": 0.10242,
-    "XRPUSDT": 1.5756
+    "ETHUSDT": 2355.56,
+    "SOLUSDT": 95.33,
+    "BNBUSDT": 683.33,
+    "DOGEUSDT": 0.10368,
+    "XRPUSDT": 1.5991
   },
   "equity_history": [
     500.0,
@@ -29532,6 +29538,10 @@
     779.8,
     804.29,
     779.8,
+    804.29,
+    780.19,
+    804.29,
+    780.19,
     804.29,
     780.19,
     804.29,
@@ -38124,18 +38134,18 @@
   "last_snapshot_date": "2026-02-28",
   "today_pnl": 0.0316,
   "prev_prices": {
-    "ETHUSDT": 2346.46,
-    "SOLUSDT": 95.04,
-    "BNBUSDT": 681.01,
-    "DOGEUSDT": 0.1024,
-    "XRPUSDT": 1.5753
+    "ETHUSDT": 2355.74,
+    "SOLUSDT": 95.34,
+    "BNBUSDT": 683.33,
+    "DOGEUSDT": 0.10368,
+    "XRPUSDT": 1.5991
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0073,
-    "SOLUSDT": 0.0114,
-    "BNBUSDT": 0.0064,
-    "DOGEUSDT": 0.0088,
-    "XRPUSDT": 0.0182
+    "ETHUSDT": 0.0072,
+    "SOLUSDT": 0.0117,
+    "BNBUSDT": 0.0065,
+    "DOGEUSDT": 0.0085,
+    "XRPUSDT": 0.0234
   },
   "last_extreme_event_time": "2026-03-16T08:06:43.578484+00:00",
   "asset_pnl": {
@@ -40660,7 +40670,7 @@
       363414
     ]
   },
-  "cycle_count": 1844,
+  "cycle_count": 1848,
   "win_loss": {
     "wins": 717,
     "losses": 323,
@@ -40678,7 +40688,7 @@
     "real_wins": 663,
     "real_losses": 377
   },
-  "sharpe_ratio": 22.07,
+  "sharpe_ratio": 22.68,
   "max_drawdown_pct": 3.0449,
   "asset_daily_start": {
     "XRPUSDT": -1.0032,
