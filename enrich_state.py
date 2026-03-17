@@ -10,8 +10,10 @@ for sym, g in s.get('grids', {}).items():
     if sym in asset_pnl:
         g['realized_pnl'] = asset_pnl[sym]
 
-# 2. Total capital
-s['total_capital'] = 500
+# 2. Total capital — ambil dari grid capitals, jangan hardcode
+calc_total = sum(g.get('capital', 0) for g in s.get('grids', {}).values())
+if calc_total > 0:
+    s['total_capital'] = round(calc_total, 2)
 
 # 3. Today snapshot — WIB = UTC+7
 wib = timezone(timedelta(hours=7))
@@ -41,7 +43,7 @@ s['today_snapshot'] = {
     "pnl":         day_pnl,
     "fills":       day_fills,
     "cumulative":  round(float(realized), 4),
-    "roi_pct":     round(day_pnl / 500 * 100, 3),
+    "roi_pct":     round(day_pnl / max(s.get('total_capital', 500), 1) * 100, 3),
     "fee_est":     round(-today_fee_est, 4),
     "net_pnl":     today_net,
 }
