@@ -423,6 +423,7 @@ footer {
     <button class="nav-tab" onclick="showTab('analytics')">Analytics</button>
   </div>
   <div class="nav-badge" id="nav-badge">TESTNET</div>
+  <a href="https://app.zerovantclaw.xyz" target="_blank" style="padding:5px 12px;border-radius:8px;background:var(--ora);color:#fff;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;text-decoration:none">Get Bot &rarr;</a>
 </nav>
 
 <!-- TAB: MAIN -->
@@ -438,6 +439,33 @@ footer {
         <span class="hero-tag-badge">LIVE</span>
         5 assets · 10 grids each · Venice AI
       </div>
+    </div>
+
+    <!-- LIVE STATS BAR -->
+    <div style="background:rgba(255,85,0,0.06);border:1px solid rgba(255,85,0,0.15);border-radius:12px;padding:12px 20px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <div style="font-size:12px;color:var(--muted)">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--grn);box-shadow:0 0 6px var(--grn);margin-right:6px;animation:pulse 2s infinite"></span>
+        Live Testnet Performance
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <div style="text-align:center">
+          <div style="font-size:16px;font-weight:800;font-family:'Space Mono';color:var(--grn)" id="ls-pnl">+$0.00</div>
+          <div style="font-size:10px;color:var(--muted)">Net PnL</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:16px;font-weight:800;font-family:'Space Mono'" id="ls-wr">0%</div>
+          <div style="font-size:10px;color:var(--muted)">Win Rate</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:16px;font-weight:800;font-family:'Space Mono'" id="ls-fills">0</div>
+          <div style="font-size:10px;color:var(--muted)">Fills</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:16px;font-weight:800;font-family:'Space Mono'" id="ls-sharpe">0</div>
+          <div style="font-size:10px;color:var(--muted)">Sharpe</div>
+        </div>
+      </div>
+      <a href="https://app.zerovantclaw.xyz" target="_blank" style="background:var(--ora);color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap">Subscribe $10/mo &rarr;</a>
     </div>
 
     <!-- BALANCE -->
@@ -1229,6 +1257,7 @@ async function load() {
 
     // Chart
     drawChart(d.equity_history || [500, 500]);
+    updateLiveStats(d);
 
     // PnL
     const caps = d.grid_capitals || {ETHUSDT:80,SOLUSDT:110,BNBUSDT:60,DOGEUSDT:150,XRPUSDT:100};
@@ -1262,6 +1291,32 @@ async function load() {
 
 setTimeout(load, 300);
 setInterval(load, 5000);
+
+function updateLiveStats(d) {
+  try {
+    const fs = d.fee_simulation || {};
+    const wl = d.win_loss || {};
+    const w = wl.wins || 0; const l = wl.losses || 0;
+    const net = parseFloat(fs.simulated_pnl || 0);
+    const wr = (w+l) > 0 ? (w/(w+l)*100).toFixed(1) : 0;
+    const el_pnl = document.getElementById('ls-pnl');
+    const el_wr  = document.getElementById('ls-wr');
+    const el_fills = document.getElementById('ls-fills');
+    const el_sharpe = document.getElementById('ls-sharpe');
+    if (el_pnl) {
+      el_pnl.textContent = (net >= 0 ? '+' : '') + '$' + net.toFixed(2);
+      el_pnl.style.color = net >= 0 ? 'var(--grn)' : 'var(--red)';
+    }
+    if (el_wr) el_wr.textContent = wr + '%';
+    if (el_fills) el_fills.textContent = (d.total_fills || 0).toLocaleString();
+    if (el_sharpe) el_sharpe.textContent = parseFloat(d.sharpe_ratio || 0).toFixed(1);
+    // Also update sidebar
+    const sb_net = document.getElementById('sb-net');
+    const sb_wr = document.getElementById('sb-wr');
+    if (sb_net) { sb_net.textContent = (net>=0?'+':'')+'$'+net.toFixed(2); sb_net.style.color = net>=0?'var(--grn)':'var(--red)'; }
+    if (sb_wr) sb_wr.textContent = wr + '%';
+  } catch(e) {}
+}
 window.addEventListener('resize', () => {
   fetch('/data/grid_state.json?t='+Date.now())
     .then(r=>r.json()).then(d=>drawChart(d.equity_history||[500])).catch(()=>{});
