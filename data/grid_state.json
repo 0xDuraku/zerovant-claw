@@ -8,7 +8,7 @@
       "confidence": 0.9,
       "reason": "WR 86.5% tighten range",
       "active": true,
-      "last_rebalance": "2026-03-17T15:00:10.572360+00:00",
+      "last_rebalance": null,
       "orders_placed": 10,
       "realized_pnl": 55.918,
       "fills": 45,
@@ -16,7 +16,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 10,
-      "current_price": 2331.45
+      "current_price": 2313.68
     },
     "SOLUSDT": {
       "action": "CANCEL",
@@ -34,7 +34,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0,
-      "current_price": 94.09
+      "current_price": 93.64
     },
     "BNBUSDT": {
       "action": "REBALANCE",
@@ -52,7 +52,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 10,
-      "current_price": 669.09
+      "current_price": 666.62
     },
     "DOGEUSDT": {
       "action": "CANCEL",
@@ -62,7 +62,7 @@
       "confidence": 0.0,
       "reason": "PF 1.2 < 1.0",
       "active": true,
-      "last_rebalance": "2026-03-17T15:00:10.572360+00:00",
+      "last_rebalance": null,
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
@@ -70,7 +70,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0,
-      "current_price": 0.09966
+      "current_price": 0.0991
     },
     "XRPUSDT": {
       "action": "CANCEL",
@@ -88,7 +88,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0,
-      "current_price": 1.5135
+      "current_price": 1.5078
     }
   },
   "last_ai_check": "2026-03-17T15:00:10.572360+00:00",
@@ -30215,11 +30215,11 @@
   "total_rebalances": 286,
   "last_prices": {
     "BTCUSDT": 65983.62,
-    "ETHUSDT": 2331.45,
-    "SOLUSDT": 94.09,
-    "BNBUSDT": 669.09,
-    "DOGEUSDT": 0.09966,
-    "XRPUSDT": 1.5135
+    "ETHUSDT": 2313.45,
+    "SOLUSDT": 93.49,
+    "BNBUSDT": 666.62,
+    "DOGEUSDT": 0.0991,
+    "XRPUSDT": 1.5078
   },
   "equity_history": [
     500.0,
@@ -30389,6 +30389,8 @@
     861.04,
     835.81,
     861.04,
+    835.81,
+    861.0,
     835.81,
     861.0,
     835.81,
@@ -39196,18 +39198,18 @@
   "last_snapshot_date": "2026-02-28",
   "today_pnl": 0.0316,
   "prev_prices": {
-    "ETHUSDT": 2331.45,
-    "SOLUSDT": 94.09,
-    "BNBUSDT": 669.09,
-    "DOGEUSDT": 0.09966,
-    "XRPUSDT": 1.5135
+    "ETHUSDT": 2313.68,
+    "SOLUSDT": 93.64,
+    "BNBUSDT": 666.62,
+    "DOGEUSDT": 0.0991,
+    "XRPUSDT": 1.5078
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0074,
-    "SOLUSDT": 0.0067,
-    "BNBUSDT": 0.0047,
-    "DOGEUSDT": 0.0111,
-    "XRPUSDT": 0.0049
+    "ETHUSDT": 0.0071,
+    "SOLUSDT": 0.0065,
+    "BNBUSDT": 0.0044,
+    "DOGEUSDT": 0.0106,
+    "XRPUSDT": 0.0046
   },
   "last_extreme_event_time": "2026-03-17T04:42:11.280269+00:00",
   "asset_pnl": {
@@ -41732,7 +41734,7 @@
       363414
     ]
   },
-  "cycle_count": 1945,
+  "cycle_count": 1947,
   "win_loss": {
     "wins": 741,
     "losses": 324,
@@ -41743,14 +41745,14 @@
   },
   "fee_simulation": {
     "fee_rate": 0.001,
-    "simulated_pnl": 335.812,
-    "gross_pnl": 361.0381,
-    "fee_impact": -25.2261,
-    "real_win_rate": 64.6,
+    "simulated_pnl": 335.7599,
+    "gross_pnl": 361.0021,
+    "fee_impact": -25.2422,
+    "real_win_rate": 64.5,
     "real_wins": 687,
-    "real_losses": 377
+    "real_losses": 378
   },
-  "sharpe_ratio": 15.67,
+  "sharpe_ratio": 14.69,
   "max_drawdown_pct": 4.5004,
   "asset_daily_start": {
     "XRPUSDT": -1.0032,
@@ -41828,16 +41830,16 @@
     },
     "BNBUSDT": {
       "wins": 117,
-      "losses": 40,
-      "wr": 74.5,
+      "losses": 41,
+      "wr": 74.1,
       "avg_win": 0.1124,
-      "avg_loss": -0.035,
+      "avg_loss": -0.0351,
       "best": 0.5656,
       "worst": -0.1166,
-      "avg_pnl": 0.0748,
-      "total_trades": 157,
-      "total_buys": 167,
-      "profit_factor": 9.38
+      "avg_pnl": 0.0741,
+      "total_trades": 158,
+      "total_buys": 168,
+      "profit_factor": 9.15
     },
     "DOGEUSDT": {
       "wins": 85,
