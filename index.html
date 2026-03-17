@@ -577,7 +577,7 @@ footer {
           <div class="sys-row"><span class="sys-key">service</span><span class="sys-val ok">active</span></div>
           <div class="sys-row"><span class="sys-key">cycle_min</span><span class="sys-val">15</span></div>
           <div class="sys-row"><span class="sys-key">ai_provider</span><span class="sys-val ok">venice_ai</span></div>
-          <div class="sys-row"><span class="sys-key">exchange</span><span class="sys-val wn">binance_testnet</span></div>
+          <div class="sys-row"><span class="sys-key">exchange</span><span class="sys-val wn" id="sys-exchange">binance_testnet</span></div>
           <div class="sys-row"><span class="sys-key">emergency_stop</span><span class="sys-val ok" id="sys-es">false</span></div>
           <div class="sys-row"><span class="sys-key">telegram_bot</span><span class="sys-val ok">active</span></div>
         </div>
@@ -600,7 +600,7 @@ footer {
           <div class="sys-row"><span class="sys-key">schedule</span><span class="sys-val">00:00 WIB</span></div>
           <div class="sys-row"><span class="sys-key">last_amount</span><span class="sys-val ok" id="sys-ca">—</span></div>
           <div class="sys-row"><span class="sys-key">total_capital</span><span class="sys-val" id="sys-ct">$500</span></div>
-          <div class="sys-row"><span class="sys-key">base</span><span class="sys-val">$500.00</span></div>
+          <div class="sys-row"><span class="sys-key">base_capital</span><span class="sys-val" id="sys-base">$500.00</span></div>
           <div class="sys-row"><span class="sys-key">next_est</span><span class="sys-val" id="sys-cn">—</span></div>
         </div>
       </div>
@@ -1279,6 +1279,15 @@ async function load() {
     document.getElementById('sys-ca').textContent  = lc.amount?'+$'+parseFloat(lc.amount).toFixed(2):'—';
     document.getElementById('sys-ct').textContent  = '$'+cap.toFixed(2);
     document.getElementById('sys-cn').textContent  = '+$'+(net*0.5).toFixed(2)+' est';
+    // Update exchange mode and base capital
+    const exchEl = document.getElementById('sys-exchange');
+    if (exchEl) {
+      const mode = d.mainnet_mode ? 'binance_mainnet' : 'binance_testnet';
+      exchEl.textContent = mode;
+      exchEl.className = 'sys-val ' + (d.mainnet_mode ? 'ok' : 'wn');
+    }
+    const baseEl = document.getElementById('sys-base');
+    if (baseEl) baseEl.textContent = '$' + parseFloat(d.start_capital || 500).toFixed(2);
     document.getElementById('sys-uptime').textContent = uptime(d.start_time);
     const days = d.start_time ? Math.floor((Date.now()-new Date(d.start_time).getTime())/86400000) : 0;
     document.getElementById('sys-days').textContent = days>=14?'✓ READY':'⏳ '+days+'/14';
