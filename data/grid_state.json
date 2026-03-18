@@ -2,27 +2,27 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 2174.3284,
-      "range_high": 2397.7884,
+      "range_low": 2150.4225,
+      "range_high": 2373.8825,
       "num_grids": 15,
       "confidence": 0.85,
       "reason": "Tighten range and increase grids due to high win rate and profitable factor",
       "active": true,
-      "last_rebalance": "2026-03-18T13:31:34.391673+00:00",
-      "orders_placed": 0,
+      "last_rebalance": null,
+      "orders_placed": 10,
       "realized_pnl": 86.8322,
       "fills": 112,
       "capital": 124.0,
       "trailing_triggered": true,
-      "trailing_count": 5,
-      "open_orders": 10,
-      "current_price": 2208.01,
-      "last_trail": "2026-03-18T14:48:39.380837+00:00"
+      "trailing_count": 9,
+      "open_orders": 30,
+      "current_price": 2182.54,
+      "last_trail": "2026-03-18T15:19:55.603328+00:00"
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 88.0984,
-      "range_high": 98.9584,
+      "range_low": 87.6354,
+      "range_high": 98.4954,
       "num_grids": 10,
       "confidence": 0.65,
       "reason": "Widen range and reduce grids due to low win rate and spacing",
@@ -33,16 +33,16 @@
       "fills": 0,
       "capital": 41.31,
       "trailing_triggered": true,
-      "trailing_count": 11,
+      "trailing_count": 15,
       "open_orders": 0,
-      "current_price": 89.43,
-      "last_trail": "2026-03-18T14:49:11.793440+00:00"
+      "current_price": 88.96,
+      "last_trail": "2026-03-18T15:19:59.110366+00:00"
     },
     "BNBUSDT": {
       "active": false,
       "reason": "Parameters are optimal",
       "capital": 41.0,
-      "current_price": 651.11
+      "current_price": 646.55
     },
     "DOGEUSDT": {
       "action": "CANCEL",
@@ -60,13 +60,13 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 9,
-      "current_price": 0.09464,
+      "current_price": 0.09435,
       "last_trail": "2026-03-18T13:47:44.616110+00:00"
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.4304,
-      "range_high": 1.6074,
+      "range_low": 1.4227,
+      "range_high": 1.5997,
       "num_grids": 10,
       "confidence": 0.55,
       "reason": "Widen range and reduce grids due to low win rate and spacing",
@@ -77,10 +77,10 @@
       "fills": 0,
       "capital": 41.0,
       "trailing_triggered": true,
-      "trailing_count": 11,
+      "trailing_count": 15,
       "open_orders": 0,
-      "current_price": 1.452,
-      "last_trail": "2026-03-18T14:49:15.221831+00:00"
+      "current_price": 1.4444,
+      "last_trail": "2026-03-18T15:20:02.774938+00:00"
     }
   },
   "last_ai_check": "2026-03-18T13:31:34.391673+00:00",
@@ -31495,11 +31495,11 @@
   "total_rebalances": 297,
   "last_prices": {
     "BTCUSDT": 65983.62,
-    "ETHUSDT": 2208.02,
-    "SOLUSDT": 89.44,
-    "BNBUSDT": 651.14,
-    "DOGEUSDT": 0.09464,
-    "XRPUSDT": 1.4522
+    "ETHUSDT": 2183.17,
+    "SOLUSDT": 88.97,
+    "BNBUSDT": 646.82,
+    "DOGEUSDT": 0.0944,
+    "XRPUSDT": 1.4444
   },
   "equity_history": [
     500.0,
@@ -31628,9 +31628,11 @@
     866.73,
     866.73,
     866.73,
+    866.8,
+    866.8,
     866.8
   ],
-  "total_open_orders": 19,
+  "total_open_orders": 39,
   "ai_log": [
     {
       "type": "ai",
@@ -40823,18 +40825,18 @@
   "last_snapshot_date": "2026-02-28",
   "today_pnl": 0.0316,
   "prev_prices": {
-    "ETHUSDT": 2208.01,
-    "SOLUSDT": 89.43,
-    "BNBUSDT": 651.11,
-    "DOGEUSDT": 0.09464,
-    "XRPUSDT": 1.452
+    "ETHUSDT": 2182.54,
+    "SOLUSDT": 88.96,
+    "BNBUSDT": 646.55,
+    "DOGEUSDT": 0.09435,
+    "XRPUSDT": 1.4444
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0354,
-    "SOLUSDT": 0.0372,
-    "BNBUSDT": 0.0243,
-    "DOGEUSDT": 0.0358,
-    "XRPUSDT": 0.0311
+    "ETHUSDT": 0.0364,
+    "SOLUSDT": 0.0363,
+    "BNBUSDT": 0.0247,
+    "DOGEUSDT": 0.033,
+    "XRPUSDT": 0.0304
   },
   "last_extreme_event_time": "2026-03-17T04:42:11.280269+00:00",
   "asset_pnl": {
@@ -43359,7 +43361,7 @@
       363414
     ]
   },
-  "cycle_count": 2091,
+  "cycle_count": 2095,
   "win_loss": {
     "wins": 781,
     "losses": 324,
