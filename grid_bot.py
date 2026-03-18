@@ -585,7 +585,15 @@ def rebalance_capital(state):
     """Rebalance capital allocation based on performance — run daily"""
     asset_pnl = state.get("asset_pnl", {})
     if not asset_pnl or len(asset_pnl) < 2: return
-    total_cap = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+    # Gunakan total_capital dari state, bukan GRID_CONFIG (bisa tidak sync)
+    total_cap = float(state.get("total_capital", 0))
+    if total_cap <= 0 or total_cap > 10000:
+        log.warning(f"  rebalance_capital: invalid total_cap={total_cap}, skip")
+        return
+    # Sync GRID_CONFIG dari state dulu
+    for sym, g in state.get("grids", {}).items():
+        if sym in GRID_CONFIG:
+            GRID_CONFIG[sym]["capital"] = float(g.get("capital", 0))
 
     # Hitung score per asset: PnL + win rate
     fills_log = state.get("fills_log", [])
