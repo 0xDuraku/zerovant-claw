@@ -1377,6 +1377,10 @@ def run():
     cycle = 0
     while True:
         cycle += 1
+        # Sync GRID_CONFIG dari state di awal setiap cycle
+        for sym, g in state.get('grids', {}).items():
+            if sym in GRID_CONFIG and float(g.get('capital', 0)) > 0:
+                GRID_CONFIG[sym]['capital'] = float(g['capital'])
         # Reload state dari file — agar perubahan dari tg_bot (pause/resume/stop) terbaca
         state = load_state()
         now = datetime.now(timezone.utc)
