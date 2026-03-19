@@ -172,6 +172,10 @@ def apply_compound(state):
         cfg["capital"] = round(cfg["capital"] + addition, 2)
 
     new_total = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
+    _start = float(state.get("start_capital") or state.get("total_capital") or 100)
+    if new_total > _start * 3:
+        log.warning(f"  compound: new_total ${new_total:.2f} > 3x start ${_start:.2f}, skip")
+        return
     state["total_capital"] = new_total
     state["grid_capitals"] = {sym: cfg["capital"] for sym, cfg in GRID_CONFIG.items()}
     # Sync ke state["grids"] agar persistent setelah restart
