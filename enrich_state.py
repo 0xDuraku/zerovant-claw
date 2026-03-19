@@ -55,19 +55,17 @@ for k in list(history.keys()):
         del history[k]
 s['daily_pnl_history'] = history
 
-# Inject grid_config — parse GRID_CONFIG langsung dari grid_bot.py source
-import re as _re
-try:
-    bot_src = open('/root/zerovantclaw/grid_bot.py').read()
-    # Cari semua "SYMBOL": {"capital": X, ...}
-    matches = _re.findall(r'"((?:ETH|SOL|BNB|DOGE|XRP)USDT)":\s*\{[^}]*"capital":\s*([\d.]+)', bot_src)
-    grid_config = {sym: {"capital": float(cap)} for sym, cap in matches}
-    if not grid_config:
-        raise ValueError("no matches")
-except Exception as e:
-    grid_config = {"ETHUSDT":{"capital":80},"SOLUSDT":{"capital":110},"BNBUSDT":{"capital":60},"DOGEUSDT":{"capital":150},"XRPUSDT":{"capital":100}}
-    print(f"grid_config fallback: {e}")
+# Inject grid_config dari state grids (bukan hardcode dari source)
+grids = s.get('grids', {})
+grid_config = {}
+for sym in ['ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','XRPUSDT']:
+    cap = float(grids.get(sym, {}).get('capital', 0))
+    grid_config[sym] = {"capital": cap}
 s["grid_config"] = grid_config
+# Fix grid_capitals juga
+s["grid_capitals"] = {sym: cfg["capital"] for sym, cfg in grid_config.items()}
+# Fix total_capital
+s["total_capital"] = sum(cfg["capital"] for cfg in grid_config.values() if cfg["capital"] > 0)
 
 json.dump(s, open('/var/www/zerovantclaw/data/grid_state.json', 'w'), indent=2)
 print(f"✅ today_snapshot: pnl={day_pnl} fills={day_fills} net={today_net}")
