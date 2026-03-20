@@ -1297,7 +1297,7 @@ def run():
         state["daily_pnl_history"] = {}
     if "daily_start_pnl" not in state:
         state["daily_start_pnl"] = state.get("realized_pnl", 0)
-        rebalance_capital(state)
+        # DO NOT call rebalance_capital on startup - causes capital inflation
         log.info("  Capital rebalanced based on performance")
     # Always backfill stats on startup
     backfill_stats(state)
