@@ -632,6 +632,28 @@ def rebalance_capital(state):
            "\n".join(changes) +
            f"\nTotal: ${total_cap:.0f}")
 
+def place_sell_for_inventory(symbol, inventory_qty, current_price, num_levels=3):
+    """Place SELL orders for existing inventory to avoid stuck tokens"""
+    if inventory_qty <= 0.0001 or current_price <= 0:
+        return 0
+    placed = 0
+    qty_per_level = round(inventory_qty / num_levels, 6)
+    if qty_per_level * current_price < 6.0:
+        qty_per_level = round(inventory_qty, 6)
+        num_levels = 1
+    for i in range(1, num_levels + 1):
+        price = round(current_price * (1 + i * 0.01), 2)
+        qty = qty_per_level
+        if qty * price < 5.0:
+            continue
+        try:
+            place_limit_order(symbol, "SELL", price, qty)
+            placed += 1
+            log.info(f"  ✅ Inventory SELL: {symbol} {qty} @ ${price:.2f}")
+        except Exception as e:
+            log.warning(f"  Inventory SELL fail {symbol}@{price:.2f}: {e}")
+    return placed
+
 def place_grid(symbol, range_low, range_high, num_grids, capital, current_price):
     spacing = (range_high - range_low) / num_grids
     # Enforce minimum spacing = 0.4% of price (2x fee rate untuk net profit)
@@ -1484,6 +1506,12 @@ def run():
             try:
                 n = len(api_get("/openOrders", {"symbol": sym}, auth=True))
                 log.info(f"  {sym}: {n} open orders")
+                if n == 0:
+                    inv_qty = float(state.get("inventory", {}).get(sym, 0))
+                    cur_price = float(state.get("grids",{}).get(sym,{}).get("current_price") or 0)
+                    if inv_qty > 0.0001 and cur_price > 0:
+                        log.info(f"  {sym}: stuck inventory {inv_qty:.6f} — placing SELL")
+                        place_sell_for_inventory(sym, inv_qty, cur_price)
                 # Aggressive rebalance — price out of comfort zone
                 g  = state["grids"].get(sym, {})
                 cp = g.get("current_price") or 0
