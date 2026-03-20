@@ -234,17 +234,17 @@ COOLDOWN_MINUTES    = 30     # Pause trading setelah extreme event
 # $500 real capital — BTC removed (min notional too high for small capital)
 # Reallocated BTC+BNB share to DOGE/XRP/SOL (higher ROI anyway)
 GRID_CONFIG_TESTNET = {
-    "ETHUSDT":  {"capital": 350,  "num_grids": 10, "range_pct": 0.10},
-    "SOLUSDT":  {"capital": 50, "num_grids": 10, "range_pct": 0.12},
-    "BNBUSDT":  {"capital": 100,  "num_grids": 10, "range_pct": 0.08},
-    "DOGEUSDT": {"capital": 0, "num_grids": 10, "range_pct": 0.10},
+    "ETHUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.10},
+    "SOLUSDT":  {"capital": 0,    "num_grids": 10, "range_pct": 0.12},
+    "BNBUSDT":  {"capital": 0,    "num_grids": 10, "range_pct": 0.08},
+    "TAOUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.08},
     "XRPUSDT":  {"capital": 0, "num_grids": 10, "range_pct": 0.12},
 }
 GRID_CONFIG_MAINNET = {
-    "ETHUSDT":  {"capital": 350,  "num_grids": 10, "range_pct": 0.10},
-    "SOLUSDT":  {"capital": 50,  "num_grids": 10, "range_pct": 0.12},
-    "BNBUSDT":  {"capital": 100,  "num_grids": 10, "range_pct": 0.08},
-    "DOGEUSDT": {"capital": 0,  "num_grids": 10, "range_pct": 0.10},
+    "ETHUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.10},
+    "SOLUSDT":  {"capital": 0,    "num_grids": 10, "range_pct": 0.12},
+    "BNBUSDT":  {"capital": 0,    "num_grids": 10, "range_pct": 0.08},
+    "TAOUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.08},
     "XRPUSDT":  {"capital": 0,  "num_grids": 10, "range_pct": 0.12},
 }
 GRID_CONFIG = GRID_CONFIG_MAINNET if MAINNET_MODE else GRID_CONFIG_TESTNET
@@ -309,8 +309,8 @@ def cancel_open_orders(symbol):
 
 def place_limit_order(symbol, side, price, qty):
     # price precision per asset
-    price_prec = {"BTCUSDT":2,"ETHUSDT":2,"SOLUSDT":2,"BNBUSDT":2,"DOGEUSDT":5,"XRPUSDT":4}.get(symbol,2)
-    qty_prec = {"BTCUSDT":5,"ETHUSDT":4,"SOLUSDT":3,"BNBUSDT":3,"DOGEUSDT":0,"XRPUSDT":1}.get(symbol,2)
+    price_prec = {"BTCUSDT":2,"ETHUSDT":2,"SOLUSDT":2,"BNBUSDT":2,"DOGEUSDT":5,"XRPUSDT":4,"TAOUSDT":1}.get(symbol,2)
+    qty_prec = {"BTCUSDT":5,"ETHUSDT":4,"SOLUSDT":3,"BNBUSDT":3,"DOGEUSDT":0,"XRPUSDT":1,"TAOUSDT":4}.get(symbol,2)
     pd, qd = price_prec, qty_prec
     return api_post("/order", {
         "symbol": symbol, "side": side, "type": "LIMIT",
