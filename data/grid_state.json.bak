@@ -11,7 +11,7 @@
       "orders_placed": 0,
       "realized_pnl": 1.8287,
       "fills": 96,
-      "capital": 124.0,
+      "capital": 206.53,
       "trailing_triggered": true,
       "trailing_count": 2,
       "current_price": 2120.74,
@@ -29,7 +29,7 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 41.31,
+      "capital": 0.0,
       "trailing_triggered": true,
       "trailing_count": 2,
       "current_price": 88.38,
@@ -39,7 +39,7 @@
     "BNBUSDT": {
       "active": false,
       "reason": "Range breach: 637.2100 outside 627.6519-635.1319",
-      "capital": 41.0
+      "capital": 0.0
     },
     "DOGEUSDT": {
       "action": "REBALANCE",
@@ -52,7 +52,7 @@
       "orders_placed": 0,
       "realized_pnl": 0.1304,
       "fills": 26,
-      "capital": 41.0,
+      "capital": 0.0,
       "trailing_triggered": true,
       "trailing_count": 1,
       "current_price": 0.09364,
@@ -77,7 +77,9 @@
       "last_trail": "2026-03-20T18:32:37.358897+00:00"
     },
     "TAOUSDT": {
-      "current_price": 270.0
+      "current_price": 270.0,
+      "capital": 206.53,
+      "active": true
     }
   },
   "last_ai_check": null,
@@ -1259,11 +1261,11 @@
     }
   ],
   "grid_capitals": {
-    "ETHUSDT": 124.0,
-    "SOLUSDT": 41.31,
-    "BNBUSDT": 41.0,
-    "DOGEUSDT": 41.0,
-    "XRPUSDT": 41.0
+    "ETHUSDT": 206.53,
+    "SOLUSDT": 0,
+    "BNBUSDT": 0,
+    "TAOUSDT": 206.53,
+    "XRPUSDT": 0
   },
   "prev_prices": {
     "ETHUSDT": 2120.74,
@@ -35430,8 +35432,8 @@
     856.26,
     856.26
   ],
-  "cycle_count": 364,
-  "total_open_orders": 0,
+  "cycle_count": 365,
+  "total_open_orders": 17,
   "asset_pnl": {
     "XRPUSDT": 2.3327,
     "ETHUSDT": 356.2279,
