@@ -1310,9 +1310,13 @@ def run():
             cap = float(grid_capitals[sym])
         elif state.get("grids",{}).get(sym,{}).get("capital") and float(state["grids"][sym].get("capital",0)) > 0:
             cap = float(state["grids"][sym]["capital"])
-        if cap:
+        _total = float(state.get("total_capital", 0)) or float(state.get("start_capital", 0)) or 10000
+        if cap and float(cap) <= _total * 1.1:
             cfg["capital"] = cap
             log.info(f"  Capital restored {sym}: ${cap}")
+        elif cap:
+            log.warning(f"  Capital restore REJECTED {sym}: ${cap} > total ${_total}")
+            cfg["capital"] = 0.0
     # Init daily tracking
     today_init = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     if "daily_pnl_history" not in state:
