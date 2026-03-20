@@ -212,7 +212,7 @@ ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 VENICE_KEY    = os.environ.get("VENICE_API_KEY", "")
 USE_VENICE    = bool(VENICE_KEY)  # Auto-switch ke Venice jika key tersedia
 
-ASSETS = ["ETHUSDT", "SOLUSDT", "BNBUSDT", "DOGEUSDT", "XRPUSDT"]
+ASSETS = ["ETHUSDT", "SOLUSDT", "BNBUSDT", "TAOUSDT", "XRPUSDT"]
 # ── RISK MANAGEMENT ────────────────────────────────────
 MAX_DAILY_LOSS_PCT  = 0.05   # Stop semua grid kalau loss >5% modal hari ini
 ASSET_STOP_LOSS_PCT = 0.15   # Pause asset kalau rugi >15% dari capital asset tsb
