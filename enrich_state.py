@@ -58,7 +58,7 @@ s['daily_pnl_history'] = history
 # Inject grid_config dari state grids (bukan hardcode dari source)
 grids = s.get('grids', {})
 grid_config = {}
-for sym in ['ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','XRPUSDT']:
+for sym in grids.keys():
     cap = float(grids.get(sym, {}).get('capital', 0))
     grid_config[sym] = {"capital": cap}
 s["grid_config"] = grid_config
