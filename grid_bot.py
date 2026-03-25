@@ -1620,8 +1620,7 @@ def run():
             fills = state.get("total_fills", 0)
             active_n = sum(1 for g in state.get("grids",{}).values() if g.get("active"))
             tg(f"🔥 <b>DAILY SUMMARY</b>\n🔥 Realized PnL: <b>${pnl:+.2f}</b>\n🔥 Total Fills: {fills}\n🔥 Active Grids: {active_n}/3\n🔥 Cycles: {cycle}")
-            # Auto-rebalance capital berdasarkan performance
-            rebalance_capital(state)
+            # Auto-rebalance DISABLED - capital set manually
             save_state(state)
         # Update equity history untuk chart
         _start_cap = float(state.get("start_capital", 500))
