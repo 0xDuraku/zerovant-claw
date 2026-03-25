@@ -1133,20 +1133,8 @@ def check_balance_change(state):
             state["last_known_balance"] = usdt_balance
 
         elif change_pct > 0.10:
-            # Balance naik >10% — auto adjust capital
-            log.info(f"  �� BALANCE INCREASE detected! {last_known:.2f} → {usdt_balance:.2f} ({change_pct*100:+.1f}%)")
-            ratio = usdt_balance / last_known
-            for sym, cfg in GRID_CONFIG.items():
-                cfg["capital"] = round(cfg["capital"] * ratio, 2)
-                if state.get("grids", {}).get(sym, {}).get("balance_paused"):
-                    state["grids"][sym]["active"] = True
-                    state["grids"][sym]["balance_paused"] = False
-            new_total = sum(cfg["capital"] for cfg in GRID_CONFIG.values())
-            state["total_capital"] = new_total
-            tg(f"�� <b>BALANCE UPDATED</b>\n"
-               f"Previous: <b>${last_known:.2f}</b>\n"
-               f"New: <b>${usdt_balance:.2f}</b>\n"
-               f"Capital auto-adjusted to ${new_total:.2f}")
+            # Balance naik — JANGAN auto-adjust capital
+            log.info(f"  Balance increase {last_known:.2f} -> {usdt_balance:.2f} ({change_pct*100:+.1f}%) — no auto-adjust")
             state["last_known_balance"] = usdt_balance
 
     except Exception as e:
