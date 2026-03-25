@@ -710,7 +710,7 @@ footer {
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ora)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
         </div>
         <div style="font-weight:700;margin-bottom:6px;font-size:13px">5 Assets</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.6">ETH, SOL, BNB, DOGE, XRP run in parallel for diversification and more profit opportunities.</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6">ETH and TAO run in parallel for diversification and more profit opportunities.</div>
       </div>
     </div>
   </div>
@@ -808,7 +808,7 @@ footer {
 
 <script>
 
-const SYMS = ['ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','XRPUSDT'];
+const SYMS = ['ETHUSDT','TAOUSDT'];
 const FEE  = 0.001;
 
 function showTab(t) {
@@ -843,7 +843,7 @@ function tick() {
 setInterval(tick, 1000); tick();
 
 // Live price ticker — update setiap 10 detik dari Binance
-const SYMS_TICKER = ['ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','XRPUSDT'];
+const SYMS_TICKER = ['ETHUSDT','TAOUSDT'];
 let livePrices = {};
 let prevPrices = {};
 
@@ -1119,8 +1119,8 @@ function renderAllocation(d) {
   const apnl  = d.asset_pnl || {};
   const an    = d.analytics || {};
   const total = Object.values(alloc).reduce((a,b)=>a+b,0) || 500;
-  const syms  = ['ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','XRPUSDT'];
-  const colors= {'ETHUSDT':'#6366f1','SOLUSDT':'#f59e0b','BNBUSDT':'#eab308','DOGEUSDT':'#f97316','XRPUSDT':'#06b6d4'};
+  const syms  = ['ETHUSDT','TAOUSDT'];
+  const colors= {'ETHUSDT':'#6366f1','TAOUSDT':'#8b5cf6'};
   if (!Object.keys(alloc).length) { el.innerHTML='<div style="color:var(--muted);font-size:12px">No allocation data yet</div>'; return; }
   el.innerHTML = `<div style="margin-bottom:14px">` +
     syms.filter(s=>alloc[s]).map(sym => {
@@ -1146,7 +1146,7 @@ function renderAllocation(d) {
 function renderAnalytics(analytics) {
   const el = document.getElementById('analytics-list');
   if (!el) return;
-  const syms = ['ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','XRPUSDT'];
+  const syms = ['ETHUSDT','TAOUSDT'];
   // Sort by win rate
   const sorted = [...syms].sort((a,b) => ((analytics[b]||{}).wr||0) - ((analytics[a]||{}).wr||0));
   el.innerHTML = sorted.map(sym => {
@@ -1264,7 +1264,7 @@ async function load() {
     updateLiveStats(d);
 
     // PnL
-    const caps = d.grid_capitals || {ETHUSDT:80,SOLUSDT:110,BNBUSDT:60,DOGEUSDT:150,XRPUSDT:100};
+    const caps = d.grid_capitals || {ETHUSDT:206,TAOUSDT:206};
     renderPnl(d.asset_pnl||{}, d.fills_log||[], caps);
     renderAssets(grids, d.last_prices||{});
     renderHistory(d.daily_pnl_history||{}, d.today_snapshot);
