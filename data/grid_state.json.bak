@@ -2,26 +2,27 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 2014.7683,
-      "range_high": 2219.2683,
+      "range_low": 2011.1631,
+      "range_high": 2215.6631,
       "num_grids": 15,
       "confidence": 0.85,
       "reason": "WR 80% tighten range, spacing < 0.4% expand range",
       "active": true,
       "last_rebalance": "2026-03-26T19:18:44.567387+00:00",
-      "orders_placed": 11,
+      "orders_placed": 10,
       "realized_pnl": 9.9539,
       "fills": 52,
       "capital": 200.0,
       "trailing_triggered": true,
-      "trailing_count": 1,
-      "open_orders": 10,
-      "current_price": 2046.66
+      "trailing_count": 2,
+      "open_orders": 20,
+      "current_price": 2050.53,
+      "last_trail": "2026-03-26T19:34:44.408069+00:00"
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 84.6608,
-      "range_high": 94.6608,
+      "range_low": 84.385,
+      "range_high": 94.385,
       "num_grids": 10,
       "confidence": 0.65,
       "reason": "PF < 1.0, spacing < 0.4% expand range",
@@ -32,10 +33,10 @@
       "fills": 1,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 2,
+      "trailing_count": 6,
       "open_orders": 0,
-      "current_price": 86.04,
-      "last_trail": "2026-03-26T19:24:23.215668+00:00"
+      "current_price": 85.67,
+      "last_trail": "2026-03-26T19:55:22.900300+00:00"
     },
     "BNBUSDT": {
       "action": "REBALANCE",
@@ -45,7 +46,7 @@
       "confidence": 0.75,
       "reason": "WR 75% tighten range, spacing < 0.4% expand range",
       "active": true,
-      "last_rebalance": "2026-03-26T19:18:44.567387+00:00",
+      "last_rebalance": null,
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
@@ -53,19 +54,19 @@
       "trailing_triggered": true,
       "trailing_count": 2,
       "open_orders": 0,
-      "current_price": 625.78,
+      "current_price": 626.18,
       "last_trail": "2026-03-26T19:24:27.776817+00:00"
     },
     "TAOUSDT": {
       "active": false,
       "reason": "WR < 50%, PF < 1.0",
       "capital": 200.0,
-      "current_price": 343.7
+      "current_price": 341.7
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.3266,
-      "range_high": 1.4876,
+      "range_low": 1.3303,
+      "range_high": 1.4913,
       "num_grids": 10,
       "confidence": 0.55,
       "reason": "spacing < 0.4% expand range",
@@ -76,10 +77,10 @@
       "fills": 4,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 2,
+      "trailing_count": 6,
       "open_orders": 0,
-      "current_price": 1.3471,
-      "last_trail": "2026-03-26T19:24:32.873900+00:00"
+      "current_price": 1.3504,
+      "last_trail": "2026-03-26T19:55:27.441567+00:00"
     },
     "DOGEUSDT": {
       "current_price": 0.0966,
@@ -870,18 +871,18 @@
     "XRPUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2046.66,
-    "SOLUSDT": 86.04,
-    "BNBUSDT": 625.78,
-    "TAOUSDT": 343.7,
-    "XRPUSDT": 1.3471
+    "ETHUSDT": 2050.53,
+    "SOLUSDT": 85.67,
+    "BNBUSDT": 626.18,
+    "TAOUSDT": 341.7,
+    "XRPUSDT": 1.3504
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.011,
-    "SOLUSDT": 0.0142,
-    "BNBUSDT": 0.005,
-    "TAOUSDT": 0.018,
-    "XRPUSDT": 0.0129
+    "ETHUSDT": 0.0101,
+    "SOLUSDT": 0.0159,
+    "BNBUSDT": 0.0041,
+    "TAOUSDT": 0.0165,
+    "XRPUSDT": 0.0115
   },
   "daily_reset_date": "2026-03-27",
   "daily_start_pnl": 407.8865,
@@ -36466,11 +36467,11 @@
   ],
   "realized_pnl": 406.5883,
   "last_prices": {
-    "ETHUSDT": 2046.65,
-    "SOLUSDT": 85.95,
-    "BNBUSDT": 625.83,
-    "TAOUSDT": 343.7,
-    "XRPUSDT": 1.3468,
+    "ETHUSDT": 2050.78,
+    "SOLUSDT": 85.67,
+    "BNBUSDT": 626.18,
+    "TAOUSDT": 341.7,
+    "XRPUSDT": 1.3506,
     "DOGEUSDT": 0.0966
   },
   "seen_trade_ids": {
@@ -36996,10 +36997,12 @@
     874.78,
     874.78,
     874.4,
-    874.4
+    874.4,
+    874.08,
+    874.08
   ],
-  "cycle_count": 301,
-  "total_open_orders": 10,
+  "cycle_count": 305,
+  "total_open_orders": 20,
   "win_loss": {
     "wins": 876,
     "losses": 372,
