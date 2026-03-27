@@ -14,14 +14,14 @@
       "capital": 200.0,
       "trailing_triggered": true,
       "trailing_count": 2,
-      "current_price": 1986.98,
+      "current_price": 1989.66,
       "open_orders": 28,
       "last_trail": "2026-03-27T20:32:04.713668+00:00"
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 81.5482,
-      "range_high": 221.5682,
+      "range_low": 81.7451,
+      "range_high": 221.7651,
       "num_grids": 12,
       "reason": "LOW vol, DOWN trend, ATR=0.39%",
       "active": true,
@@ -31,9 +31,9 @@
       "fills": 1,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 5,
-      "current_price": 82.79,
-      "last_trail": "2026-03-27T20:56:56.012413+00:00",
+      "trailing_count": 9,
+      "current_price": 82.97,
+      "last_trail": "2026-03-27T21:27:58.751102+00:00",
       "open_orders": 0
     },
     "BNBUSDT": {
@@ -50,26 +50,26 @@
       "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 611.23,
+      "current_price": 611.7,
       "open_orders": 0
     },
     "TAOUSDT": {
       "action": "REBALANCE",
-      "range_low": 314.806,
-      "range_high": 454.826,
+      "range_low": 314.1165,
+      "range_high": 454.1365,
       "num_grids": 12,
       "reason": "LOW vol, DOWN trend, ATR=0.34%",
       "active": true,
       "last_rebalance": null,
       "orders_placed": 10,
       "realized_pnl": 0,
-      "fills": 8,
+      "fills": 9,
       "capital": 200.0,
       "trailing_triggered": true,
-      "trailing_count": 4,
-      "current_price": 319.6,
-      "open_orders": 23,
-      "last_trail": "2026-03-27T20:56:59.334381+00:00"
+      "trailing_count": 8,
+      "current_price": 318.9,
+      "open_orders": 42,
+      "last_trail": "2026-03-27T21:28:02.423834+00:00"
     },
     "XRPUSDT": {
       "action": "REBALANCE",
@@ -85,7 +85,7 @@
       "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 1.3264,
+      "current_price": 1.3305,
       "last_trail": "2026-03-27T20:32:13.907979+00:00",
       "open_orders": 0
     },
@@ -95,7 +95,7 @@
     }
   },
   "last_ai_check": "2026-03-27T20:16:11.864828+00:00",
-  "total_fills": 2929,
+  "total_fills": 2930,
   "start_time": "2026-03-25T04:46:38.077144+00:00",
   "total_rebalances": 37,
   "ai_log": [
@@ -1403,18 +1403,18 @@
     "XRPUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 1986.98,
-    "SOLUSDT": 82.79,
-    "BNBUSDT": 611.23,
-    "TAOUSDT": 319.6,
-    "XRPUSDT": 1.3264
+    "ETHUSDT": 1989.66,
+    "SOLUSDT": 82.97,
+    "BNBUSDT": 611.7,
+    "TAOUSDT": 318.9,
+    "XRPUSDT": 1.3305
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0048,
-    "SOLUSDT": 0.0075,
-    "BNBUSDT": 0.0034,
-    "TAOUSDT": 0.0137,
-    "XRPUSDT": 0.0065
+    "ETHUSDT": 0.005,
+    "SOLUSDT": 0.0076,
+    "BNBUSDT": 0.0041,
+    "TAOUSDT": 0.0158,
+    "XRPUSDT": 0.0061
   },
   "daily_reset_date": "2026-03-28",
   "daily_start_pnl": 403.184,
@@ -37877,15 +37877,29 @@
       "inventory": 0.3786,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 12646,
+      "symbol": "TAOUSDT",
+      "side": "BUY",
+      "price": 319.0,
+      "qty": 0.0627,
+      "fee": 0.0,
+      "time": "21:09:34",
+      "timestamp": "2026-03-27T21:09:34Z",
+      "pnl": null,
+      "inventory": 0.4413,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
   "realized_pnl": 401.5567,
   "last_prices": {
-    "ETHUSDT": 1986.98,
-    "SOLUSDT": 82.79,
-    "BNBUSDT": 611.23,
-    "TAOUSDT": 319.6,
-    "XRPUSDT": 1.3264,
+    "ETHUSDT": 1989.13,
+    "SOLUSDT": 82.99,
+    "BNBUSDT": 611.7,
+    "TAOUSDT": 318.9,
+    "XRPUSDT": 1.3306,
     "DOGEUSDT": 0.0966
   },
   "seen_trade_ids": {
@@ -38368,7 +38382,8 @@
       12639,
       12640,
       12641,
-      12642
+      12642,
+      12646
     ]
   },
   "inventory": {
@@ -38376,7 +38391,7 @@
     "SOLUSDT": -3.296,
     "BNBUSDT": -0.003,
     "XRPUSDT": -53.5,
-    "TAOUSDT": 0.3786
+    "TAOUSDT": 0.4413
   },
   "equity_history": [
     500.0,
@@ -38577,10 +38592,12 @@
     868.21,
     868.21,
     868.21,
+    868.21,
+    868.21,
     868.21
   ],
-  "cycle_count": 501,
-  "total_open_orders": 51,
+  "cycle_count": 505,
+  "total_open_orders": 70,
   "win_loss": {
     "wins": 885,
     "losses": 384,
@@ -38832,7 +38849,7 @@
       "roi_pct": -0.941
     }
   },
-  "sharpe_ratio": 13.36,
+  "sharpe_ratio": 13.33,
   "max_drawdown_pct": 0.9526,
   "last_snapshot_date": "2026-03-25",
   "start_capital": 500.0
