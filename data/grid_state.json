@@ -2,13 +2,13 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 2026.8444,
-      "range_high": 2236.8444,
+      "range_low": 2036.2708,
+      "range_high": 2186.2708,
       "num_grids": 14,
       "confidence": 0.85,
-      "reason": "Tighten range by 10% and increase num_grids due to WR > 75%",
+      "reason": "WR 80% tighten range",
       "active": true,
-      "last_rebalance": "2026-03-27T05:32:27.091961+00:00",
+      "last_rebalance": "2026-03-27T07:36:06.637023+00:00",
       "orders_placed": 11,
       "realized_pnl": 12.7869,
       "fills": 73,
@@ -16,34 +16,34 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 11,
-      "current_price": 2069.48
+      "current_price": 2067.39
     },
     "SOLUSDT": {
-      "action": "CANCEL",
-      "range_low": 84.5524,
-      "range_high": 94.8924,
-      "num_grids": 0,
-      "confidence": 0.0,
-      "reason": "PF < 1.0",
+      "action": "REBALANCE",
+      "range_low": 84.582,
+      "range_high": 94.582,
+      "num_grids": 10,
+      "confidence": 0.65,
+      "reason": "WR 56.9% widen range, low vol",
       "active": true,
-      "last_rebalance": "2026-03-27T05:32:27.091961+00:00",
+      "last_rebalance": "2026-03-27T07:36:06.637023+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 1,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 14,
+      "trailing_count": 4,
       "open_orders": 0,
-      "current_price": 86.25,
-      "last_trail": "2026-03-27T07:10:59.818196+00:00"
+      "current_price": 85.88,
+      "last_trail": "2026-03-27T07:57:10.388604+00:00"
     },
     "BNBUSDT": {
       "action": "REBALANCE",
-      "range_low": 617.792,
-      "range_high": 628.132,
-      "num_grids": 10,
+      "range_low": 619.043,
+      "range_high": 629.043,
+      "num_grids": 12,
       "confidence": 0.75,
-      "reason": "Tighten range by 10% and increase num_grids due to WR > 75%",
+      "reason": "WR 73.1% tighten range, low vol",
       "active": true,
       "last_rebalance": null,
       "orders_placed": 0,
@@ -53,43 +53,43 @@
       "trailing_triggered": true,
       "trailing_count": 2,
       "open_orders": 0,
-      "current_price": 629.59,
-      "last_trail": "2026-03-27T05:48:25.663802+00:00"
+      "current_price": 628.49,
+      "last_trail": "2026-03-27T07:41:47.214020+00:00"
     },
     "TAOUSDT": {
       "active": false,
-      "reason": "PF < 1.0",
+      "reason": "PF 0.08, WR 22.2%",
       "capital": 200.0,
-      "current_price": 336.6
+      "current_price": 335.2
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": -3.806,
-      "range_high": 6.534,
-      "num_grids": 10,
+      "range_low": 1.3381,
+      "range_high": 1.5041,
+      "num_grids": 8,
       "confidence": 0.55,
-      "reason": "spacing < 0.4% expand range",
+      "reason": "WR 51.7%, spacing 76.02%",
       "active": true,
-      "last_rebalance": null,
+      "last_rebalance": "2026-03-27T07:36:06.637023+00:00",
       "orders_placed": 0,
       "realized_pnl": 0.6209,
       "fills": 4,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 14,
+      "trailing_count": 4,
       "open_orders": 0,
-      "current_price": 1.364,
-      "last_trail": "2026-03-27T07:26:24.795415+00:00"
+      "current_price": 1.3583,
+      "last_trail": "2026-03-27T07:57:14.225923+00:00"
     },
     "DOGEUSDT": {
       "current_price": 0.0966,
       "capital": 0.0
     }
   },
-  "last_ai_check": "2026-03-27T05:32:27.091961+00:00",
+  "last_ai_check": "2026-03-27T07:36:06.637023+00:00",
   "total_fills": 2891,
   "start_time": "2026-03-25T04:46:38.077144+00:00",
-  "total_rebalances": 28,
+  "total_rebalances": 29,
   "ai_log": [
     {
       "type": "ai",
@@ -1070,6 +1070,41 @@
       "symbol": "XRP",
       "reason": "spacing < 0.4% expand range",
       "msg": "[05:32] XRP: REBALANCE \u2014 spacing < 0.4% expand range"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "WR 80% tighten range",
+      "msg": "[07:36] ETH: REBALANCE \u2014 WR 80% tighten range"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "SOL",
+      "reason": "WR 56.9% widen range, low vol",
+      "msg": "[07:36] SOL: REBALANCE \u2014 WR 56.9% widen range, low vol"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "BNB",
+      "reason": "WR 73.1% tighten range, low vol",
+      "msg": "[07:36] BNB: REBALANCE \u2014 WR 73.1% tighten range, low vol"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "TAO",
+      "reason": "PF 0.08, WR 22.2%",
+      "msg": "[07:36] TAO: CANCEL \u2014 PF 0.08, WR 22.2%"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "XRP",
+      "reason": "WR 51.7%, spacing 76.02%",
+      "msg": "[07:36] XRP: REBALANCE \u2014 WR 51.7%, spacing 76.02%"
     }
   ],
   "grid_capitals": {
@@ -1080,18 +1115,18 @@
     "XRPUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2069.48,
-    "SOLUSDT": 86.25,
-    "BNBUSDT": 629.59,
-    "TAOUSDT": 336.6,
-    "XRPUSDT": 1.364
+    "ETHUSDT": 2067.39,
+    "SOLUSDT": 85.88,
+    "BNBUSDT": 628.49,
+    "TAOUSDT": 335.2,
+    "XRPUSDT": 1.3583
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.006,
-    "SOLUSDT": 0.0055,
-    "BNBUSDT": 0.0035,
-    "TAOUSDT": 0.0106,
-    "XRPUSDT": 0.0046
+    "ETHUSDT": 0.0058,
+    "SOLUSDT": 0.0048,
+    "BNBUSDT": 0.0027,
+    "TAOUSDT": 0.0114,
+    "XRPUSDT": 0.0038
   },
   "daily_reset_date": "2026-03-27",
   "daily_start_pnl": 407.8865,
@@ -37026,11 +37061,11 @@
   ],
   "realized_pnl": 409.3364,
   "last_prices": {
-    "ETHUSDT": 2069.52,
-    "SOLUSDT": 86.25,
-    "BNBUSDT": 629.59,
-    "TAOUSDT": 336.6,
-    "XRPUSDT": 1.3639,
+    "ETHUSDT": 2067.19,
+    "SOLUSDT": 85.87,
+    "BNBUSDT": 628.49,
+    "TAOUSDT": 335.0,
+    "XRPUSDT": 1.3585,
     "DOGEUSDT": 0.0966
   },
   "seen_trade_ids": {
@@ -37630,9 +37665,11 @@
     876.35,
     876.35,
     876.35,
+    876.35,
+    876.35,
     876.35
   ],
-  "cycle_count": 396,
+  "cycle_count": 400,
   "total_open_orders": 0,
   "win_loss": {
     "wins": 885,
@@ -37879,7 +37916,7 @@
       "roi_pct": 0.869
     }
   },
-  "sharpe_ratio": 15.9,
+  "sharpe_ratio": 15.85,
   "max_drawdown_pct": 0.2829,
   "last_snapshot_date": "2026-03-25",
   "start_capital": 500.0
