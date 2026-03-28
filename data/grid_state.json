@@ -2,8 +2,8 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 1916.46,
-      "range_high": 2056.7,
+      "range_low": 1973.3096,
+      "range_high": 2113.5496,
       "num_grids": 12,
       "reason": "LOW vol, DOWN trend, ATR=0.18%",
       "active": true,
@@ -11,12 +11,14 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 200.0
+      "capital": 200.0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 78.86,
-      "range_high": 85.85,
+      "range_low": 81.9126,
+      "range_high": 88.9026,
       "num_grids": 12,
       "reason": "LOW vol, DOWN trend, ATR=0.24%",
       "active": true,
@@ -24,12 +26,14 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "BNBUSDT": {
       "action": "REBALANCE",
-      "range_low": 592.32,
-      "range_high": 626.69,
+      "range_low": 604.4157,
+      "range_high": 638.7857,
       "num_grids": 12,
       "reason": "LOW vol, DOWN trend, ATR=0.13%",
       "active": true,
@@ -37,12 +41,14 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "TAOUSDT": {
       "action": "REBALANCE",
-      "range_low": 306.22,
-      "range_high": 331.99,
+      "range_low": 317.367,
+      "range_high": 343.137,
       "num_grids": 15,
       "reason": "MEDIUM vol, DOWN trend, ATR=0.43%",
       "active": true,
@@ -50,12 +56,14 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 200.0
+      "capital": 200.0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.271,
-      "range_high": 1.383,
+      "range_low": 1.3204,
+      "range_high": 1.4324,
       "num_grids": 12,
       "reason": "LOW vol, DOWN trend, ATR=0.18%",
       "active": true,
@@ -63,7 +71,9 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     }
   },
   "last_ai_check": "2026-03-28T12:22:24.141039+00:00",
@@ -130,5 +140,94 @@
     "BNBUSDT": 0,
     "TAOUSDT": 200.0,
     "XRPUSDT": 0
-  }
+  },
+  "prev_prices": {
+    "ETHUSDT": 2003.41,
+    "SOLUSDT": 83.19,
+    "BNBUSDT": 613.63,
+    "TAOUSDT": 322.2,
+    "XRPUSDT": 1.3405
+  },
+  "prev_bb_width": {
+    "ETHUSDT": 0.0035,
+    "SOLUSDT": 0.0061,
+    "BNBUSDT": 0.0028,
+    "TAOUSDT": 0.0239,
+    "XRPUSDT": 0.0024
+  },
+  "daily_reset_date": "2026-03-28",
+  "daily_start_pnl": 0,
+  "daily_start_fills": 0,
+  "daily_peak_pnl": 0,
+  "fills_log": [],
+  "realized_pnl": 0.0,
+  "last_prices": {
+    "ETHUSDT": 2003.36,
+    "SOLUSDT": 83.16,
+    "BNBUSDT": 613.62,
+    "TAOUSDT": 322.2,
+    "XRPUSDT": 1.3405
+  },
+  "analytics": {
+    "ETHUSDT": {
+      "wins": 0,
+      "losses": 0,
+      "wr": 0,
+      "avg_win": 0,
+      "avg_loss": 0,
+      "best": 0,
+      "worst": 0,
+      "avg_pnl": 0,
+      "total_trades": 0
+    },
+    "SOLUSDT": {
+      "wins": 0,
+      "losses": 0,
+      "wr": 0,
+      "avg_win": 0,
+      "avg_loss": 0,
+      "best": 0,
+      "worst": 0,
+      "avg_pnl": 0,
+      "total_trades": 0
+    },
+    "BNBUSDT": {
+      "wins": 0,
+      "losses": 0,
+      "wr": 0,
+      "avg_win": 0,
+      "avg_loss": 0,
+      "best": 0,
+      "worst": 0,
+      "avg_pnl": 0,
+      "total_trades": 0
+    },
+    "TAOUSDT": {
+      "wins": 0,
+      "losses": 0,
+      "wr": 0,
+      "avg_win": 0,
+      "avg_loss": 0,
+      "best": 0,
+      "worst": 0,
+      "avg_pnl": 0,
+      "total_trades": 0
+    },
+    "XRPUSDT": {
+      "wins": 0,
+      "losses": 0,
+      "wr": 0,
+      "avg_win": 0,
+      "avg_loss": 0,
+      "best": 0,
+      "worst": 0,
+      "avg_pnl": 0,
+      "total_trades": 0
+    }
+  },
+  "equity_history": [
+    500.0
+  ],
+  "cycle_count": 1,
+  "total_open_orders": 0
 }
