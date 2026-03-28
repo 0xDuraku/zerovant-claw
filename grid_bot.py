@@ -1,4 +1,22 @@
 import os, time, json, logging, hmac, hashlib
+import importlib.util as _ilu
+
+def _load_scanner():
+    try:
+        spec = _ilu.spec_from_file_location("pair_scanner", "/root/zerovantclaw/pair_scanner.py")
+        mod = _ilu.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+    except: return None
+
+def get_best_pairs(n=2):
+    try:
+        scanner = _load_scanner()
+        if scanner:
+            pairs = scanner.scan_best_pairs(top_n=n)
+            return [p['symbol'] for p in pairs]
+    except: pass
+    return ["ETHUSDT", "TAOUSDT"]
 from datetime import datetime, timezone, timedelta
 from urllib.parse import urlencode
 import requests
@@ -212,42 +230,9 @@ ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 VENICE_KEY    = os.environ.get("VENICE_API_KEY", "")
 USE_VENICE    = bool(VENICE_KEY)  # Auto-switch ke Venice jika key tersedia
 
-ASSETS = ["ETHUSDT", "SOLUSDT", "BNBUSDT", "TAOUSDT", "XRPUSDT"]
-# ── RISK MANAGEMENT ────────────────────────────────────
-MAX_DAILY_LOSS_PCT  = 0.05   # Stop semua grid kalau loss >5% modal hari ini
-ASSET_STOP_LOSS_PCT = 0.15   # Pause asset kalau rugi >15% dari capital asset tsb
-ASSET_STOP_COOLDOWN = 4      # Jam cooldown sebelum asset bisa aktif lagi
-RANGE_BREACH_PCT    = 0.15   # Cancel grid kalau harga keluar range >15%
-MAX_DRAWDOWN_PCT    = 0.10   # Emergency stop kalau drawdown >10% dari peak
-DAILY_PROFIT_TARGET = 0.02   # Optional: lock profit kalau sudah +2% hari ini
-
-# Flash crash / news protection
-FLASH_CRASH_PCT     = 0.05   # Cancel semua kalau 1 candle bergerak >5%
-TRAILING_STOP_PCT   = 0.03   # Geser grid ke atas kalau harga naik >3% dari range_low
-TRAILING_LOCK_PCT   = 0.015  # Lock profit — range_low naik mengikuti harga - 1.5%
-VOLUME_SPIKE_MULT   = 5.0    # Volume spike = volume > 5x rata-rata 20 candle
-BB_EXPLOSION_MULT   = 2.5    # BB width explode = >2.5x dari BB sebelumnya
-COOLDOWN_MINUTES    = 30     # Pause trading setelah extreme event
-
-# Optimized for $500 real capital — weighted by backtest ROI
-# DOGE/XRP/SOL overweighted (highest ROI), BTC underweighted (lowest ROI per $)
-# $500 real capital — BTC removed (min notional too high for small capital)
-# Reallocated BTC+BNB share to DOGE/XRP/SOL (higher ROI anyway)
-GRID_CONFIG_TESTNET = {
-    "ETHUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.10},
-    "SOLUSDT":  {"capital": 0,    "num_grids": 10, "range_pct": 0.12},
-    "BNBUSDT":  {"capital": 0,    "num_grids": 10, "range_pct": 0.08},
-    "TAOUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.08},
-    "XRPUSDT":  {"capital": 0, "num_grids": 10, "range_pct": 0.12},
-}
-GRID_CONFIG_MAINNET = {
-    "ETHUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.10},
-    "SOLUSDT":  {"capital": 0,    "num_grids": 10, "range_pct": 0.12},
-    "BNBUSDT":  {"capital": 0,    "num_grids": 10, "range_pct": 0.08},
-    "TAOUSDT":  {"capital": 200,  "num_grids": 10, "range_pct": 0.08},
-    "XRPUSDT":  {"capital": 0,  "num_grids": 10, "range_pct": 0.12},
-}
-GRID_CONFIG = GRID_CONFIG_MAINNET if MAINNET_MODE else GRID_CONFIG_TESTNET
+# Dynamic pair config — loaded from state, updated by pair_scanner
+ASSETS = ["ETHUSDT", "TAOUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT", "BTCUSDT"]  # all possible pairs
+GRID_CONFIG = {sym: {"capital": 0, "num_grids": 10, "range_pct": 0.08} for sym in ASSETS}
 # Total: $500 | BTC removed (min order $5, $30/10grids=$3 too small)
 # Expected monthly: ~$55/month = 11% monthly ROI
 CYCLE_MINUTES  = 15
@@ -1323,6 +1308,29 @@ def run():
     cycle = 0
     while True:
         cycle += 1
+        # Auto-switch pairs setiap 16 cycles (4 jam)
+        if cycle % 16 == 1 and cycle > 1:
+            best = get_best_pairs(2)
+            current = [sym for sym, cfg in GRID_CONFIG.items() if cfg.get('capital',0) > 0]
+            if sorted(best) != sorted(current):
+                log.info(f"  PAIR SWITCH: {current} -> {best}")
+                total = sum(cfg['capital'] for cfg in GRID_CONFIG.values() if cfg['capital'] > 0)
+                for sym in GRID_CONFIG:
+                    GRID_CONFIG[sym]['capital'] = 0
+                    state.setdefault('grids', {}).setdefault(sym, {})['capital'] = 0
+                for i, sym in enumerate(best):
+                    if sym not in GRID_CONFIG:
+                        GRID_CONFIG[sym] = {'capital': 0, 'num_grids': 10, 'range_pct': 0.08}
+                        state.setdefault('grids', {}).setdefault(sym, {})
+                    cap = round(total * (0.6 if i == 0 else 0.4), 2)
+                    GRID_CONFIG[sym]['capital'] = cap
+                    state['grids'][sym]['capital'] = cap
+                    state['grids'][sym]['range_low'] = 0
+                    state['grids'][sym]['range_high'] = 0
+                state['grid_capitals'] = {sym: GRID_CONFIG[sym]['capital'] for sym in GRID_CONFIG}
+                log.info(f"  New allocation: {[(s, GRID_CONFIG[s]['capital']) for s in best]}")
+            else:
+                log.info(f"  Pairs optimal: {current}")
         # Sync GRID_CONFIG dari state di awal setiap cycle
         for sym, g in state.get('grids', {}).items():
             if sym in GRID_CONFIG and float(g.get('capital', 0)) > 0:
