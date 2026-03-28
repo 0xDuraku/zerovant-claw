@@ -2,77 +2,55 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 1994.3689,
-      "range_high": 2156.3889,
+      "range_low": 1939.37,
+      "range_high": 2100.99,
       "num_grids": 12,
       "confidence": 0.85,
       "reason": "WR 80% tighten range",
       "active": true,
-      "last_rebalance": "2026-03-28T15:54:46.236372+00:00",
-      "orders_placed": 10,
+      "last_rebalance": "2026-03-28T17:55:12.166558+00:00",
+      "orders_placed": 8,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 200.0,
-      "current_price": 2021.07,
-      "trailing_triggered": true,
-      "trailing_count": 1
+      "capital": 200.0
     },
     "SOLUSDT": {
-      "action": "REBALANCE",
-      "range_low": 82.0012,
-      "range_high": 89.0012,
-      "num_grids": 12,
-      "confidence": 0.65,
-      "reason": "spacing > 193% reduce grids",
-      "active": true,
-      "last_rebalance": "2026-03-28T15:54:46.236372+00:00",
-      "orders_placed": 0,
-      "realized_pnl": 0,
-      "fills": 0,
-      "capital": 0,
-      "current_price": 83.25,
-      "trailing_triggered": true,
-      "trailing_count": 3,
-      "last_trail": "2026-03-28T17:45:50.495367+00:00"
+      "active": false,
+      "reason": "params optimal",
+      "capital": 0
     },
     "BNBUSDT": {
       "action": "REBALANCE",
-      "range_low": 600,
-      "range_high": 630,
-      "num_grids": 12,
-      "confidence": 0.75,
+      "range_low": 590,
+      "range_high": 640,
+      "num_grids": 14,
+      "confidence": 0.8,
       "reason": "WR 73% tighten range",
       "active": true,
-      "last_rebalance": "2026-03-28T15:54:46.236372+00:00",
+      "last_rebalance": "2026-03-28T17:55:12.166558+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0,
-      "current_price": 616.17
+      "capital": 0
     },
     "TAOUSDT": {
       "active": false,
       "reason": "PF < 1.0",
-      "capital": 200.0,
-      "current_price": 317.7
+      "capital": 200.0
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": -2.152,
-      "range_high": 4.848,
-      "num_grids": 12,
-      "confidence": 0.55,
+      "range_low": 1.291,
+      "range_high": 1.399,
+      "num_grids": 10,
+      "confidence": 0.75,
       "reason": "spacing < 0.4% expand range",
       "active": true,
-      "last_rebalance": null,
+      "last_rebalance": "2026-03-28T17:55:12.166558+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0,
-      "current_price": 1.3473,
-      "trailing_triggered": true,
-      "trailing_count": 1,
-      "last_trail": "2026-03-28T17:30:13.706920+00:00"
+      "capital": 0
     },
     "DOGEUSDT": {
       "current_price": 0.0966,
@@ -80,14 +58,14 @@
     },
     "BTCUSDT": {
       "active": false,
-      "reason": "3 TF same direction DOWN",
+      "reason": "All 3 TF same direction DOWN",
       "capital": 0
     }
   },
-  "last_ai_check": "2026-03-28T15:54:46.236372+00:00",
+  "last_ai_check": "2026-03-28T17:55:12.166558+00:00",
   "total_fills": 2943,
   "start_time": "2026-03-25T04:46:38.077144+00:00",
-  "total_rebalances": 47,
+  "total_rebalances": 48,
   "ai_log": [
     {
       "type": "ai",
@@ -1754,6 +1732,48 @@
       "symbol": "BTC",
       "reason": "3 TF same direction DOWN",
       "msg": "[15:54] BTC: CANCEL \u2014 3 TF same direction DOWN"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "WR 80% tighten range",
+      "msg": "[17:55] ETH: REBALANCE \u2014 WR 80% tighten range"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "TAO",
+      "reason": "PF < 1.0",
+      "msg": "[17:55] TAO: CANCEL \u2014 PF < 1.0"
+    },
+    {
+      "type": "ai",
+      "action": "KEEP",
+      "symbol": "SOL",
+      "reason": "params optimal",
+      "msg": "[17:55] SOL: KEEP \u2014 params optimal"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "BNB",
+      "reason": "WR 73% tighten range",
+      "msg": "[17:55] BNB: REBALANCE \u2014 WR 73% tighten range"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "XRP",
+      "reason": "spacing < 0.4% expand range",
+      "msg": "[17:55] XRP: REBALANCE \u2014 spacing < 0.4% expand range"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BTC",
+      "reason": "All 3 TF same direction DOWN",
+      "msg": "[17:55] BTC: CANCEL \u2014 All 3 TF same direction DOWN"
     }
   ],
   "grid_capitals": {
