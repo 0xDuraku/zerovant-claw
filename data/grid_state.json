@@ -1,67 +1,29 @@
 {
   "grids": {
     "ETHUSDT": {
-      "action": "REBALANCE",
-      "range_low": 1963.893,
-      "range_high": 2123.633,
-      "num_grids": 12,
-      "confidence": 0.85,
-      "reason": "WR 80% tighten range",
-      "active": true,
-      "last_rebalance": "2026-03-28T12:33:01.530512+00:00",
-      "orders_placed": 11,
-      "realized_pnl": 4.5346,
-      "fills": 111,
-      "capital": 200.0,
-      "current_price": 2004.64,
-      "trailing_triggered": true,
-      "trailing_count": 1
+      "active": false,
+      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "capital": 200.0
     },
     "SOLUSDT": {
       "active": false,
-      "reason": "params optimal",
-      "capital": 0,
-      "current_price": 83.0
+      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "capital": 0
     },
     "BNBUSDT": {
-      "action": "REBALANCE",
-      "range_low": 602.8102,
-      "range_high": 642.8102,
-      "num_grids": 12,
-      "confidence": 0.75,
-      "reason": "WR > 75% tighten range",
-      "active": true,
-      "last_rebalance": "2026-03-28T12:33:01.530512+00:00",
-      "orders_placed": 0,
-      "realized_pnl": 0,
-      "fills": 0,
-      "capital": 0,
-      "current_price": 613.92,
-      "trailing_triggered": true,
-      "trailing_count": 1
+      "active": false,
+      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "capital": 0
     },
     "TAOUSDT": {
       "active": false,
-      "reason": "PF < 1.0",
-      "capital": 200.0,
-      "current_price": 319.8
+      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "capital": 200.0
     },
     "XRPUSDT": {
-      "action": "REBALANCE",
-      "range_low": 1.3174,
-      "range_high": 1.4244,
-      "num_grids": 12,
-      "confidence": 0.55,
-      "reason": "spacing < 0.4% expand range",
-      "active": true,
-      "last_rebalance": "2026-03-28T12:33:01.530512+00:00",
-      "orders_placed": 0,
-      "realized_pnl": 0.6209,
-      "fills": 4,
-      "capital": 0,
-      "current_price": 1.3427,
-      "trailing_triggered": true,
-      "trailing_count": 1
+      "active": false,
+      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "capital": 0
     },
     "DOGEUSDT": {
       "current_price": 0.0966,
@@ -73,7 +35,7 @@
       "capital": 0
     }
   },
-  "last_ai_check": "2026-03-28T12:33:01.530512+00:00",
+  "last_ai_check": null,
   "total_fills": 2943,
   "start_time": "2026-03-25T04:46:38.077144+00:00",
   "total_rebalances": 45,
@@ -1663,25 +1625,24 @@
   ],
   "grid_capitals": {
     "ETHUSDT": 200.0,
-    "TAOUSDT": 200.0,
     "SOLUSDT": 0,
     "BNBUSDT": 0,
-    "XRPUSDT": 0,
-    "BTCUSDT": 0
+    "TAOUSDT": 200.0,
+    "XRPUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2004.64,
-    "SOLUSDT": 83.0,
-    "BNBUSDT": 613.92,
-    "TAOUSDT": 319.8,
-    "XRPUSDT": 1.3427
+    "ETHUSDT": 2026.66,
+    "SOLUSDT": 83.45,
+    "BNBUSDT": 616.14,
+    "TAOUSDT": 325.5,
+    "XRPUSDT": 1.3496
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0026,
-    "SOLUSDT": 0.0039,
-    "BNBUSDT": 0.0024,
-    "TAOUSDT": 0.0176,
-    "XRPUSDT": 0.0024
+    "ETHUSDT": 0.009,
+    "SOLUSDT": 0.0049,
+    "BNBUSDT": 0.0045,
+    "TAOUSDT": 0.0217,
+    "XRPUSDT": 0.0056
   },
   "daily_reset_date": "2026-03-28",
   "daily_start_pnl": 403.184,
@@ -39376,5 +39337,6 @@
   "sharpe_ratio": 11.53,
   "max_drawdown_pct": 1.2823,
   "last_snapshot_date": "2026-03-25",
-  "start_capital": 500.0
+  "start_capital": 500.0,
+  "last_extreme_event_time": "2026-03-28T13:54:21.767073+00:00"
 }
