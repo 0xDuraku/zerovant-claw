@@ -1,28 +1,64 @@
 {
   "grids": {
     "ETHUSDT": {
-      "active": false,
-      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "action": "REBALANCE",
+      "range_low": 1945.66,
+      "range_high": 2107.8,
+      "num_grids": 12,
+      "confidence": 0.85,
+      "reason": "WR 80% tighten range",
+      "active": true,
+      "last_rebalance": "2026-03-28T13:54:41.057885+00:00",
+      "orders_placed": 10,
+      "realized_pnl": 0,
+      "fills": 0,
       "capital": 200.0
     },
     "SOLUSDT": {
-      "active": false,
-      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "action": "KEEP",
+      "range_low": 80.112,
+      "range_high": 86.788,
+      "num_grids": 0,
+      "confidence": 0.6,
+      "reason": "params optimal",
+      "active": true,
+      "last_rebalance": "2026-03-28T13:54:41.057885+00:00",
+      "orders_placed": 0,
+      "realized_pnl": 0,
+      "fills": 0,
       "capital": 0
     },
     "BNBUSDT": {
-      "active": false,
-      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "action": "REBALANCE",
+      "range_low": 591.54,
+      "range_high": 640.84,
+      "num_grids": 14,
+      "confidence": 0.75,
+      "reason": "WR 73% tighten range",
+      "active": true,
+      "last_rebalance": "2026-03-28T13:54:41.057885+00:00",
+      "orders_placed": 0,
+      "realized_pnl": 0,
+      "fills": 0,
       "capital": 0
     },
     "TAOUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "reason": "PF < 1.0",
       "capital": 200.0
     },
     "XRPUSDT": {
-      "active": false,
-      "reason": "BB_EXPLOSION: ETH BB exploded 3.5x (0.003\u21920.009)",
+      "action": "REBALANCE",
+      "range_low": 1.3,
+      "range_high": 1.4,
+      "num_grids": 10,
+      "confidence": 0.55,
+      "reason": "spacing < 0.4% expand range",
+      "active": true,
+      "last_rebalance": "2026-03-28T13:54:41.057885+00:00",
+      "orders_placed": 0,
+      "realized_pnl": 0,
+      "fills": 0,
       "capital": 0
     },
     "DOGEUSDT": {
@@ -35,10 +71,10 @@
       "capital": 0
     }
   },
-  "last_ai_check": null,
+  "last_ai_check": "2026-03-28T13:54:41.057885+00:00",
   "total_fills": 2943,
   "start_time": "2026-03-25T04:46:38.077144+00:00",
-  "total_rebalances": 45,
+  "total_rebalances": 46,
   "ai_log": [
     {
       "type": "ai",
@@ -1621,14 +1657,57 @@
       "symbol": "BTC",
       "reason": "All 3 TF same direction DOWN",
       "msg": "[12:33] BTC: CANCEL \u2014 All 3 TF same direction DOWN"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "WR 80% tighten range",
+      "msg": "[13:54] ETH: REBALANCE \u2014 WR 80% tighten range"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "TAO",
+      "reason": "PF < 1.0",
+      "msg": "[13:54] TAO: CANCEL \u2014 PF < 1.0"
+    },
+    {
+      "type": "ai",
+      "action": "KEEP",
+      "symbol": "SOL",
+      "reason": "params optimal",
+      "msg": "[13:54] SOL: KEEP \u2014 params optimal"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "BNB",
+      "reason": "WR 73% tighten range",
+      "msg": "[13:54] BNB: REBALANCE \u2014 WR 73% tighten range"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "XRP",
+      "reason": "spacing < 0.4% expand range",
+      "msg": "[13:54] XRP: REBALANCE \u2014 spacing < 0.4% expand range"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BTC",
+      "reason": "All 3 TF same direction DOWN",
+      "msg": "[13:54] BTC: CANCEL \u2014 All 3 TF same direction DOWN"
     }
   ],
   "grid_capitals": {
     "ETHUSDT": 200.0,
+    "TAOUSDT": 200.0,
     "SOLUSDT": 0,
     "BNBUSDT": 0,
-    "TAOUSDT": 200.0,
-    "XRPUSDT": 0
+    "XRPUSDT": 0,
+    "BTCUSDT": 0
   },
   "prev_prices": {
     "ETHUSDT": 2026.66,
