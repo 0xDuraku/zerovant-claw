@@ -2,64 +2,64 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 1967.7345,
-      "range_high": 2128.0345,
+      "range_low": 1924.8,
+      "range_high": 2085.2,
       "num_grids": 12,
       "confidence": 0.85,
       "reason": "WR 80% tighten range",
       "active": true,
-      "last_rebalance": "2026-03-29T09:31:48.917028+00:00",
+      "last_rebalance": "2026-03-29T11:31:57.525171+00:00",
       "orders_placed": 10,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 200.0,
-      "current_price": 2004.04,
-      "trailing_triggered": true,
-      "trailing_count": 1
+      "capital": 200.0
     },
     "SOLUSDT": {
-      "active": false,
-      "reason": "params optimal",
-      "capital": 0,
-      "current_price": 82.6
+      "action": "REBALANCE",
+      "range_low": 80,
+      "range_high": 85,
+      "num_grids": 15,
+      "confidence": 0.65,
+      "reason": "spacing < 0.4% expand range",
+      "active": true,
+      "last_rebalance": "2026-03-29T11:31:57.525171+00:00",
+      "orders_placed": 0,
+      "realized_pnl": 0,
+      "fills": 0,
+      "capital": 0
     },
     "BNBUSDT": {
       "action": "REBALANCE",
       "range_low": 600,
-      "range_high": 630,
-      "num_grids": 15,
+      "range_high": 625,
+      "num_grids": 10,
       "confidence": 0.75,
       "reason": "WR > 75% tighten range",
       "active": true,
-      "last_rebalance": "2026-03-29T09:31:48.917028+00:00",
+      "last_rebalance": "2026-03-29T11:31:57.525171+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0,
-      "current_price": 613.61
+      "capital": 0
     },
     "TAOUSDT": {
       "active": false,
       "reason": "PF < 1.0",
-      "capital": 200.0,
-      "current_price": 319.6
+      "capital": 200.0
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.3191,
-      "range_high": 1.3991,
+      "range_low": 1.3,
+      "range_high": 1.38,
       "num_grids": 10,
-      "confidence": 0.55,
+      "confidence": 0.6,
       "reason": "spacing < 0.4% expand range",
       "active": true,
-      "last_rebalance": "2026-03-29T09:31:48.917028+00:00",
+      "last_rebalance": "2026-03-29T11:31:57.525171+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0,
-      "current_price": 1.338,
-      "trailing_triggered": true,
-      "trailing_count": 1
+      "capital": 0
     },
     "DOGEUSDT": {
       "current_price": 0.0966,
@@ -67,14 +67,14 @@
     },
     "BTCUSDT": {
       "active": false,
-      "reason": "No trades yet",
+      "reason": "PF < 1.0",
       "capital": 0
     }
   },
-  "last_ai_check": "2026-03-29T09:31:48.917028+00:00",
+  "last_ai_check": "2026-03-29T11:31:57.525171+00:00",
   "total_fills": 2943,
   "start_time": "2026-03-25T04:46:38.077144+00:00",
-  "total_rebalances": 56,
+  "total_rebalances": 57,
   "ai_log": [
     {
       "type": "ai",
@@ -2119,6 +2119,48 @@
       "symbol": "BTC",
       "reason": "No trades yet",
       "msg": "[09:31] BTC: CANCEL \u2014 No trades yet"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "WR 80% tighten range",
+      "msg": "[11:31] ETH: REBALANCE \u2014 WR 80% tighten range"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "TAO",
+      "reason": "PF < 1.0",
+      "msg": "[11:31] TAO: CANCEL \u2014 PF < 1.0"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "SOL",
+      "reason": "spacing < 0.4% expand range",
+      "msg": "[11:31] SOL: REBALANCE \u2014 spacing < 0.4% expand range"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "BNB",
+      "reason": "WR > 75% tighten range",
+      "msg": "[11:31] BNB: REBALANCE \u2014 WR > 75% tighten range"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "XRP",
+      "reason": "spacing < 0.4% expand range",
+      "msg": "[11:31] XRP: REBALANCE \u2014 spacing < 0.4% expand range"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BTC",
+      "reason": "PF < 1.0",
+      "msg": "[11:31] BTC: CANCEL \u2014 PF < 1.0"
     }
   ],
   "grid_capitals": {
