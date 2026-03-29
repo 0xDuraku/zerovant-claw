@@ -12,17 +12,19 @@
       "orders_placed": 11,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 200.0
+      "capital": 200.0,
+      "current_price": 2007.14
     },
     "SOLUSDT": {
       "active": false,
       "reason": "params optimal",
-      "capital": 0
+      "capital": 0,
+      "current_price": 82.1
     },
     "BNBUSDT": {
       "action": "CANCEL",
-      "range_low": 585.5712,
-      "range_high": 634.3688,
+      "range_low": 601.0864,
+      "range_high": 649.884,
       "num_grids": 0,
       "confidence": 1.0,
       "reason": "All 3 TF same direction DOWN",
@@ -31,17 +33,21 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "current_price": 610.24,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "TAOUSDT": {
       "active": false,
       "reason": "PF 0.04 < 1.0",
-      "capital": 200.0
+      "capital": 200.0,
+      "current_price": 318.5
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.274,
-      "range_high": 1.38,
+      "range_low": 1.3078,
+      "range_high": 1.4138,
       "num_grids": 10,
       "confidence": 0.7,
       "reason": "spacing 0.00% < 0.4%",
@@ -50,7 +56,10 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "current_price": 1.3281,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "DOGEUSDT": {
       "current_price": 0.0966,
@@ -2382,18 +2391,18 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2002.68,
-    "SOLUSDT": 81.89,
-    "BNBUSDT": 609.78,
+    "ETHUSDT": 2007.14,
+    "SOLUSDT": 82.1,
+    "BNBUSDT": 610.24,
     "TAOUSDT": 318.5,
-    "XRPUSDT": 1.3247
+    "XRPUSDT": 1.3281
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0037,
-    "SOLUSDT": 0.0041,
-    "BNBUSDT": 0.0023,
+    "ETHUSDT": 0.0043,
+    "SOLUSDT": 0.0047,
+    "BNBUSDT": 0.0024,
     "TAOUSDT": 0.0051,
-    "XRPUSDT": 0.0037
+    "XRPUSDT": 0.0042
   },
   "daily_reset_date": "2026-03-30",
   "daily_start_pnl": 398.8802,
@@ -39056,11 +39065,11 @@
   ],
   "realized_pnl": 398.8802,
   "last_prices": {
-    "ETHUSDT": 2002.49,
-    "SOLUSDT": 81.9,
-    "BNBUSDT": 609.78,
+    "ETHUSDT": 2007.14,
+    "SOLUSDT": 82.11,
+    "BNBUSDT": 610.24,
     "TAOUSDT": 318.5,
-    "XRPUSDT": 1.3247,
+    "XRPUSDT": 1.3277,
     "DOGEUSDT": 0.0966
   },
   "seen_trade_ids": {
