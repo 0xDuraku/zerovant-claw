@@ -1,21 +1,31 @@
 import os, time, json, logging, hmac, hashlib
 import importlib.util as _ilu
 
-def _load_scanner():
+def _load_agent():
     try:
-        spec = _ilu.spec_from_file_location("pair_scanner", "/root/zerovantclaw/pair_scanner.py")
+        spec = _ilu.spec_from_file_location("ai_agent", "/root/zerovantclaw/ai_agent.py")
         mod = _ilu.module_from_spec(spec)
         spec.loader.exec_module(mod)
         return mod
     except: return None
 
 def get_best_pairs(n=2):
+    """Gunakan AI agent untuk pilih pair terbaik"""
     try:
-        scanner = _load_scanner()
-        if scanner:
-            pairs = scanner.scan_best_pairs(top_n=n)
-            return [p['symbol'] for p in pairs]
-    except: pass
+        agent = _load_agent()
+        if agent:
+            # Load state untuk context
+            try:
+                import json as _j
+                _s = _j.load(open("data/grid_state.json"))
+            except:
+                _s = {}
+            decision = agent.ai_agent_decide(_s)
+            active = [p['symbol'] for p in decision.get('pairs',[]) if p.get('action') == 'TRADE']
+            if active:
+                return active[:n]
+    except Exception as e:
+        log.warning(f"  AI agent error: {e}")
     return ["ETHUSDT", "TAOUSDT"]
 from datetime import datetime, timezone, timedelta
 from urllib.parse import urlencode
@@ -908,6 +918,20 @@ def check_trailing_stop(state):
             tg(f"&#128200; <b>TRAILING STOP</b> — {short}\nPrice: <b>${price:.4f}</b> (+{price_vs_low:.1%} from low)\nRange: {range_low:.4f}-{range_high:.4f} → {round(new_low,4):.4f}-{round(new_high,4):.4f}\nLock #{grid.get('trailing_count',0)+1}")
 
     return triggered
+
+# Risk constants
+MAX_DAILY_LOSS_PCT  = 0.05
+ASSET_STOP_LOSS_PCT = 0.15
+ASSET_STOP_COOLDOWN = 4
+RANGE_BREACH_PCT    = 0.15
+MAX_DRAWDOWN_PCT    = 0.10
+DAILY_PROFIT_TARGET = 0.02
+FLASH_CRASH_PCT     = 0.05
+TRAILING_STOP_PCT   = 0.03
+TRAILING_LOCK_PCT   = 0.015
+VOLUME_SPIKE_MULT   = 5.0
+BB_EXPLOSION_MULT   = 2.5
+COOLDOWN_MINUTES    = 30
 
 def detect_extreme_event(analyses, state) -> dict:
     """
