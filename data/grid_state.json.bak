@@ -11,12 +11,12 @@
       "last_rebalance": "2026-03-31T03:57:01.196333+00:00",
       "orders_placed": 10,
       "realized_pnl": 0.8337,
-      "fills": 47,
+      "fills": 50,
       "capital": 200.0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "open_orders": 10,
-      "current_price": 2059.98
+      "open_orders": 7,
+      "current_price": 2060.64
     },
     "SOLUSDT": {
       "action": "KEEP",
@@ -50,13 +50,13 @@
       "fills": 0,
       "capital": 0,
       "open_orders": 0,
-      "current_price": 611.87
+      "current_price": 612.32
     },
     "TAOUSDT": {
       "active": false,
       "reason": "PF 0.06 < 1.0",
       "capital": 200.0,
-      "current_price": 311.4
+      "current_price": 309.8
     },
     "XRPUSDT": {
       "action": "REBALANCE",
@@ -74,7 +74,7 @@
       "trailing_triggered": true,
       "trailing_count": 2,
       "open_orders": 0,
-      "current_price": 1.3217,
+      "current_price": 1.3241,
       "last_trail": "2026-03-31T04:28:49.740900+00:00"
     },
     "DOGEUSDT": {
@@ -97,11 +97,11 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0,
-      "current_price": 67540.0
+      "current_price": 67542.31
     }
   },
   "last_ai_check": "2026-03-31T03:57:01.196333+00:00",
-  "total_fills": 3040,
+  "total_fills": 3043,
   "start_time": "2026-03-25T04:46:38.077144+00:00",
   "total_rebalances": 78,
   "ai_log": [
@@ -3006,20 +3006,20 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2059.98,
-    "TAOUSDT": 311.4,
+    "ETHUSDT": 2060.64,
+    "TAOUSDT": 309.8,
     "SOLUSDT": 83.36,
-    "BNBUSDT": 611.87,
-    "XRPUSDT": 1.3217,
-    "BTCUSDT": 67540.0
+    "BNBUSDT": 612.32,
+    "XRPUSDT": 1.3241,
+    "BTCUSDT": 67542.31
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0196,
-    "TAOUSDT": 0.0108,
-    "SOLUSDT": 0.0135,
-    "BNBUSDT": 0.0089,
+    "ETHUSDT": 0.0171,
+    "TAOUSDT": 0.0114,
+    "SOLUSDT": 0.012,
+    "BNBUSDT": 0.0078,
     "XRPUSDT": 0.0098,
-    "BTCUSDT": 0.0142
+    "BTCUSDT": 0.012
   },
   "daily_reset_date": "2026-03-31",
   "daily_start_pnl": 404.0093,
@@ -41036,17 +41036,59 @@
       "inventory": 0.0,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 4259155,
+      "symbol": "ETHUSDT",
+      "side": "BUY",
+      "price": 2052.77,
+      "qty": 0.0097,
+      "fee": 0.0,
+      "time": "04:13:06",
+      "timestamp": "2026-03-31T04:13:06Z",
+      "pnl": null,
+      "inventory": -0.0868,
+      "slippage_pct": 0.0,
+      "is_partial": false
+    },
+    {
+      "tradeId": 4259202,
+      "symbol": "ETHUSDT",
+      "side": "BUY",
+      "price": 2036.21,
+      "qty": 0.0098,
+      "fee": 0.0,
+      "time": "04:13:06",
+      "timestamp": "2026-03-31T04:13:06Z",
+      "pnl": null,
+      "inventory": -0.077,
+      "slippage_pct": 0.0,
+      "is_partial": false
+    },
+    {
+      "tradeId": 4259234,
+      "symbol": "ETHUSDT",
+      "side": "BUY",
+      "price": 2019.66,
+      "qty": 0.0099,
+      "fee": 0.0,
+      "time": "04:13:06",
+      "timestamp": "2026-03-31T04:13:06Z",
+      "pnl": null,
+      "inventory": -0.0671,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
   "realized_pnl": 407.0319,
   "last_prices": {
-    "ETHUSDT": 2059.52,
-    "SOLUSDT": 83.37,
-    "BNBUSDT": 611.94,
-    "TAOUSDT": 311.4,
-    "XRPUSDT": 1.3217,
+    "ETHUSDT": 2060.63,
+    "SOLUSDT": 83.36,
+    "BNBUSDT": 612.32,
+    "TAOUSDT": 309.8,
+    "XRPUSDT": 1.3241,
     "DOGEUSDT": 0.0966,
-    "BTCUSDT": 67560.87
+    "BTCUSDT": 67551.39
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -41474,7 +41516,10 @@
       4244841,
       4247939,
       4247961,
-      4247962
+      4247962,
+      4259155,
+      4259202,
+      4259234
     ],
     "SOLUSDT": [
       612600,
@@ -41645,7 +41690,7 @@
     ]
   },
   "inventory": {
-    "ETHUSDT": -0.0965,
+    "ETHUSDT": -0.0671,
     "SOLUSDT": -3.296,
     "BNBUSDT": -0.003,
     "XRPUSDT": -53.5,
@@ -42088,9 +42133,10 @@
     869.42,
     869.42,
     869.42,
+    869.42,
     869.42
   ],
-  "cycle_count": 958,
+  "cycle_count": 961,
   "total_open_orders": 0,
   "win_loss": {
     "wins": 909,
