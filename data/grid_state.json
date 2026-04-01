@@ -2,40 +2,42 @@
   "grids": {
     "ETHUSDT": {
       "action": "CANCEL",
-      "range_low": 2104.1472,
-      "range_high": 2275.0368,
+      "range_low": 2101.596,
+      "range_high": 2272.3184,
       "num_grids": 0,
-      "reason": "Strong trend (UP), EMA diff 3.00%",
+      "reason": "Strong trend (UP), EMA diff 9.00%",
       "active": true,
-      "last_rebalance": "2026-04-01T11:53:17.000786+00:00",
+      "last_rebalance": "2026-04-01T12:24:23.203946+00:00",
       "orders_placed": 0,
-      "realized_pnl": 6.9205,
-      "fills": 89,
+      "realized_pnl": 0,
+      "fills": 0,
       "capital": 160.0,
       "trailing_triggered": true,
       "trailing_count": 1
     },
     "SOLUSDT": {
-      "action": "REBALANCE",
-      "range_low": 81.9,
-      "range_high": 86.59,
-      "num_grids": 12,
-      "reason": "LOW vol, UP trend, ATR=0.00%",
+      "action": "CANCEL",
+      "range_low": 82.1687,
+      "range_high": 88.8415,
+      "num_grids": 0,
+      "reason": "Strong trend (UP), EMA diff 9.00%",
       "active": true,
-      "last_rebalance": "2026-04-01T11:53:17.000786+00:00",
+      "last_rebalance": "2026-04-01T12:24:23.203946+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 160.0
+      "capital": 160.0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "BNBUSDT": {
       "action": "CANCEL",
-      "range_low": 606.4744,
-      "range_high": 655.7232,
+      "range_low": 605.5485,
+      "range_high": 654.7301,
       "num_grids": 0,
-      "reason": "Strong trend (UP), EMA diff 3.00%",
+      "reason": "Strong trend (UP), EMA diff 9.00%",
       "active": true,
-      "last_rebalance": "2026-04-01T11:53:17.000786+00:00",
+      "last_rebalance": "2026-04-01T12:24:23.203946+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
@@ -44,30 +46,24 @@
       "trailing_count": 1
     },
     "TAOUSDT": {
-      "action": "REBALANCE",
-      "range_low": 305.71,
-      "range_high": 323.2,
-      "num_grids": 12,
-      "reason": "LOW vol, UP trend, ATR=0.00%",
-      "active": true,
-      "last_rebalance": "2026-04-01T11:53:17.000786+00:00",
-      "orders_placed": 0,
-      "realized_pnl": 0,
-      "fills": 2,
+      "active": false,
+      "reason": "Strong trend (UP), EMA diff 8.92%",
       "capital": 0
     },
     "XRPUSDT": {
-      "action": "REBALANCE",
-      "range_low": 1.329,
-      "range_high": 1.405,
-      "num_grids": 12,
-      "reason": "LOW vol, UP trend, ATR=0.00%",
+      "action": "CANCEL",
+      "range_low": 1.3331,
+      "range_high": 1.4413,
+      "num_grids": 0,
+      "reason": "Strong trend (UP), EMA diff 8.87%",
       "active": true,
-      "last_rebalance": "2026-04-01T11:53:17.000786+00:00",
+      "last_rebalance": "2026-04-01T12:24:23.203946+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "DOGEUSDT": {
       "current_price": 0.0966,
@@ -75,12 +71,12 @@
     },
     "BTCUSDT": {
       "action": "CANCEL",
-      "range_low": 67704.9502,
-      "range_high": 73203.1198,
+      "range_low": 67547.5865,
+      "range_high": 73034.5201,
       "num_grids": 0,
-      "reason": "Strong trend (UP), EMA diff 3.00%",
+      "reason": "Strong trend (UP), EMA diff 9.00%",
       "active": true,
-      "last_rebalance": "2026-04-01T11:53:17.000786+00:00",
+      "last_rebalance": "2026-04-01T12:24:23.203946+00:00",
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
@@ -89,10 +85,10 @@
       "trailing_count": 1
     }
   },
-  "last_ai_check": "2026-04-01T11:53:17.000786+00:00",
+  "last_ai_check": "2026-04-01T12:24:23.203946+00:00",
   "total_fills": 3088,
   "start_time": "2026-03-25T04:46:38.077144+00:00",
-  "total_rebalances": 93,
+  "total_rebalances": 94,
   "ai_log": [
     {
       "type": "ai",
@@ -3614,6 +3610,48 @@
       "symbol": "BTC",
       "reason": "Strong trend (UP), EMA diff 3.00%",
       "msg": "[11:53] BTC: CANCEL \u2014 Strong trend (UP), EMA diff 3.00%"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "ETH",
+      "reason": "Strong trend (UP), EMA diff 9.00%",
+      "msg": "[12:24] ETH: CANCEL \u2014 Strong trend (UP), EMA diff 9.00%"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "TAO",
+      "reason": "Strong trend (UP), EMA diff 8.92%",
+      "msg": "[12:24] TAO: CANCEL \u2014 Strong trend (UP), EMA diff 8.92%"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "SOL",
+      "reason": "Strong trend (UP), EMA diff 9.00%",
+      "msg": "[12:24] SOL: CANCEL \u2014 Strong trend (UP), EMA diff 9.00%"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BNB",
+      "reason": "Strong trend (UP), EMA diff 9.00%",
+      "msg": "[12:24] BNB: CANCEL \u2014 Strong trend (UP), EMA diff 9.00%"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "XRP",
+      "reason": "Strong trend (UP), EMA diff 8.87%",
+      "msg": "[12:24] XRP: CANCEL \u2014 Strong trend (UP), EMA diff 8.87%"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BTC",
+      "reason": "Strong trend (UP), EMA diff 9.00%",
+      "msg": "[12:24] BTC: CANCEL \u2014 Strong trend (UP), EMA diff 9.00%"
     }
   ],
   "grid_capitals": {
@@ -3625,20 +3663,20 @@
     "BTCUSDT": 240.0
   },
   "prev_prices": {
-    "ETHUSDT": 2136.12,
-    "TAOUSDT": 310.8,
+    "ETHUSDT": 2134.03,
+    "TAOUSDT": 315.4,
     "SOLUSDT": 83.41,
-    "BNBUSDT": 615.61,
-    "XRPUSDT": 1.3551,
-    "BTCUSDT": 68727.12
+    "BNBUSDT": 614.77,
+    "XRPUSDT": 1.3533,
+    "BTCUSDT": 68586.67
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0,
-    "TAOUSDT": 0.0,
-    "SOLUSDT": 0.0,
-    "BNBUSDT": 0.0,
-    "XRPUSDT": 0.0,
-    "BTCUSDT": 0.0
+    "ETHUSDT": 0.0008,
+    "TAOUSDT": 0.0124,
+    "SOLUSDT": 0.0004,
+    "BNBUSDT": 0.001,
+    "XRPUSDT": 0.0018,
+    "BTCUSDT": 0.002
   },
   "daily_reset_date": "2026-04-01",
   "daily_start_pnl": 407.3036,
@@ -42331,13 +42369,13 @@
   ],
   "realized_pnl": 410.0711,
   "last_prices": {
-    "ETHUSDT": 2136.19,
-    "SOLUSDT": 83.44,
-    "BNBUSDT": 615.71,
-    "TAOUSDT": 310.8,
-    "XRPUSDT": 1.3552,
+    "ETHUSDT": 2133.6,
+    "SOLUSDT": 83.42,
+    "BNBUSDT": 614.77,
+    "TAOUSDT": 315.4,
+    "XRPUSDT": 1.3534,
     "DOGEUSDT": 0.0966,
-    "BTCUSDT": 68735.99
+    "BTCUSDT": 68576.23
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -43476,9 +43514,10 @@
     871.74,
     871.74,
     871.74,
+    871.74,
     871.74
   ],
-  "cycle_count": 1142,
+  "cycle_count": 1145,
   "total_open_orders": 0,
   "win_loss": {
     "wins": 920,
@@ -43586,7 +43625,7 @@
     "BTCUSDT": 11.2061
   },
   "total_capital": 413.06,
-  "last_known_balance": 8181.5585235,
+  "last_known_balance": 10000.0,
   "milestones_reached": [
     "wr_70",
     "wr_75",
@@ -43769,9 +43808,9 @@
       "roi_pct": 0.659
     }
   },
-  "sharpe_ratio": 8.57,
+  "sharpe_ratio": 8.56,
   "max_drawdown_pct": 1.904,
   "last_snapshot_date": "2026-03-25",
   "start_capital": 500.0,
-  "last_extreme_event_time": "2026-03-29T22:51:29.163999+00:00"
+  "last_extreme_event_time": "2026-04-01T12:23:04.841549+00:00"
 }
