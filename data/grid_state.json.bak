@@ -14,13 +14,13 @@
       "capital": 224.0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 2141.45,
+      "current_price": 2140.16,
       "open_orders": 2
     },
     "SOLUSDT": {
       "action": "CANCEL",
-      "range_low": 80.1495,
-      "range_high": 86.6574,
+      "range_low": 80.0115,
+      "range_high": 86.5115,
       "num_grids": 0,
       "reason": "Strong trend (UP), EMA diff 3.15%",
       "active": true,
@@ -30,14 +30,15 @@
       "fills": 0,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 1,
-      "current_price": 81.27,
-      "open_orders": 0
+      "trailing_count": 2,
+      "current_price": 81.12,
+      "open_orders": 0,
+      "last_trail": "2026-04-02T00:26:24.344156+00:00"
     },
     "BNBUSDT": {
       "action": "CANCEL",
-      "range_low": 601.6774,
-      "range_high": 650.5446,
+      "range_low": 601.8055,
+      "range_high": 608.3055,
       "num_grids": 0,
       "reason": "Strong trend (UP), EMA diff 3.88%",
       "active": true,
@@ -47,14 +48,15 @@
       "fills": 0,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 1,
-      "current_price": 610.69,
-      "open_orders": 0
+      "trailing_count": 2,
+      "current_price": 610.97,
+      "open_orders": 0,
+      "last_trail": "2026-04-02T00:26:28.150910+00:00"
     },
     "TAOUSDT": {
       "action": "REBALANCE",
-      "range_low": 300.17,
-      "range_high": 317.35,
+      "range_low": 305.547,
+      "range_high": 322.727,
       "num_grids": 12,
       "reason": "LOW vol, UP trend, ATR=0.36%",
       "active": true,
@@ -63,13 +65,15 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 308.2,
-      "open_orders": 0
+      "current_price": 310.2,
+      "open_orders": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "XRPUSDT": {
       "action": "CANCEL",
-      "range_low": 1.3286,
-      "range_high": 1.4366,
+      "range_low": 77.87,
+      "range_high": 84.37,
       "num_grids": 0,
       "reason": "Strong trend (UP), EMA diff 3.71%",
       "active": true,
@@ -80,8 +84,9 @@
       "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 1.3483,
-      "open_orders": 0
+      "current_price": 1.3488,
+      "open_orders": 0,
+      "last_trail": "2026-04-02T00:26:32.125863+00:00"
     },
     "DOGEUSDT": {
       "current_price": 0.0966,
@@ -101,7 +106,7 @@
       "capital": 336.0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 68124.24,
+      "current_price": 68261.67,
       "open_orders": 0
     }
   },
@@ -3935,20 +3940,20 @@
     "BTCUSDT": 336.0
   },
   "prev_prices": {
-    "ETHUSDT": 2141.45,
-    "TAOUSDT": 308.2,
-    "SOLUSDT": 81.27,
-    "BNBUSDT": 610.69,
-    "XRPUSDT": 1.3483,
-    "BTCUSDT": 68124.24
+    "ETHUSDT": 2140.16,
+    "TAOUSDT": 310.2,
+    "SOLUSDT": 81.12,
+    "BNBUSDT": 610.97,
+    "XRPUSDT": 1.3488,
+    "BTCUSDT": 68261.67
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0068,
-    "TAOUSDT": 0.0163,
-    "SOLUSDT": 0.0258,
-    "BNBUSDT": 0.005,
-    "XRPUSDT": 0.0037,
-    "BTCUSDT": 0.003
+    "ETHUSDT": 0.006,
+    "TAOUSDT": 0.0149,
+    "SOLUSDT": 0.0226,
+    "BNBUSDT": 0.0052,
+    "XRPUSDT": 0.0038,
+    "BTCUSDT": 0.0029
   },
   "daily_reset_date": "2026-04-02",
   "daily_start_pnl": 410.0711,
@@ -42655,13 +42660,13 @@
   ],
   "realized_pnl": 411.1601,
   "last_prices": {
-    "ETHUSDT": 2141.45,
-    "SOLUSDT": 81.27,
-    "BNBUSDT": 610.69,
-    "TAOUSDT": 308.2,
-    "XRPUSDT": 1.3482,
+    "ETHUSDT": 2140.16,
+    "SOLUSDT": 81.23,
+    "BNBUSDT": 610.97,
+    "TAOUSDT": 310.2,
+    "XRPUSDT": 1.349,
     "DOGEUSDT": 0.0966,
-    "BTCUSDT": 68125.84
+    "BTCUSDT": 68271.18
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -43795,9 +43800,11 @@
     872.76,
     872.76,
     872.76,
+    872.76,
+    872.76,
     872.76
   ],
-  "cycle_count": 1231,
+  "cycle_count": 1235,
   "total_open_orders": 2,
   "win_loss": {
     "wins": 921,
@@ -44094,7 +44101,7 @@
       "roi_pct": 0.553
     }
   },
-  "sharpe_ratio": 8.58,
+  "sharpe_ratio": 8.57,
   "max_drawdown_pct": 1.904,
   "last_snapshot_date": "2026-03-25",
   "start_capital": 500.0,
