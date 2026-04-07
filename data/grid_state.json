@@ -2,18 +2,20 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 2100.8,
-      "range_high": 2221.0,
+      "range_low": 2142.9168,
+      "range_high": 2263.1168,
       "num_grids": 6,
       "reason": "LOW vol, UP trend, ATR=0.72%",
       "active": true,
       "last_rebalance": "2026-04-07T21:32:41.667219+00:00",
       "orders_placed": 0,
-      "realized_pnl": 11.837,
-      "fills": 36,
-      "capital": 0,
-      "current_price": 2158.39,
-      "open_orders": 1
+      "realized_pnl": 12.0274,
+      "fills": 37,
+      "capital": 384.0,
+      "current_price": 2183.95,
+      "open_orders": 1,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "TAOUSDT": {
       "action": "REBALANCE",
@@ -26,16 +28,16 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0,
+      "capital": 256.0,
       "trailing_triggered": true,
       "trailing_count": 2,
-      "current_price": 327.3,
+      "current_price": 329.3,
       "open_orders": 0
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 81.2428,
-      "range_high": 87.8428,
+      "range_low": 82.8286,
+      "range_high": 89.4286,
       "num_grids": 12,
       "reason": "MEDIUM vol, UP trend, ATR=0.65%",
       "active": true,
@@ -43,16 +45,16 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 336.0,
+      "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 1,
-      "current_price": 83.33,
+      "trailing_count": 2,
+      "current_price": 84.24,
       "open_orders": 0
     },
     "BNBUSDT": {
       "action": "REBALANCE",
-      "range_low": 597.32,
-      "range_high": 631.5,
+      "range_low": 607.6268,
+      "range_high": 641.8068,
       "num_grids": 12,
       "reason": "LOW vol, UP trend, ATR=0.28%",
       "active": true,
@@ -61,13 +63,15 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 613.98,
-      "open_orders": 0
+      "current_price": 617.07,
+      "open_orders": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.3195,
-      "range_high": 1.3935,
+      "range_low": 1.3405,
+      "range_high": 1.4145,
       "num_grids": 10,
       "reason": "LOW vol, UP trend, ATR=0.46%",
       "active": true,
@@ -76,15 +80,15 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 1.3407,
+      "current_price": 1.3618,
       "trailing_triggered": true,
-      "trailing_count": 1,
+      "trailing_count": 2,
       "open_orders": 0
     },
     "BTCUSDT": {
       "action": "REBALANCE",
-      "range_low": 68242.2,
-      "range_high": 72146.86,
+      "range_low": 69726.1307,
+      "range_high": 73630.7908,
       "num_grids": 6,
       "reason": "LOW vol, UP trend, ATR=0.70%",
       "active": true,
@@ -93,17 +97,19 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 70274.94,
-      "open_orders": 0
+      "current_price": 70950.06,
+      "open_orders": 0,
+      "trailing_triggered": true,
+      "trailing_count": 1
     }
   },
   "last_ai_check": "2026-04-07T21:32:41.667219+00:00",
-  "total_fills": 40,
+  "total_fills": 41,
   "start_time": "2026-04-07T01:35:41.433479+00:00",
   "win_loss": {
-    "wins": 13,
+    "wins": 14,
     "losses": 3,
-    "total_win": 12.4714,
+    "total_win": 12.6618,
     "total_loss": -0.6344,
     "best": 1.7352,
     "worst": -0.356
@@ -583,35 +589,33 @@
     }
   ],
   "grid_capitals": {
-    "ETHUSDT": 0,
-    "TAOUSDT": 0,
-    "SOLUSDT": 336.0,
+    "ETHUSDT": 384.0,
+    "TAOUSDT": 256.0,
+    "SOLUSDT": 0,
     "BNBUSDT": 0,
     "XRPUSDT": 0,
-    "BTCUSDT": 0,
-    "ZECUSDT": 0,
-    "AVAXUSDT": 224.0
+    "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2158.39,
-    "TAOUSDT": 327.3,
-    "SOLUSDT": 83.33,
-    "BNBUSDT": 613.98,
-    "XRPUSDT": 1.3407,
-    "BTCUSDT": 70274.94
+    "ETHUSDT": 2183.95,
+    "TAOUSDT": 329.3,
+    "SOLUSDT": 84.24,
+    "BNBUSDT": 617.07,
+    "XRPUSDT": 1.3618,
+    "BTCUSDT": 70950.06
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0218,
-    "TAOUSDT": 0.0367,
-    "SOLUSDT": 0.0299,
-    "BNBUSDT": 0.0114,
-    "XRPUSDT": 0.02,
-    "BTCUSDT": 0.0181
+    "ETHUSDT": 0.028,
+    "TAOUSDT": 0.0408,
+    "SOLUSDT": 0.0332,
+    "BNBUSDT": 0.0137,
+    "XRPUSDT": 0.0264,
+    "BTCUSDT": 0.0227
   },
   "daily_reset_date": "2026-04-08",
   "daily_start_pnl": 0.7965,
   "daily_start_fills": 25,
-  "daily_peak_pnl": 11.837,
+  "daily_peak_pnl": 12.0274,
   "fills_log": [
     {
       "tradeId": 101640,
@@ -1042,7 +1046,7 @@
       "fee": 0.0,
       "time": "17:56:44",
       "timestamp": "2026-04-07T17:56:44Z",
-      "pnl": null,
+      "pnl": 0,
       "inventory": 0.1299,
       "slippage_pct": 0.0,
       "is_partial": false
@@ -1172,16 +1176,30 @@
       "inventory": 0.0029,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 141466,
+      "symbol": "ETHUSDT",
+      "side": "SELL",
+      "price": 2165.46,
+      "qty": 0.0029,
+      "fee": 0.0,
+      "time": "22:32:38",
+      "timestamp": "2026-04-07T22:32:38Z",
+      "pnl": 0.1904,
+      "inventory": 0.0,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
-  "realized_pnl": 11.837,
+  "realized_pnl": 12.0274,
   "last_prices": {
-    "ETHUSDT": 2158.39,
-    "TAOUSDT": 327.3,
-    "SOLUSDT": 83.33,
-    "BNBUSDT": 613.98,
-    "XRPUSDT": 1.3402,
-    "BTCUSDT": 70249.61
+    "ETHUSDT": 2183.95,
+    "TAOUSDT": 329.3,
+    "SOLUSDT": 84.24,
+    "BNBUSDT": 616.93,
+    "XRPUSDT": 1.3609,
+    "BTCUSDT": 70957.99
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -1222,7 +1240,8 @@
       136879,
       137095,
       138164,
-      138188
+      138188,
+      141466
     ],
     "TAOUSDT": [
       694,
@@ -1234,7 +1253,7 @@
     "BTCUSDT": []
   },
   "inventory": {
-    "ETHUSDT": 0.0029,
+    "ETHUSDT": 0.0,
     "TAOUSDT": -0.0243
   },
   "analytics": {
@@ -1374,12 +1393,13 @@
     510.63,
     510.63,
     510.63,
+    510.63,
     510.63
   ],
-  "cycle_count": 122,
-  "total_open_orders": 0,
+  "cycle_count": 124,
+  "total_open_orders": 1,
   "asset_pnl": {
-    "ETHUSDT": 11.837
+    "ETHUSDT": 12.0274
   },
   "sharpe_ratio": 41.06,
   "max_drawdown_pct": 0.034,
