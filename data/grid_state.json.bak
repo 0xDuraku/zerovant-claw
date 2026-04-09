@@ -10,52 +10,52 @@
       "active": true,
       "last_rebalance": "2026-04-09T21:19:10.113227+00:00",
       "orders_placed": 10,
-      "realized_pnl": 0,
-      "fills": 0,
+      "realized_pnl": 0.9045,
+      "fills": 1,
       "capital": 336.0,
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 10,
-      "current_price": 2216.63
+      "current_price": 2231.57
     },
     "TAOUSDT": {
       "active": false,
       "reason": "PF < 1.0",
       "capital": 224.0,
-      "current_price": 336.7
+      "current_price": 338.4
     },
     "SOLUSDT": {
       "active": false,
       "reason": "params optimal",
       "capital": 0,
-      "current_price": 84.45
+      "current_price": 85.26
     },
     "BNBUSDT": {
       "active": false,
       "reason": "All 3 TF same direction DOWN",
       "capital": 0,
-      "current_price": 607.99
+      "current_price": 609.63
     },
     "XRPUSDT": {
       "active": false,
       "reason": "PF < 1.0",
       "capital": 0,
-      "current_price": 1.3558
+      "current_price": 1.364
     },
     "BTCUSDT": {
       "active": false,
       "reason": "PF < 1.0",
       "capital": 0,
-      "current_price": 72396.27
+      "current_price": 72756.04
     }
   },
   "last_ai_check": "2026-04-09T21:19:10.113227+00:00",
-  "total_fills": 90,
+  "total_fills": 91,
   "start_time": "2026-04-07T01:35:41.433479+00:00",
   "win_loss": {
-    "wins": 29,
+    "wins": 30,
     "losses": 6,
-    "total_win": 27.8044,
+    "total_win": 28.7089,
     "total_loss": -1.2444,
     "best": 2.7036,
     "worst": -0.5181
@@ -1929,20 +1929,20 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2216.63,
-    "TAOUSDT": 336.7,
-    "SOLUSDT": 84.45,
-    "BNBUSDT": 607.99,
-    "XRPUSDT": 1.3558,
-    "BTCUSDT": 72396.27
+    "ETHUSDT": 2231.57,
+    "TAOUSDT": 338.4,
+    "SOLUSDT": 85.26,
+    "BNBUSDT": 609.63,
+    "XRPUSDT": 1.364,
+    "BTCUSDT": 72756.04
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0048,
-    "TAOUSDT": 0.009,
-    "SOLUSDT": 0.0063,
-    "BNBUSDT": 0.0035,
-    "XRPUSDT": 0.0032,
-    "BTCUSDT": 0.0061
+    "ETHUSDT": 0.0057,
+    "TAOUSDT": 0.0088,
+    "SOLUSDT": 0.0085,
+    "BNBUSDT": 0.0036,
+    "XRPUSDT": 0.0042,
+    "BTCUSDT": 0.0069
   },
   "daily_reset_date": "2026-04-10",
   "daily_start_pnl": 16.4588,
@@ -3120,7 +3120,7 @@
       "fee": 0.0,
       "time": "17:30:30",
       "timestamp": "2026-04-09T17:30:30Z",
-      "pnl": null,
+      "pnl": 0,
       "inventory": -0.1045,
       "slippage_pct": 0.0,
       "is_partial": false
@@ -3208,16 +3208,30 @@
       "inventory": -0.1632,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 201975,
+      "symbol": "ETHUSDT",
+      "side": "SELL",
+      "price": 2230.08,
+      "qty": 0.0151,
+      "fee": 0.0,
+      "time": "22:17:16",
+      "timestamp": "2026-04-09T22:17:16Z",
+      "pnl": 0.9045,
+      "inventory": -0.1783,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
-  "realized_pnl": 26.56,
+  "realized_pnl": 27.4645,
   "last_prices": {
-    "ETHUSDT": 2215.23,
-    "TAOUSDT": 336.7,
-    "SOLUSDT": 84.45,
-    "BNBUSDT": 608.07,
-    "XRPUSDT": 1.3551,
-    "BTCUSDT": 72362.45
+    "ETHUSDT": 2230.75,
+    "TAOUSDT": 338.4,
+    "SOLUSDT": 85.24,
+    "BNBUSDT": 609.59,
+    "XRPUSDT": 1.3638,
+    "BTCUSDT": 72757.93
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -3308,7 +3322,8 @@
       198723,
       198759,
       198778,
-      198787
+      198787,
+      201975
     ],
     "TAOUSDT": [
       694,
@@ -3320,7 +3335,7 @@
     "BTCUSDT": []
   },
   "inventory": {
-    "ETHUSDT": -0.1632,
+    "ETHUSDT": -0.1783,
     "TAOUSDT": -0.0243
   },
   "analytics": {
@@ -3628,14 +3643,15 @@
     524.19,
     524.19,
     524.19,
+    524.19,
     524.19
   ],
-  "cycle_count": 443,
+  "cycle_count": 445,
   "total_open_orders": 10,
   "asset_pnl": {
-    "ETHUSDT": 26.56
+    "ETHUSDT": 27.4645
   },
-  "sharpe_ratio": 27.14,
+  "sharpe_ratio": 27.02,
   "max_drawdown_pct": 0.034,
   "last_known_balance": 9746.473125,
   "daily_pnl_history": {
