@@ -2,32 +2,32 @@
   "grids": {
     "ETHUSDT": {
       "active": false,
-      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 5.1% in 15min ($326.1000\u2192$309.5000)",
+      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 6.4% in 15min ($309.5000\u2192$289.6000)",
       "capital": 336.0
     },
     "TAOUSDT": {
       "active": false,
-      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 5.1% in 15min ($326.1000\u2192$309.5000)",
+      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 6.4% in 15min ($309.5000\u2192$289.6000)",
       "capital": 224.0
     },
     "SOLUSDT": {
       "active": false,
-      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 5.1% in 15min ($326.1000\u2192$309.5000)",
+      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 6.4% in 15min ($309.5000\u2192$289.6000)",
       "capital": 0
     },
     "BNBUSDT": {
       "active": false,
-      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 5.1% in 15min ($326.1000\u2192$309.5000)",
+      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 6.4% in 15min ($309.5000\u2192$289.6000)",
       "capital": 0
     },
     "XRPUSDT": {
       "active": false,
-      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 5.1% in 15min ($326.1000\u2192$309.5000)",
+      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 6.4% in 15min ($309.5000\u2192$289.6000)",
       "capital": 0
     },
     "BTCUSDT": {
       "active": false,
-      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 5.1% in 15min ($326.1000\u2192$309.5000)",
+      "reason": "FLASH_CRASH: TAO CRASH \ud83d\udd25 6.4% in 15min ($309.5000\u2192$289.6000)",
       "capital": 0
     }
   },
@@ -51,7 +51,7 @@
     "real_wins": 28,
     "real_losses": 8
   },
-  "total_rebalances": 47,
+  "total_rebalances": 48,
   "ai_log": [
     {
       "type": "ai",
@@ -2026,6 +2026,48 @@
       "symbol": "BTC",
       "reason": "PF < 1.0",
       "msg": "[23:53] BTC: CANCEL \u2014 PF < 1.0"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "WR 80% tighten range, trend UP on multiple TFs",
+      "msg": "[00:23] ETH: REBALANCE \u2014 WR 80% tighten range, trend UP on multiple TFs"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "TAO",
+      "reason": "All 3 TFs DOWN, HIGH vol, PF < 1.0",
+      "msg": "[00:23] TAO: CANCEL \u2014 All 3 TFs DOWN, HIGH vol, PF < 1.0"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "SOL",
+      "reason": "LOW vol, trend UP on multiple TFs, spacing < 0.4%",
+      "msg": "[00:23] SOL: REBALANCE \u2014 LOW vol, trend UP on multiple TFs, spacing < 0.4%"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BNB",
+      "reason": "All 3 TFs DOWN, LOW vol, PF < 1.0",
+      "msg": "[00:23] BNB: CANCEL \u2014 All 3 TFs DOWN, LOW vol, PF < 1.0"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "XRP",
+      "reason": "LOW vol, trend UP on multiple TFs, spacing < 0.4%",
+      "msg": "[00:23] XRP: REBALANCE \u2014 LOW vol, trend UP on multiple TFs, spacing < 0.4%"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "BTC",
+      "reason": "LOW vol, trend UP on multiple TFs, spacing < 0.4%",
+      "msg": "[00:23] BTC: REBALANCE \u2014 LOW vol, trend UP on multiple TFs, spacing < 0.4%"
     }
   ],
   "grid_capitals": {
@@ -2037,20 +2079,20 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2189.55,
-    "TAOUSDT": 309.5,
-    "SOLUSDT": 83.29,
-    "BNBUSDT": 603.01,
-    "XRPUSDT": 1.3439,
-    "BTCUSDT": 71780.96
+    "ETHUSDT": 2185.59,
+    "TAOUSDT": 289.6,
+    "SOLUSDT": 83.08,
+    "BNBUSDT": 601.69,
+    "XRPUSDT": 1.3421,
+    "BTCUSDT": 71682.63
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0094,
-    "TAOUSDT": 0.0408,
-    "SOLUSDT": 0.0097,
-    "BNBUSDT": 0.0065,
-    "XRPUSDT": 0.007,
-    "BTCUSDT": 0.007
+    "ETHUSDT": 0.0111,
+    "TAOUSDT": 0.0903,
+    "SOLUSDT": 0.0117,
+    "BNBUSDT": 0.0085,
+    "XRPUSDT": 0.0084,
+    "BTCUSDT": 0.0075
   },
   "daily_reset_date": "2026-04-10",
   "daily_start_pnl": 16.4588,
@@ -3779,7 +3821,7 @@
   "asset_pnl": {
     "ETHUSDT": 27.4645
   },
-  "sharpe_ratio": 27.69,
+  "sharpe_ratio": 27.57,
   "max_drawdown_pct": 0.034,
   "last_known_balance": 9746.473125,
   "daily_pnl_history": {
@@ -3811,5 +3853,5 @@
     "net_20"
   ],
   "last_snapshot_date": "2026-04-09",
-  "last_extreme_event_time": "2026-04-09T23:53:17.612150+00:00"
+  "last_extreme_event_time": "2026-04-10T00:23:47.028909+00:00"
 }
