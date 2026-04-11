@@ -14,27 +14,27 @@
       "capital": 336.0,
       "trailing_triggered": true,
       "trailing_count": 2,
-      "current_price": 2232.74,
+      "current_price": 2231.78,
       "open_orders": 10,
       "last_trail": "2026-04-11T05:14:51.660289+00:00"
     },
     "TAOUSDT": {
       "action": "REBALANCE",
-      "range_low": 257.9715,
-      "range_high": 437.1115,
+      "range_low": 257.7745,
+      "range_high": 436.9145,
       "num_grids": 12,
       "reason": "MEDIUM vol, DOWN trend, ATR=0.62%",
       "active": true,
       "last_rebalance": null,
-      "orders_placed": 0,
+      "orders_placed": 5,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0,
+      "capital": 224.0,
       "trailing_triggered": true,
-      "trailing_count": 7,
-      "current_price": 261.9,
-      "open_orders": 19,
-      "last_trail": "2026-04-11T05:59:32.818672+00:00"
+      "trailing_count": 10,
+      "current_price": 261.7,
+      "open_orders": 29,
+      "last_trail": "2026-04-11T06:16:12.940310+00:00"
     },
     "SOLUSDT": {
       "action": "REBALANCE",
@@ -48,7 +48,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 84.1,
+      "current_price": 84.01,
       "open_orders": 0
     },
     "BNBUSDT": {
@@ -65,25 +65,26 @@
       "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 605.58,
+      "current_price": 604.51,
       "open_orders": 0
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.3296,
-      "range_high": 1.4056,
+      "range_low": -88.225,
+      "range_high": 90.915,
       "num_grids": 5,
       "reason": "LOW vol, DOWN trend, ATR=2.45%",
       "active": true,
-      "last_rebalance": "2026-04-11T04:42:39.028318+00:00",
+      "last_rebalance": null,
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 224.0,
+      "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 1.3478,
-      "open_orders": 0
+      "current_price": 1.3447,
+      "open_orders": 0,
+      "last_trail": "2026-04-11T06:16:16.331784+00:00"
     },
     "BTCUSDT": {
       "action": "REBALANCE",
@@ -97,7 +98,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 72722.28,
+      "current_price": 72677.36,
       "open_orders": 0
     }
   },
@@ -2898,28 +2899,27 @@
   ],
   "grid_capitals": {
     "ETHUSDT": 336.0,
-    "TAOUSDT": 0,
+    "TAOUSDT": 224.0,
     "SOLUSDT": 0,
     "BNBUSDT": 0,
-    "XRPUSDT": 224.0,
-    "BTCUSDT": 0,
-    "DOGEUSDT": 0
+    "XRPUSDT": 0,
+    "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2232.74,
-    "TAOUSDT": 261.9,
-    "SOLUSDT": 84.1,
-    "BNBUSDT": 605.58,
-    "XRPUSDT": 1.3478,
-    "BTCUSDT": 72722.28
+    "ETHUSDT": 2231.78,
+    "TAOUSDT": 261.7,
+    "SOLUSDT": 84.01,
+    "BNBUSDT": 604.51,
+    "XRPUSDT": 1.3447,
+    "BTCUSDT": 72677.36
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0203,
-    "TAOUSDT": 0.0258,
-    "SOLUSDT": 0.0055,
-    "BNBUSDT": 0.0034,
-    "XRPUSDT": 0.0042,
-    "BTCUSDT": 0.0028
+    "ETHUSDT": 0.0204,
+    "TAOUSDT": 0.0208,
+    "SOLUSDT": 0.0066,
+    "BNBUSDT": 0.003,
+    "XRPUSDT": 0.0053,
+    "BTCUSDT": 0.0032
   },
   "daily_reset_date": "2026-04-11",
   "daily_start_pnl": 29.4881,
@@ -4609,12 +4609,12 @@
   ],
   "realized_pnl": 27.0087,
   "last_prices": {
-    "ETHUSDT": 2232.74,
-    "TAOUSDT": 261.9,
-    "SOLUSDT": 84.09,
-    "BNBUSDT": 605.58,
-    "XRPUSDT": 1.3478,
-    "BTCUSDT": 72721.59
+    "ETHUSDT": 2231.78,
+    "TAOUSDT": 261.7,
+    "SOLUSDT": 84.02,
+    "BNBUSDT": 604.51,
+    "XRPUSDT": 1.3448,
+    "BTCUSDT": 72687.19
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -5164,15 +5164,17 @@
     524.1,
     524.1,
     524.1,
+    524.1,
+    524.1,
     524.1
   ],
-  "cycle_count": 653,
-  "total_open_orders": 0,
+  "cycle_count": 656,
+  "total_open_orders": 39,
   "asset_pnl": {
     "ETHUSDT": 30.831,
     "TAOUSDT": -3.8223
   },
-  "sharpe_ratio": 21.47,
+  "sharpe_ratio": 21.37,
   "max_drawdown_pct": 0.4804,
   "last_known_balance": 9746.473125,
   "daily_pnl_history": {
