@@ -12,7 +12,7 @@
       "realized_pnl": 0.6926,
       "fills": 8,
       "capital": 336.0,
-      "current_price": 2192.76,
+      "current_price": 2181.5,
       "open_orders": 2
     },
     "TAOUSDT": {
@@ -27,13 +27,13 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 224.0,
-      "current_price": 261.4,
+      "current_price": 259.2,
       "open_orders": 0
     },
     "SOLUSDT": {
       "action": "REBALANCE",
-      "range_low": 80.7995,
-      "range_high": 85.4095,
+      "range_low": 251.83,
+      "range_high": 266.56,
       "num_grids": 12,
       "reason": "LOW vol, DOWN trend, ATR=0.22%",
       "active": true,
@@ -42,15 +42,16 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 82.07,
+      "current_price": 81.52,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "open_orders": 0
+      "open_orders": 0,
+      "last_trail": "2026-04-12T14:53:21.885780+00:00"
     },
     "BNBUSDT": {
       "action": "REBALANCE",
-      "range_low": 583.9671,
-      "range_high": 617.1571,
+      "range_low": 580.756,
+      "range_high": 595.486,
       "num_grids": 12,
       "reason": "LOW vol, DOWN trend, ATR=0.20%",
       "active": true,
@@ -59,10 +60,11 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 592.37,
+      "current_price": 589.7,
       "trailing_triggered": true,
-      "trailing_count": 1,
-      "open_orders": 0
+      "trailing_count": 2,
+      "open_orders": 0,
+      "last_trail": "2026-04-12T14:53:25.448857+00:00"
     },
     "XRPUSDT": {
       "action": "REBALANCE",
@@ -76,15 +78,15 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 1.3258,
+      "current_price": 1.327,
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0
     },
     "BTCUSDT": {
       "action": "REBALANCE",
-      "range_low": 69992.0118,
-      "range_high": 73971.4118,
+      "range_low": 69675.2752,
+      "range_high": 69690.0052,
       "num_grids": 12,
       "reason": "LOW vol, DOWN trend, ATR=0.30%",
       "active": true,
@@ -93,10 +95,11 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 71064.53,
+      "current_price": 70772.74,
       "trailing_triggered": true,
-      "trailing_count": 1,
-      "open_orders": 0
+      "trailing_count": 2,
+      "open_orders": 0,
+      "last_trail": "2026-04-12T14:53:29.024662+00:00"
     }
   },
   "last_ai_check": "2026-04-12T13:20:51.568124+00:00",
@@ -3617,20 +3620,20 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2192.76,
-    "TAOUSDT": 261.4,
-    "SOLUSDT": 82.07,
-    "BNBUSDT": 592.37,
-    "XRPUSDT": 1.3258,
-    "BTCUSDT": 71064.53
+    "ETHUSDT": 2181.5,
+    "TAOUSDT": 259.2,
+    "SOLUSDT": 81.52,
+    "BNBUSDT": 589.7,
+    "XRPUSDT": 1.327,
+    "BTCUSDT": 70772.74
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0081,
-    "TAOUSDT": 0.0136,
-    "SOLUSDT": 0.0036,
-    "BNBUSDT": 0.0045,
-    "XRPUSDT": 0.0042,
-    "BTCUSDT": 0.0068
+    "ETHUSDT": 0.009,
+    "TAOUSDT": 0.0176,
+    "SOLUSDT": 0.0065,
+    "BNBUSDT": 0.0061,
+    "XRPUSDT": 0.0046,
+    "BTCUSDT": 0.0078
   },
   "daily_reset_date": "2026-04-12",
   "daily_start_pnl": 31.4,
@@ -5698,12 +5701,12 @@
   ],
   "realized_pnl": 41.4184,
   "last_prices": {
-    "ETHUSDT": 2192.76,
-    "TAOUSDT": 261.4,
-    "SOLUSDT": 82.08,
-    "BNBUSDT": 592.37,
-    "XRPUSDT": 1.3255,
-    "BTCUSDT": 71064.52
+    "ETHUSDT": 2181.08,
+    "TAOUSDT": 259.2,
+    "SOLUSDT": 81.52,
+    "BNBUSDT": 589.6,
+    "XRPUSDT": 1.3228,
+    "BTCUSDT": 70736.32
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -6407,15 +6410,17 @@
     537.78,
     537.78,
     537.78,
+    537.78,
+    537.78,
     537.78
   ],
-  "cycle_count": 901,
+  "cycle_count": 904,
   "total_open_orders": 2,
   "asset_pnl": {
     "ETHUSDT": 45.2407,
     "TAOUSDT": -3.8223
   },
-  "sharpe_ratio": 24.17,
+  "sharpe_ratio": 24.11,
   "max_drawdown_pct": 0.4804,
   "last_known_balance": 9746.473125,
   "daily_pnl_history": {
