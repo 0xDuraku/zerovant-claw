@@ -10,9 +10,9 @@
       "last_rebalance": "2026-04-16T02:57:51.269759+00:00",
       "orders_placed": 0,
       "realized_pnl": 0.1056,
-      "fills": 2,
+      "fills": 1,
       "capital": 336.0,
-      "current_price": 2358.0
+      "current_price": 2362.27
     },
     "TAOUSDT": {
       "action": "REBALANCE",
@@ -25,10 +25,10 @@
       "orders_placed": 0,
       "realized_pnl": -1.4515,
       "fills": 2,
-      "capital": 224.0,
+      "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 244.2
+      "current_price": 244.1
     },
     "SOLUSDT": {
       "action": "REBALANCE",
@@ -41,8 +41,8 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0,
-      "current_price": 85.33
+      "capital": 224.0,
+      "current_price": 85.46
     },
     "BNBUSDT": {
       "action": "REBALANCE",
@@ -56,7 +56,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 624.04
+      "current_price": 624.82
     },
     "XRPUSDT": {
       "action": "REBALANCE",
@@ -70,7 +70,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 1.4071
+      "current_price": 1.4092
     },
     "BTCUSDT": {
       "action": "REBALANCE",
@@ -84,11 +84,11 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 74912.17
+      "current_price": 75114.36
     }
   },
   "last_ai_check": "2026-04-16T02:57:51.269759+00:00",
-  "total_fills": 245,
+  "total_fills": 244,
   "start_time": "2026-04-07T01:35:41.433479+00:00",
   "win_loss": {
     "wins": 83,
@@ -5698,27 +5698,29 @@
   ],
   "grid_capitals": {
     "ETHUSDT": 336.0,
-    "TAOUSDT": 224.0,
-    "SOLUSDT": 0,
+    "TAOUSDT": 0,
+    "SOLUSDT": 224.0,
     "BNBUSDT": 0,
     "XRPUSDT": 0,
-    "BTCUSDT": 0
+    "BTCUSDT": 0,
+    "DOGEUSDT": 0,
+    "BARDUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2358.0,
-    "TAOUSDT": 244.2,
-    "SOLUSDT": 85.33,
-    "BNBUSDT": 624.04,
-    "XRPUSDT": 1.4071,
-    "BTCUSDT": 74912.17
+    "ETHUSDT": 2362.27,
+    "TAOUSDT": 244.1,
+    "SOLUSDT": 85.46,
+    "BNBUSDT": 624.82,
+    "XRPUSDT": 1.4092,
+    "BTCUSDT": 75114.36
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0035,
-    "TAOUSDT": 0.0149,
-    "SOLUSDT": 0.0061,
+    "ETHUSDT": 0.0036,
+    "TAOUSDT": 0.0153,
+    "SOLUSDT": 0.0066,
     "BNBUSDT": 0.0044,
-    "XRPUSDT": 0.0109,
-    "BTCUSDT": 0.0045
+    "XRPUSDT": 0.0099,
+    "BTCUSDT": 0.005
   },
   "daily_reset_date": "2026-04-16",
   "daily_start_pnl": 84.9827,
@@ -9140,30 +9142,16 @@
       "inventory": 0.001,
       "slippage_pct": 0.0,
       "is_partial": false
-    },
-    {
-      "tradeId": 360998,
-      "symbol": "ETHUSDT",
-      "side": "BUY",
-      "price": 2358.4,
-      "qty": 0.0142,
-      "fee": 0.0,
-      "time": "02:59:55",
-      "timestamp": "2026-04-16T02:59:55Z",
-      "pnl": null,
-      "inventory": -0.3624,
-      "slippage_pct": 0.0,
-      "is_partial": false
     }
   ],
   "realized_pnl": 84.4088,
   "last_prices": {
-    "ETHUSDT": 2358.0,
-    "TAOUSDT": 244.2,
-    "SOLUSDT": 85.33,
-    "BNBUSDT": 624.04,
-    "XRPUSDT": 1.4067,
-    "BTCUSDT": 74912.19
+    "ETHUSDT": 2361.79,
+    "TAOUSDT": 244.1,
+    "SOLUSDT": 85.46,
+    "BNBUSDT": 624.41,
+    "XRPUSDT": 1.4092,
+    "BTCUSDT": 75095.54
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -9385,8 +9373,7 @@
       350477,
       353602,
       353603,
-      355605,
-      360998
+      355605
     ],
     "TAOUSDT": [
       694,
@@ -9421,7 +9408,7 @@
     "BTCUSDT": []
   },
   "inventory": {
-    "ETHUSDT": -0.3624,
+    "ETHUSDT": -0.3766,
     "TAOUSDT": 0.001
   },
   "analytics": {
@@ -9973,9 +9960,10 @@
     579.39,
     577.89,
     577.89,
+    577.89,
     577.89
   ],
-  "cycle_count": 1406,
+  "cycle_count": 1408,
   "total_open_orders": 0,
   "asset_pnl": {
     "ETHUSDT": 91.1134,
@@ -10031,6 +10019,30 @@
       "pnl": 19.9433,
       "fills": 20,
       "cumulative": 73.7332,
+      "roi_pct": 3.989
+    },
+    "2026-04-15": {
+      "pnl": 11.2495,
+      "fills": 25,
+      "cumulative": 84.9827,
+      "roi_pct": 2.25
+    }
+  },
+  "milestones_reached": [
+    "wr_70",
+    "wr_75",
+    "wr_80",
+    "net_5",
+    "net_10",
+    "net_20",
+    "net_30",
+    "net_50",
+    "wr_85",
+    "net_75"
+  ],
+  "last_snapshot_date": "2026-04-09",
+  "last_extreme_event_time": "2026-04-16T00:40:19.915080+00:00"
+}ulative": 73.7332,
       "roi_pct": 3.989
     },
     "2026-04-15": {
