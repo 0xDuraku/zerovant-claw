@@ -10,10 +10,10 @@
       "last_rebalance": "2026-04-17T17:35:45.168733+00:00",
       "orders_placed": 0,
       "realized_pnl": 10.5596,
-      "fills": 31,
-      "capital": 336.0,
-      "current_price": 2440.73,
-      "open_orders": 10
+      "fills": 32,
+      "capital": 224.0,
+      "current_price": 2417.9,
+      "open_orders": 9
     },
     "TAOUSDT": {
       "action": "REBALANCE",
@@ -27,7 +27,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 259.7,
+      "current_price": 260.0,
       "open_orders": 0
     },
     "SOLUSDT": {
@@ -42,7 +42,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 89.75,
+      "current_price": 89.07,
       "open_orders": 0
     },
     "BNBUSDT": {
@@ -57,7 +57,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 642.39,
+      "current_price": 639.36,
       "open_orders": 0
     },
     "XRPUSDT": {
@@ -71,8 +71,8 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 224.0,
-      "current_price": 1.4859,
+      "capital": 0,
+      "current_price": 1.4753,
       "open_orders": 0
     },
     "BTCUSDT": {
@@ -86,13 +86,13 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0,
-      "current_price": 77561.98,
+      "capital": 336.0,
+      "current_price": 77117.63,
       "open_orders": 0
     }
   },
   "last_ai_check": "2026-04-17T17:35:45.168733+00:00",
-  "total_fills": 68,
+  "total_fills": 69,
   "start_time": "2026-04-16T05:00:25.810576+00:00",
   "total_rebalances": 20,
   "ai_log": [
@@ -938,30 +938,30 @@
     }
   ],
   "grid_capitals": {
-    "ETHUSDT": 336.0,
+    "ETHUSDT": 224.0,
     "TAOUSDT": 0,
     "SOLUSDT": 0,
     "BNBUSDT": 0,
-    "XRPUSDT": 224.0,
-    "BTCUSDT": 0,
+    "XRPUSDT": 0,
+    "BTCUSDT": 336.0,
     "DOGEUSDT": 0,
     "BARDUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2440.73,
-    "TAOUSDT": 259.7,
-    "SOLUSDT": 89.75,
-    "BNBUSDT": 642.39,
-    "XRPUSDT": 1.4859,
-    "BTCUSDT": 77561.98
+    "ETHUSDT": 2417.9,
+    "TAOUSDT": 260.0,
+    "SOLUSDT": 89.07,
+    "BNBUSDT": 639.36,
+    "XRPUSDT": 1.4753,
+    "BTCUSDT": 77117.63
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0114,
-    "TAOUSDT": 0.0228,
-    "SOLUSDT": 0.0055,
-    "BNBUSDT": 0.0051,
-    "XRPUSDT": 0.0105,
-    "BTCUSDT": 0.0108
+    "ETHUSDT": 0.0094,
+    "TAOUSDT": 0.0208,
+    "SOLUSDT": 0.0081,
+    "BNBUSDT": 0.0054,
+    "XRPUSDT": 0.0103,
+    "BTCUSDT": 0.0092
   },
   "daily_reset_date": "2026-04-18",
   "daily_start_pnl": 8.4589,
@@ -1919,16 +1919,30 @@
       "inventory": -0.2349,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 411209,
+      "symbol": "ETHUSDT",
+      "side": "BUY",
+      "price": 2418.0,
+      "qty": 0.0139,
+      "fee": 0.0,
+      "time": "18:14:26",
+      "timestamp": "2026-04-17T18:14:26Z",
+      "pnl": null,
+      "inventory": -0.221,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
   "realized_pnl": 8.4589,
   "last_prices": {
-    "ETHUSDT": 2440.42,
-    "TAOUSDT": 259.7,
-    "SOLUSDT": 89.76,
-    "BNBUSDT": 642.39,
-    "XRPUSDT": 1.4859,
-    "BTCUSDT": 77558.8
+    "ETHUSDT": 2417.9,
+    "TAOUSDT": 260.0,
+    "SOLUSDT": 89.07,
+    "BNBUSDT": 639.36,
+    "XRPUSDT": 1.4753,
+    "BTCUSDT": 77116.31
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -1984,7 +1998,8 @@
       402534,
       404874,
       408040,
-      409944
+      409944,
+      411209
     ],
     "TAOUSDT": [
       3219,
@@ -2009,7 +2024,7 @@
     "BTCUSDT": []
   },
   "inventory": {
-    "ETHUSDT": -0.2349,
+    "ETHUSDT": -0.221,
     "TAOUSDT": -0.0551
   },
   "equity_history": [
@@ -2126,9 +2141,11 @@
     507.11,
     507.11,
     507.11,
+    507.11,
+    507.11,
     507.11
   ],
-  "cycle_count": 214,
+  "cycle_count": 218,
   "total_open_orders": 0,
   "win_loss": {
     "wins": 18,
@@ -2224,7 +2241,7 @@
     "TAOUSDT": -3.1629,
     "ETHUSDT": 11.6218
   },
-  "sharpe_ratio": 20.95,
+  "sharpe_ratio": 20.67,
   "max_drawdown_pct": 0.72,
   "daily_pnl_history": {
     "2026-04-16": {
