@@ -13,7 +13,9 @@
       "fills": 21,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 1
+      "trailing_count": 1,
+      "current_price": 2315.32,
+      "open_orders": 10
     },
     "TAOUSDT": {
       "action": "REBALANCE",
@@ -26,7 +28,9 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "current_price": 243.7,
+      "open_orders": 0
     },
     "SOLUSDT": {
       "action": "REBALANCE",
@@ -39,7 +43,9 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "current_price": 85.29,
+      "open_orders": 0
     },
     "BNBUSDT": {
       "action": "REBALANCE",
@@ -52,7 +58,9 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "current_price": 629.31,
+      "open_orders": 0
     },
     "XRPUSDT": {
       "action": "REBALANCE",
@@ -65,7 +73,9 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 0
+      "capital": 0,
+      "current_price": 1.4247,
+      "open_orders": 0
     },
     "BTCUSDT": {
       "action": "REBALANCE",
@@ -78,7 +88,9 @@
       "orders_placed": 0,
       "realized_pnl": 0,
       "fills": 0,
-      "capital": 336.0
+      "capital": 336.0,
+      "current_price": 75622.06,
+      "open_orders": 0
     }
   },
   "last_ai_check": "2026-04-21T20:56:47.767831+00:00",
@@ -3123,20 +3135,20 @@
     "ZECUSDT": 224.0
   },
   "prev_prices": {
-    "ETHUSDT": 2317.27,
-    "TAOUSDT": 243.4,
-    "SOLUSDT": 85.51,
-    "BNBUSDT": 630.01,
-    "XRPUSDT": 1.4244,
-    "BTCUSDT": 75722.59
+    "ETHUSDT": 2315.32,
+    "TAOUSDT": 243.7,
+    "SOLUSDT": 85.29,
+    "BNBUSDT": 629.31,
+    "XRPUSDT": 1.4247,
+    "BTCUSDT": 75622.06
   },
   "prev_bb_width": {
     "ETHUSDT": 0.0091,
-    "TAOUSDT": 0.0096,
-    "SOLUSDT": 0.0098,
-    "BNBUSDT": 0.0056,
-    "XRPUSDT": 0.0072,
-    "BTCUSDT": 0.007
+    "TAOUSDT": 0.0095,
+    "SOLUSDT": 0.0085,
+    "BNBUSDT": 0.0051,
+    "XRPUSDT": 0.0064,
+    "BTCUSDT": 0.0064
   },
   "daily_reset_date": "2026-04-22",
   "daily_start_pnl": 19.6619,
@@ -6296,12 +6308,12 @@
   ],
   "realized_pnl": 35.6262,
   "last_prices": {
-    "ETHUSDT": 2317.37,
-    "TAOUSDT": 243.4,
-    "SOLUSDT": 85.51,
-    "BNBUSDT": 630.03,
-    "XRPUSDT": 1.4248,
-    "BTCUSDT": 75714.3
+    "ETHUSDT": 2315.32,
+    "TAOUSDT": 243.7,
+    "SOLUSDT": 85.29,
+    "BNBUSDT": 629.31,
+    "XRPUSDT": 1.4247,
+    "BTCUSDT": 75622.06
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -6962,10 +6974,13 @@
     522.88,
     522.88,
     522.7,
-    522.7
+    522.7,
+    522.7,
+    522.7,
+    530.45
   ],
-  "cycle_count": 811,
-  "total_open_orders": 0,
+  "cycle_count": 815,
+  "total_open_orders": 10,
   "win_loss": {
     "wins": 64,
     "losses": 19,
@@ -6976,26 +6991,26 @@
   },
   "fee_simulation": {
     "fee_rate": 0.001,
-    "simulated_pnl": 22.7046,
-    "gross_pnl": 27.3405,
-    "fee_impact": -4.6359,
-    "real_win_rate": 72.0,
-    "real_wins": 54,
+    "simulated_pnl": 30.4528,
+    "gross_pnl": 35.6262,
+    "fee_impact": -5.1734,
+    "real_win_rate": 74.7,
+    "real_wins": 62,
     "real_losses": 21
   },
   "analytics": {
     "ETHUSDT": {
-      "wins": 52,
+      "wins": 60,
       "losses": 15,
-      "wr": 77.6,
-      "avg_win": 0.6956,
+      "wr": 80.0,
+      "avg_win": 0.7409,
       "avg_loss": -0.4434,
       "best": 1.9341,
       "worst": -0.9621,
-      "avg_pnl": 0.4406,
-      "total_trades": 67,
-      "total_buys": 107,
-      "profit_factor": 5.44
+      "avg_pnl": 0.5041,
+      "total_trades": 75,
+      "total_buys": 108,
+      "profit_factor": 6.68
     },
     "TAOUSDT": {
       "wins": 4,
@@ -7060,7 +7075,7 @@
     "TAOUSDT": -2.1787,
     "ETHUSDT": 37.8049
   },
-  "sharpe_ratio": 18.2,
+  "sharpe_ratio": 20.06,
   "max_drawdown_pct": 0.72,
   "daily_pnl_history": {
     "2026-04-16": {
@@ -7105,7 +7120,8 @@
     "net_5",
     "wr_75",
     "net_10",
-    "net_20"
+    "net_20",
+    "net_30"
   ],
   "last_extreme_event_time": "2026-04-21T04:18:09.850389+00:00"
 }
