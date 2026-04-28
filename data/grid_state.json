@@ -10,12 +10,12 @@
       "last_rebalance": "2026-04-27T22:08:42.779075+00:00",
       "orders_placed": 0,
       "realized_pnl": -0.8282,
-      "fills": 11,
+      "fills": 13,
       "capital": 336.0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 2294.2,
-      "open_orders": 10
+      "current_price": 2306.25,
+      "open_orders": 9
     },
     "TAOUSDT": {
       "action": "REBALANCE",
@@ -29,7 +29,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 246.7,
+      "current_price": 248.3,
       "open_orders": 6
     },
     "SOLUSDT": {
@@ -46,7 +46,7 @@
       "capital": 224.0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 84.62,
+      "current_price": 84.87,
       "open_orders": 0
     },
     "BNBUSDT": {
@@ -63,7 +63,7 @@
       "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 625.68,
+      "current_price": 627.21,
       "open_orders": 0
     },
     "XRPUSDT": {
@@ -80,7 +80,7 @@
       "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 1.3987,
+      "current_price": 1.4018,
       "open_orders": 0
     },
     "BTCUSDT": {
@@ -97,12 +97,12 @@
       "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "current_price": 77145.0,
+      "current_price": 77411.05,
       "open_orders": 0
     }
   },
   "last_ai_check": "2026-04-27T22:08:42.779075+00:00",
-  "total_fills": 74,
+  "total_fills": 76,
   "start_time": "2026-04-24T15:54:25.991007+00:00",
   "total_rebalances": 41,
   "ai_log": [
@@ -1841,20 +1841,20 @@
     "APEUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2294.2,
-    "TAOUSDT": 246.7,
-    "SOLUSDT": 84.62,
-    "BNBUSDT": 625.68,
-    "XRPUSDT": 1.3987,
-    "BTCUSDT": 77145.0
+    "ETHUSDT": 2306.25,
+    "TAOUSDT": 248.3,
+    "SOLUSDT": 84.87,
+    "BNBUSDT": 627.21,
+    "XRPUSDT": 1.4018,
+    "BTCUSDT": 77411.05
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0027,
-    "TAOUSDT": 0.0035,
-    "SOLUSDT": 0.0036,
-    "BNBUSDT": 0.0028,
-    "XRPUSDT": 0.0035,
-    "BTCUSDT": 0.003
+    "ETHUSDT": 0.0043,
+    "TAOUSDT": 0.0048,
+    "SOLUSDT": 0.0046,
+    "BNBUSDT": 0.0038,
+    "XRPUSDT": 0.0047,
+    "BTCUSDT": 0.0044
   },
   "daily_reset_date": "2026-04-28",
   "daily_start_pnl": 1.753,
@@ -2896,16 +2896,44 @@
       "inventory": -0.2267,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 721649,
+      "symbol": "ETHUSDT",
+      "side": "SELL",
+      "price": 2307.71,
+      "qty": 0.0097,
+      "fee": 0.0,
+      "time": "23:55:06",
+      "timestamp": "2026-04-27T23:55:06Z",
+      "pnl": null,
+      "inventory": -0.2364,
+      "slippage_pct": 0.0,
+      "is_partial": false
+    },
+    {
+      "tradeId": 721650,
+      "symbol": "ETHUSDT",
+      "side": "SELL",
+      "price": 2307.71,
+      "qty": 0.0049,
+      "fee": 0.0,
+      "time": "23:55:06",
+      "timestamp": "2026-04-27T23:55:06Z",
+      "pnl": null,
+      "inventory": -0.2413,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
   "realized_pnl": 2.3488,
   "last_prices": {
-    "ETHUSDT": 2294.2,
-    "TAOUSDT": 246.7,
-    "SOLUSDT": 84.62,
-    "BNBUSDT": 625.68,
-    "XRPUSDT": 1.3987,
-    "BTCUSDT": 77145.0
+    "ETHUSDT": 2305.68,
+    "TAOUSDT": 248.3,
+    "SOLUSDT": 84.88,
+    "BNBUSDT": 627.06,
+    "XRPUSDT": 1.4017,
+    "BTCUSDT": 77399.0
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -2943,7 +2971,9 @@
       714425,
       714455,
       715502,
-      720450
+      720450,
+      721649,
+      721650
     ],
     "TAOUSDT": [
       4609,
@@ -2992,7 +3022,7 @@
     "BTCUSDT": []
   },
   "inventory": {
-    "ETHUSDT": -0.2267,
+    "ETHUSDT": -0.2413,
     "TAOUSDT": -0.8336
   },
   "equity_history": [
@@ -3255,9 +3285,11 @@
     501.17,
     501.17,
     501.17,
+    501.17,
+    501.17,
     501.17
   ],
-  "cycle_count": 505,
+  "cycle_count": 509,
   "total_open_orders": 0,
   "win_loss": {
     "wins": 17,
