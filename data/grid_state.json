@@ -2,39 +2,39 @@
   "grids": {
     "ETHUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 3.2x (0.002\u21920.005)",
-      "capital": 0
+      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "capital": 336.0
     },
     "TAOUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 3.2x (0.002\u21920.005)",
-      "capital": 0
+      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "capital": 224.0
     },
     "SOLUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 3.2x (0.002\u21920.005)",
-      "capital": 224.0
+      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "capital": 0
     },
     "BNBUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 3.2x (0.002\u21920.005)",
+      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
       "capital": 0
     },
     "XRPUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 3.2x (0.002\u21920.005)",
+      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
       "capital": 0
     },
     "BTCUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 3.2x (0.002\u21920.005)",
-      "capital": 336.0
+      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "capital": 0
     }
   },
   "last_ai_check": null,
   "total_fills": 98,
   "start_time": "2026-04-24T15:54:25.991007+00:00",
-  "total_rebalances": 55,
+  "total_rebalances": 56,
   "ai_log": [
     {
       "type": "ai",
@@ -2345,34 +2345,73 @@
       "symbol": "BTC",
       "reason": "LOW vol, DOWN trend, ATR=0.99%",
       "msg": "[02:46] BTC: REBALANCE \u2014 LOW vol, DOWN trend, ATR=0.99%"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "WR 64.3% tighten range, PF 1.43",
+      "msg": "[03:16] ETH: REBALANCE \u2014 WR 64.3% tighten range, PF 1.43"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "TAO",
+      "reason": "WR 86.7% tighten range, PF 13.32",
+      "msg": "[03:16] TAO: REBALANCE \u2014 WR 86.7% tighten range, PF 13.32"
+    },
+    {
+      "type": "ai",
+      "action": "KEEP",
+      "symbol": "SOL",
+      "reason": "params optimal",
+      "msg": "[03:16] SOL: KEEP \u2014 params optimal"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BNB",
+      "reason": "PF 0",
+      "msg": "[03:16] BNB: CANCEL \u2014 PF 0"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "XRP",
+      "reason": "PF 0",
+      "msg": "[03:16] XRP: CANCEL \u2014 PF 0"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BTC",
+      "reason": "PF 0",
+      "msg": "[03:16] BTC: CANCEL \u2014 PF 0"
     }
   ],
   "grid_capitals": {
-    "ETHUSDT": 0,
-    "TAOUSDT": 0,
-    "SOLUSDT": 224.0,
+    "ETHUSDT": 336.0,
+    "TAOUSDT": 224.0,
+    "SOLUSDT": 0,
     "BNBUSDT": 0,
     "XRPUSDT": 0,
-    "BTCUSDT": 336.0,
-    "ZECUSDT": 0,
-    "DOGEUSDT": 0,
-    "APEUSDT": 0
+    "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2286.97,
-    "TAOUSDT": 259.4,
-    "SOLUSDT": 83.97,
-    "BNBUSDT": 623.92,
-    "XRPUSDT": 1.3797,
-    "BTCUSDT": 76464.85
+    "ETHUSDT": 2292.78,
+    "TAOUSDT": 263.1,
+    "SOLUSDT": 84.23,
+    "BNBUSDT": 624.54,
+    "XRPUSDT": 1.3823,
+    "BTCUSDT": 76654.31
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0023,
-    "TAOUSDT": 0.0048,
-    "SOLUSDT": 0.0033,
+    "ETHUSDT": 0.0025,
+    "TAOUSDT": 0.0133,
+    "SOLUSDT": 0.0036,
     "BNBUSDT": 0.0017,
     "XRPUSDT": 0.0017,
-    "BTCUSDT": 0.0024
+    "BTCUSDT": 0.0032
   },
   "daily_reset_date": "2026-04-29",
   "daily_start_pnl": 2.9158,
@@ -4229,7 +4268,7 @@
     "real_wins": 20,
     "real_losses": 8
   },
-  "sharpe_ratio": 13.12,
+  "sharpe_ratio": 13.1,
   "max_drawdown_pct": 0.3702,
   "analytics": {
     "ETHUSDT": {
@@ -4347,5 +4386,5 @@
     "wr_85",
     "wr_90"
   ],
-  "last_extreme_event_time": "2026-04-29T02:46:13.017359+00:00"
+  "last_extreme_event_time": "2026-04-29T03:16:45.468761+00:00"
 }
