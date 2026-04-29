@@ -2,39 +2,39 @@
   "grids": {
     "ETHUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "reason": "BB_EXPLOSION: ETH BB exploded 2.8x (0.003\u21920.007)",
       "capital": 336.0
     },
     "TAOUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "reason": "BB_EXPLOSION: ETH BB exploded 2.8x (0.003\u21920.007)",
       "capital": 224.0
     },
     "SOLUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "reason": "BB_EXPLOSION: ETH BB exploded 2.8x (0.003\u21920.007)",
       "capital": 0
     },
     "BNBUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "reason": "BB_EXPLOSION: ETH BB exploded 2.8x (0.003\u21920.007)",
       "capital": 0
     },
     "XRPUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "reason": "BB_EXPLOSION: ETH BB exploded 2.8x (0.003\u21920.007)",
       "capital": 0
     },
     "BTCUSDT": {
       "active": false,
-      "reason": "BB_EXPLOSION: TAO BB exploded 2.8x (0.005\u21920.013)",
+      "reason": "BB_EXPLOSION: ETH BB exploded 2.8x (0.003\u21920.007)",
       "capital": 0
     }
   },
   "last_ai_check": null,
   "total_fills": 98,
   "start_time": "2026-04-24T15:54:25.991007+00:00",
-  "total_rebalances": 56,
+  "total_rebalances": 57,
   "ai_log": [
     {
       "type": "ai",
@@ -2387,6 +2387,48 @@
       "symbol": "BTC",
       "reason": "PF 0",
       "msg": "[03:16] BTC: CANCEL \u2014 PF 0"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "ETH",
+      "reason": "WR 64.3% tighten range, PF 1.43",
+      "msg": "[03:48] ETH: REBALANCE \u2014 WR 64.3% tighten range, PF 1.43"
+    },
+    {
+      "type": "ai",
+      "action": "REBALANCE",
+      "symbol": "TAO",
+      "reason": "WR 86.7% tighten range, PF 13.32",
+      "msg": "[03:48] TAO: REBALANCE \u2014 WR 86.7% tighten range, PF 13.32"
+    },
+    {
+      "type": "ai",
+      "action": "KEEP",
+      "symbol": "SOL",
+      "reason": "params optimal",
+      "msg": "[03:48] SOL: KEEP \u2014 params optimal"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BNB",
+      "reason": "PF 0, market conditions poor",
+      "msg": "[03:48] BNB: CANCEL \u2014 PF 0, market conditions poor"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "XRP",
+      "reason": "PF 0, market conditions poor",
+      "msg": "[03:48] XRP: CANCEL \u2014 PF 0, market conditions poor"
+    },
+    {
+      "type": "ai",
+      "action": "CANCEL",
+      "symbol": "BTC",
+      "reason": "PF 0, market conditions poor",
+      "msg": "[03:48] BTC: CANCEL \u2014 PF 0, market conditions poor"
     }
   ],
   "grid_capitals": {
@@ -2398,20 +2440,20 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2292.78,
-    "TAOUSDT": 263.1,
-    "SOLUSDT": 84.23,
-    "BNBUSDT": 624.54,
-    "XRPUSDT": 1.3823,
-    "BTCUSDT": 76654.31
+    "ETHUSDT": 2312.03,
+    "TAOUSDT": 262.9,
+    "SOLUSDT": 84.7,
+    "BNBUSDT": 626.0,
+    "XRPUSDT": 1.3889,
+    "BTCUSDT": 77031.4
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0025,
-    "TAOUSDT": 0.0133,
-    "SOLUSDT": 0.0036,
-    "BNBUSDT": 0.0017,
-    "XRPUSDT": 0.0017,
-    "BTCUSDT": 0.0032
+    "ETHUSDT": 0.007,
+    "TAOUSDT": 0.0174,
+    "SOLUSDT": 0.0061,
+    "BNBUSDT": 0.0025,
+    "XRPUSDT": 0.0045,
+    "BTCUSDT": 0.0061
   },
   "daily_reset_date": "2026-04-29",
   "daily_start_pnl": 2.9158,
@@ -4386,5 +4428,5 @@
     "wr_85",
     "wr_90"
   ],
-  "last_extreme_event_time": "2026-04-29T03:16:45.468761+00:00"
+  "last_extreme_event_time": "2026-04-29T03:48:08.781070+00:00"
 }
