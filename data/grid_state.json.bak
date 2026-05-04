@@ -10,10 +10,10 @@
       "last_rebalance": "2026-05-03T22:55:07.283248+00:00",
       "orders_placed": 0,
       "realized_pnl": 0.573,
-      "fills": 4,
+      "fills": 5,
       "capital": 0,
-      "current_price": 2327.68,
-      "open_orders": 10
+      "current_price": 2322.75,
+      "open_orders": 9
     },
     "TAOUSDT": {
       "action": "REBALANCE",
@@ -27,7 +27,7 @@
       "realized_pnl": 0.9516,
       "fills": 13,
       "capital": 0,
-      "current_price": 289.8,
+      "current_price": 289.7,
       "open_orders": 7
     },
     "SOLUSDT": {
@@ -42,7 +42,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 84.14,
+      "current_price": 83.9,
       "open_orders": 0
     },
     "BNBUSDT": {
@@ -57,7 +57,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 619.51,
+      "current_price": 617.47,
       "open_orders": 0
     },
     "XRPUSDT": {
@@ -72,7 +72,7 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 0,
-      "current_price": 1.3911,
+      "current_price": 1.3876,
       "open_orders": 0
     },
     "BTCUSDT": {
@@ -87,12 +87,12 @@
       "realized_pnl": 0,
       "fills": 0,
       "capital": 224.0,
-      "current_price": 78728.83,
+      "current_price": 78552.89,
       "open_orders": 0
     }
   },
   "last_ai_check": "2026-05-03T22:55:07.283248+00:00",
-  "total_fills": 253,
+  "total_fills": 254,
   "start_time": "2026-04-24T15:54:25.991007+00:00",
   "total_rebalances": 118,
   "ai_log": [
@@ -5069,20 +5069,20 @@
     "ORDIUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2327.68,
-    "TAOUSDT": 289.8,
-    "SOLUSDT": 84.14,
-    "BNBUSDT": 619.51,
-    "XRPUSDT": 1.3911,
-    "BTCUSDT": 78728.83
+    "ETHUSDT": 2322.75,
+    "TAOUSDT": 289.7,
+    "SOLUSDT": 83.9,
+    "BNBUSDT": 617.47,
+    "XRPUSDT": 1.3876,
+    "BTCUSDT": 78552.89
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0058,
-    "TAOUSDT": 0.0141,
-    "SOLUSDT": 0.0048,
-    "BNBUSDT": 0.0027,
-    "XRPUSDT": 0.004,
-    "BTCUSDT": 0.0048
+    "ETHUSDT": 0.0064,
+    "TAOUSDT": 0.0136,
+    "SOLUSDT": 0.0058,
+    "BNBUSDT": 0.0035,
+    "XRPUSDT": 0.005,
+    "BTCUSDT": 0.0053
   },
   "daily_reset_date": "2026-05-04",
   "daily_start_pnl": 44.52,
@@ -8630,16 +8630,30 @@
       "inventory": -0.5815,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 857463,
+      "symbol": "ETHUSDT",
+      "side": "BUY",
+      "price": 2324.0,
+      "qty": 0.0145,
+      "fee": 0.0,
+      "time": "23:45:09",
+      "timestamp": "2026-05-03T23:45:09Z",
+      "pnl": null,
+      "inventory": -0.567,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
   "realized_pnl": 45.1565,
   "last_prices": {
-    "ETHUSDT": 2327.68,
-    "TAOUSDT": 289.8,
-    "SOLUSDT": 84.14,
-    "BNBUSDT": 619.51,
-    "XRPUSDT": 1.3907,
-    "BTCUSDT": 78700.01
+    "ETHUSDT": 2322.75,
+    "TAOUSDT": 289.7,
+    "SOLUSDT": 83.9,
+    "BNBUSDT": 617.49,
+    "XRPUSDT": 1.3876,
+    "BTCUSDT": 78568.62
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -8796,7 +8810,8 @@
       851402,
       854135,
       854701,
-      855298
+      855298,
+      857463
     ],
     "TAOUSDT": [
       4609,
@@ -8905,7 +8920,7 @@
     "BTCUSDT": []
   },
   "inventory": {
-    "ETHUSDT": -0.5815,
+    "ETHUSDT": -0.567,
     "TAOUSDT": -0.8212
   },
   "equity_history": [
@@ -9402,10 +9417,12 @@
     539.62,
     540.06,
     540.06,
+    540.06,
+    540.06,
     540.06
   ],
-  "cycle_count": 1343,
-  "total_open_orders": 17,
+  "cycle_count": 1347,
+  "total_open_orders": 16,
   "win_loss": {
     "wins": 78,
     "losses": 18,
@@ -9423,7 +9440,7 @@
     "real_wins": 74,
     "real_losses": 22
   },
-  "sharpe_ratio": 22.5,
+  "sharpe_ratio": 22.41,
   "max_drawdown_pct": 0.5961,
   "analytics": {
     "ETHUSDT": {
@@ -9436,7 +9453,7 @@
       "worst": -0.994,
       "avg_pnl": 0.6562,
       "total_trades": 55,
-      "total_buys": 55,
+      "total_buys": 56,
       "profit_factor": 9.32
     },
     "TAOUSDT": {
