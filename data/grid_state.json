@@ -16,7 +16,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 9,
-      "current_price": 2366.67
+      "current_price": 2370.74
     },
     "TAOUSDT": {
       "action": "REBALANCE",
@@ -29,40 +29,40 @@
       "last_rebalance": null,
       "orders_placed": 6,
       "realized_pnl": 1.3113,
-      "fills": 19,
+      "fills": 20,
       "capital": 0,
       "trailing_triggered": true,
       "trailing_count": 1,
-      "open_orders": 5,
-      "current_price": 287.0
+      "open_orders": 4,
+      "current_price": 287.8
     },
     "SOLUSDT": {
       "active": false,
       "reason": "params optimal",
       "capital": 0,
-      "current_price": 84.94
+      "current_price": 84.88
     },
     "BNBUSDT": {
       "active": false,
       "reason": "PF < 1.0",
       "capital": 0,
-      "current_price": 630.76
+      "current_price": 628.95
     },
     "XRPUSDT": {
       "active": false,
       "reason": "PF < 1.0",
       "capital": 0,
-      "current_price": 1.4085
+      "current_price": 1.4104
     },
     "BTCUSDT": {
       "active": false,
       "reason": "PF < 1.0",
       "capital": 0,
-      "current_price": 79781.43
+      "current_price": 79920.0
     }
   },
   "last_ai_check": "2026-05-04T05:03:59.605038+00:00",
-  "total_fills": 265,
+  "total_fills": 266,
   "start_time": "2026-04-24T15:54:25.991007+00:00",
   "total_rebalances": 121,
   "ai_log": [
@@ -5165,20 +5165,20 @@
     "ORDIUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2366.67,
-    "TAOUSDT": 287.0,
-    "SOLUSDT": 84.94,
-    "BNBUSDT": 630.76,
-    "XRPUSDT": 1.4085,
-    "BTCUSDT": 79781.43
+    "ETHUSDT": 2370.74,
+    "TAOUSDT": 287.8,
+    "SOLUSDT": 84.88,
+    "BNBUSDT": 628.95,
+    "XRPUSDT": 1.4104,
+    "BTCUSDT": 79920.0
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0128,
-    "TAOUSDT": 0.0178,
-    "SOLUSDT": 0.0093,
-    "BNBUSDT": 0.0167,
-    "XRPUSDT": 0.0084,
-    "BTCUSDT": 0.0088
+    "ETHUSDT": 0.0082,
+    "TAOUSDT": 0.0183,
+    "SOLUSDT": 0.007,
+    "BNBUSDT": 0.014,
+    "XRPUSDT": 0.0052,
+    "BTCUSDT": 0.0056
   },
   "daily_reset_date": "2026-05-04",
   "daily_start_pnl": 44.52,
@@ -8894,16 +8894,30 @@
       "inventory": -0.6097,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 7308,
+      "symbol": "TAOUSDT",
+      "side": "BUY",
+      "price": 286.0,
+      "qty": 0.0587,
+      "fee": 0.0,
+      "time": "06:26:10",
+      "timestamp": "2026-05-04T06:26:10Z",
+      "pnl": null,
+      "inventory": -0.7604,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
   "realized_pnl": 45.6966,
   "last_prices": {
-    "ETHUSDT": 2366.68,
-    "TAOUSDT": 287.0,
-    "SOLUSDT": 84.94,
-    "BNBUSDT": 630.77,
-    "XRPUSDT": 1.4085,
-    "BTCUSDT": 79793.32
+    "ETHUSDT": 2371.19,
+    "TAOUSDT": 288.2,
+    "SOLUSDT": 84.9,
+    "BNBUSDT": 628.95,
+    "XRPUSDT": 1.4104,
+    "BTCUSDT": 79920.0
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -9173,7 +9187,8 @@
       7300,
       7303,
       7304,
-      7305
+      7305,
+      7308
     ],
     "SOLUSDT": [],
     "BNBUSDT": [],
@@ -9182,7 +9197,7 @@
   },
   "inventory": {
     "ETHUSDT": -0.6097,
-    "TAOUSDT": -0.8191
+    "TAOUSDT": -0.7604
   },
   "equity_history": [
     500.0,
@@ -9655,9 +9670,11 @@
     540.43,
     540.43,
     540.43,
+    540.43,
+    540.43,
     540.43
   ],
-  "cycle_count": 1397,
+  "cycle_count": 1401,
   "total_open_orders": 0,
   "win_loss": {
     "wins": 81,
@@ -9676,7 +9693,7 @@
     "real_wins": 77,
     "real_losses": 23
   },
-  "sharpe_ratio": 23.24,
+  "sharpe_ratio": 23.19,
   "max_drawdown_pct": 0.5961,
   "analytics": {
     "ETHUSDT": {
@@ -9689,7 +9706,7 @@
       "worst": -0.994,
       "avg_pnl": 0.6477,
       "total_trades": 56,
-      "total_buys": 56,
+      "total_buys": 57,
       "profit_factor": 9.37
     },
     "TAOUSDT": {
@@ -9702,7 +9719,7 @@
       "worst": -1.026,
       "avg_pnl": 0.2095,
       "total_trades": 45,
-      "total_buys": 47,
+      "total_buys": 48,
       "profit_factor": 2.82
     },
     "SOLUSDT": {
