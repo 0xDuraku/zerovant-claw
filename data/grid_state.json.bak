@@ -16,13 +16,13 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 9,
-      "current_price": 2312.4
+      "current_price": 2318.41
     },
     "TAOUSDT": {
       "active": false,
       "reason": "params optimal",
       "capital": 224.0,
-      "current_price": 313.4
+      "current_price": 314.4
     },
     "SOLUSDT": {
       "action": "REBALANCE",
@@ -40,7 +40,7 @@
       "trailing_triggered": true,
       "trailing_count": 2,
       "open_orders": 0,
-      "current_price": 91.73
+      "current_price": 92.2
     },
     "BNBUSDT": {
       "action": "REBALANCE",
@@ -58,12 +58,12 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0,
-      "current_price": 646.95
+      "current_price": 648.94
     },
     "XRPUSDT": {
       "action": "REBALANCE",
-      "range_low": 1.3742,
-      "range_high": 1.4852,
+      "range_low": 1.3986,
+      "range_high": 1.5096,
       "num_grids": 12,
       "confidence": 0.7,
       "reason": "spacing 1.12% expand range",
@@ -74,9 +74,9 @@
       "fills": 0,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 1,
+      "trailing_count": 2,
       "open_orders": 0,
-      "current_price": 1.4091
+      "current_price": 1.4196
     },
     "BTCUSDT": {
       "action": "REBALANCE",
@@ -94,7 +94,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0,
-      "current_price": 80177.9
+      "current_price": 80267.38
     }
   },
   "last_ai_check": "2026-05-08T16:36:28.522559+00:00",
@@ -238,20 +238,20 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2312.4,
-    "TAOUSDT": 313.4,
-    "SOLUSDT": 91.73,
-    "BNBUSDT": 646.95,
-    "XRPUSDT": 1.4091,
-    "BTCUSDT": 80177.9
+    "ETHUSDT": 2318.41,
+    "TAOUSDT": 314.4,
+    "SOLUSDT": 92.2,
+    "BNBUSDT": 648.94,
+    "XRPUSDT": 1.4196,
+    "BTCUSDT": 80267.38
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0096,
-    "TAOUSDT": 0.017,
-    "SOLUSDT": 0.0213,
-    "BNBUSDT": 0.0077,
-    "XRPUSDT": 0.009,
-    "BTCUSDT": 0.0049
+    "ETHUSDT": 0.0107,
+    "TAOUSDT": 0.016,
+    "SOLUSDT": 0.026,
+    "BNBUSDT": 0.0083,
+    "XRPUSDT": 0.0123,
+    "BTCUSDT": 0.0048
   },
   "daily_reset_date": "2026-05-09",
   "daily_start_pnl": 0.5133,
@@ -625,12 +625,12 @@
   ],
   "realized_pnl": 1.2288,
   "last_prices": {
-    "ETHUSDT": 2312.73,
-    "TAOUSDT": 313.4,
-    "SOLUSDT": 91.73,
-    "BNBUSDT": 646.95,
-    "XRPUSDT": 1.4091,
-    "BTCUSDT": 80180.89
+    "ETHUSDT": 2318.48,
+    "TAOUSDT": 314.4,
+    "SOLUSDT": 92.2,
+    "BNBUSDT": 648.91,
+    "XRPUSDT": 1.4199,
+    "BTCUSDT": 80274.44
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -692,9 +692,10 @@
     500.24,
     500.24,
     500.24,
-    500.24
+    500.24,
+    500.89
   ],
-  "cycle_count": 34,
+  "cycle_count": 36,
   "total_open_orders": 9,
   "win_loss": {
     "wins": 6,
@@ -706,28 +707,28 @@
   },
   "fee_simulation": {
     "fee_rate": 0.001,
-    "simulated_pnl": 0.2444,
-    "gross_pnl": 0.5133,
-    "fee_impact": -0.2689,
-    "real_win_rate": 66.7,
-    "real_wins": 4,
+    "simulated_pnl": 0.8926,
+    "gross_pnl": 1.2288,
+    "fee_impact": -0.3362,
+    "real_win_rate": 71.4,
+    "real_wins": 5,
     "real_losses": 2
   },
-  "sharpe_ratio": 33.56,
+  "sharpe_ratio": 31.69,
   "max_drawdown_pct": 0.016,
   "analytics": {
     "ETHUSDT": {
-      "wins": 1,
+      "wins": 2,
       "losses": 1,
-      "wr": 50.0,
-      "avg_win": 0.1683,
+      "wr": 66.7,
+      "avg_win": 0.4419,
       "avg_loss": -0.3722,
-      "best": 0.1683,
+      "best": 0.7155,
       "worst": -0.3722,
-      "avg_pnl": -0.1019,
-      "total_trades": 2,
+      "avg_pnl": 0.1705,
+      "total_trades": 3,
       "total_buys": 10,
-      "profit_factor": 0.45
+      "profit_factor": 2.37
     },
     "TAOUSDT": {
       "wins": 4,
