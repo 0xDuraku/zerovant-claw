@@ -16,20 +16,20 @@
       "trailing_triggered": true,
       "trailing_count": 2,
       "open_orders": 10,
-      "current_price": 2223.45,
+      "current_price": 2228.19,
       "last_trail": "2026-05-15T16:52:42.257132+00:00"
     },
     "TAOUSDT": {
       "active": false,
       "reason": "PF 0.55, 3 TF DOWN, LOW vol",
       "capital": 224.0,
-      "current_price": 285.4
+      "current_price": 288.3
     },
     "SOLUSDT": {
       "active": false,
       "reason": "params optimal",
       "capital": 0,
-      "current_price": 89.42
+      "current_price": 89.73
     },
     "BNBUSDT": {
       "action": "REBALANCE",
@@ -47,7 +47,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0,
-      "current_price": 674.77
+      "current_price": 675.13
     },
     "XRPUSDT": {
       "action": "REBALANCE",
@@ -65,7 +65,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0,
-      "current_price": 1.445
+      "current_price": 1.4479
     },
     "BTCUSDT": {
       "action": "REBALANCE",
@@ -83,7 +83,7 @@
       "trailing_triggered": true,
       "trailing_count": 1,
       "open_orders": 0,
-      "current_price": 79242.01
+      "current_price": 79320.9
     }
   },
   "last_ai_check": "2026-05-15T16:37:09.332764+00:00",
@@ -3881,24 +3881,24 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2223.45,
-    "TAOUSDT": 285.4,
-    "SOLUSDT": 89.42,
-    "BNBUSDT": 674.77,
-    "XRPUSDT": 1.445,
-    "BTCUSDT": 79242.01
+    "ETHUSDT": 2228.19,
+    "TAOUSDT": 288.3,
+    "SOLUSDT": 89.73,
+    "BNBUSDT": 675.13,
+    "XRPUSDT": 1.4479,
+    "BTCUSDT": 79320.9
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0142,
-    "TAOUSDT": 0.0349,
-    "SOLUSDT": 0.0158,
-    "BNBUSDT": 0.0136,
-    "XRPUSDT": 0.015,
-    "BTCUSDT": 0.0139
+    "ETHUSDT": 0.0118,
+    "TAOUSDT": 0.0305,
+    "SOLUSDT": 0.0129,
+    "BNBUSDT": 0.011,
+    "XRPUSDT": 0.0122,
+    "BTCUSDT": 0.0112
   },
-  "daily_reset_date": "2026-05-15",
-  "daily_start_pnl": 3.6903,
-  "daily_start_fills": 181,
+  "daily_reset_date": "2026-05-16",
+  "daily_start_pnl": 5.3647,
+  "daily_start_fills": 193,
   "daily_peak_pnl": 5.3647,
   "fills_log": [
     {
@@ -6606,12 +6606,12 @@
   ],
   "realized_pnl": 5.3647,
   "last_prices": {
-    "ETHUSDT": 2223.45,
-    "TAOUSDT": 285.4,
-    "SOLUSDT": 89.42,
-    "BNBUSDT": 674.77,
-    "XRPUSDT": 1.445,
-    "BTCUSDT": 79242.0
+    "ETHUSDT": 2228.19,
+    "TAOUSDT": 288.3,
+    "SOLUSDT": 89.73,
+    "BNBUSDT": 675.13,
+    "XRPUSDT": 1.4478,
+    "BTCUSDT": 79320.91
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -7316,9 +7316,12 @@
     501.79,
     501.79,
     501.79,
-    501.79
+    501.79,
+    501.89,
+    501.89,
+    501.89
   ],
-  "cycle_count": 1030,
+  "cycle_count": 1034,
   "total_open_orders": 10,
   "win_loss": {
     "wins": 43,
@@ -7330,28 +7333,28 @@
   },
   "fee_simulation": {
     "fee_rate": 0.001,
-    "simulated_pnl": 1.7916,
-    "gross_pnl": 5.195,
-    "fee_impact": -3.4034,
-    "real_win_rate": 54.2,
-    "real_wins": 39,
+    "simulated_pnl": 1.894,
+    "gross_pnl": 5.3647,
+    "fee_impact": -3.4707,
+    "real_win_rate": 54.8,
+    "real_wins": 40,
     "real_losses": 33
   },
-  "sharpe_ratio": 3.56,
+  "sharpe_ratio": 3.74,
   "max_drawdown_pct": 1.6635,
   "analytics": {
     "ETHUSDT": {
-      "wins": 21,
+      "wins": 22,
       "losses": 10,
-      "wr": 67.7,
-      "avg_win": 0.5639,
+      "wr": 68.8,
+      "avg_win": 0.546,
       "avg_loss": -0.2796,
       "best": 1.4433,
       "worst": -0.6037,
-      "avg_pnl": 0.2918,
-      "total_trades": 31,
-      "total_buys": 52,
-      "profit_factor": 4.24
+      "avg_pnl": 0.288,
+      "total_trades": 32,
+      "total_buys": 53,
+      "profit_factor": 4.3
     },
     "TAOUSDT": {
       "wins": 21,
@@ -7466,6 +7469,12 @@
       "fills": 15,
       "cumulative": 3.6903,
       "roi_pct": 0.284
+    },
+    "2026-05-15": {
+      "pnl": 1.6744,
+      "fills": 12,
+      "cumulative": 5.3647,
+      "roi_pct": 0.335
     }
   },
   "last_extreme_event_time": "2026-05-13T07:39:49.084733+00:00"
