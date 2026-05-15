@@ -14,17 +14,21 @@
       "fills": 27,
       "capital": 336.0,
       "trailing_triggered": true,
-      "trailing_count": 1
+      "trailing_count": 1,
+      "open_orders": 10,
+      "current_price": 2266.43
     },
     "TAOUSDT": {
       "active": false,
       "reason": "PF 0.55",
-      "capital": 224.0
+      "capital": 224.0,
+      "current_price": 304.8
     },
     "SOLUSDT": {
       "active": false,
       "reason": "All 3 TF same direction DOWN",
-      "capital": 0
+      "capital": 0,
+      "current_price": 91.52
     },
     "BNBUSDT": {
       "action": "KEEP",
@@ -40,7 +44,9 @@
       "fills": 0,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 1
+      "trailing_count": 1,
+      "open_orders": 0,
+      "current_price": 679.43
     },
     "XRPUSDT": {
       "action": "REBALANCE",
@@ -56,12 +62,15 @@
       "fills": 0,
       "capital": 0,
       "trailing_triggered": true,
-      "trailing_count": 1
+      "trailing_count": 1,
+      "open_orders": 0,
+      "current_price": 1.4783
     },
     "BTCUSDT": {
       "active": false,
       "reason": "All 3 TF same direction DOWN",
-      "capital": 0
+      "capital": 0,
+      "current_price": 80882.44
     }
   },
   "last_ai_check": "2026-05-15T04:20:59.936989+00:00",
@@ -3607,20 +3616,20 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2268.81,
-    "TAOUSDT": 304.7,
-    "SOLUSDT": 91.83,
-    "BNBUSDT": 680.03,
-    "XRPUSDT": 1.4849,
-    "BTCUSDT": 80986.96
+    "ETHUSDT": 2266.43,
+    "TAOUSDT": 304.8,
+    "SOLUSDT": 91.52,
+    "BNBUSDT": 679.43,
+    "XRPUSDT": 1.4783,
+    "BTCUSDT": 80882.44
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0079,
-    "TAOUSDT": 0.0077,
-    "SOLUSDT": 0.0049,
-    "BNBUSDT": 0.0057,
-    "XRPUSDT": 0.0063,
-    "BTCUSDT": 0.0049
+    "ETHUSDT": 0.0082,
+    "TAOUSDT": 0.0083,
+    "SOLUSDT": 0.0059,
+    "BNBUSDT": 0.0055,
+    "XRPUSDT": 0.0075,
+    "BTCUSDT": 0.0054
   },
   "daily_reset_date": "2026-05-15",
   "daily_start_pnl": 3.6903,
@@ -6234,12 +6243,12 @@
   ],
   "realized_pnl": 5.195,
   "last_prices": {
-    "ETHUSDT": 2269.13,
-    "TAOUSDT": 304.7,
-    "SOLUSDT": 91.83,
-    "BNBUSDT": 680.03,
-    "XRPUSDT": 1.4856,
-    "BTCUSDT": 80986.97
+    "ETHUSDT": 2266.43,
+    "TAOUSDT": 304.8,
+    "SOLUSDT": 91.51,
+    "BNBUSDT": 679.43,
+    "XRPUSDT": 1.4783,
+    "BTCUSDT": 80882.44
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -6446,27 +6455,13 @@
     500.0,
     500.0,
     500.0,
-    500.0,
-    500.0,
-    500.0,
     499.92,
     499.92,
-    499.92,
-    499.92,
-    499.92,
-    500.24,
-    500.24,
-    500.24,
-    500.24,
     500.24,
     500.24,
     500.24,
     500.24,
     500.89,
-    500.89,
-    500.95,
-    500.95,
-    500.95,
     500.95,
     500.95,
     500.95,
@@ -6482,36 +6477,12 @@
     501.55,
     501.55,
     501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.55,
-    501.08,
-    501.08,
     501.08,
     501.08,
     501.31,
     501.31,
     501.31,
     501.31,
-    501.31,
-    501.31,
-    501.31,
-    501.31,
-    501.19,
-    501.19,
-    501.19,
-    501.19,
-    501.19,
-    501.19,
     501.19,
     501.19,
     501.19,
@@ -6520,10 +6491,6 @@
     501.19,
     501.4,
     501.4,
-    501.4,
-    501.35,
-    501.35,
-    501.35,
     501.35,
     501.35,
     501.23,
@@ -6533,15 +6500,6 @@
     501.23,
     501.23,
     501.23,
-    501.23,
-    501.23,
-    501.23,
-    501.23,
-    501.23,
-    501.23,
-    501.23,
-    501.91,
-    501.91,
     501.91,
     501.91,
     501.91,
@@ -6941,10 +6899,12 @@
     501.79,
     501.79,
     501.79,
+    501.79,
+    501.79,
     501.79
   ],
-  "cycle_count": 936,
-  "total_open_orders": 10,
+  "cycle_count": 940,
+  "total_open_orders": 0,
   "win_loss": {
     "wins": 42,
     "losses": 30,
@@ -6962,7 +6922,7 @@
     "real_wins": 39,
     "real_losses": 33
   },
-  "sharpe_ratio": 3.54,
+  "sharpe_ratio": 3.72,
   "max_drawdown_pct": 1.6635,
   "analytics": {
     "ETHUSDT": {
