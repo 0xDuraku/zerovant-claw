@@ -2,48 +2,56 @@
   "grids": {
     "ETHUSDT": {
       "action": "REBALANCE",
-      "range_low": 2147.5856,
-      "range_high": 2347.5856,
+      "range_low": 2144.3844,
+      "range_high": 2344.3844,
       "num_grids": 15,
       "confidence": 0.85,
       "reason": "WR 69.7% tighten range, PF 4.44",
       "active": true,
       "last_rebalance": "2026-05-17T01:17:51.956500+00:00",
-      "orders_placed": 11,
+      "orders_placed": 0,
       "realized_pnl": 0,
-      "fills": 1,
+      "fills": 2,
       "capital": 336.0,
       "trailing_triggered": true,
-      "trailing_count": 1
+      "trailing_count": 2,
+      "open_orders": 10,
+      "current_price": 2174.77,
+      "last_trail": "2026-05-17T01:33:17.559123+00:00"
     },
     "TAOUSDT": {
       "active": false,
       "reason": "PF 0.55 < 1.0",
-      "capital": 224.0
+      "capital": 224.0,
+      "current_price": 268.9
     },
     "SOLUSDT": {
       "active": false,
       "reason": "params optimal",
-      "capital": 0
+      "capital": 0,
+      "current_price": 85.91
     },
     "BNBUSDT": {
       "active": false,
       "reason": "spacing 0.47% < 0.4%",
-      "capital": 0
+      "capital": 0,
+      "current_price": 651.49
     },
     "XRPUSDT": {
       "active": false,
       "reason": "spacing 0.47% < 0.4%",
-      "capital": 0
+      "capital": 0,
+      "current_price": 1.4068
     },
     "BTCUSDT": {
       "active": false,
       "reason": "spacing 0.00% < 0.4%",
-      "capital": 0
+      "capital": 0,
+      "current_price": 77839.23
     }
   },
   "last_ai_check": "2026-05-17T01:17:51.956500+00:00",
-  "total_fills": 197,
+  "total_fills": 198,
   "start_time": "2026-05-08T12:31:05.573577+00:00",
   "total_rebalances": 109,
   "ai_log": [
@@ -4635,20 +4643,20 @@
     "BTCUSDT": 0
   },
   "prev_prices": {
-    "ETHUSDT": 2181.16,
-    "TAOUSDT": 270.0,
-    "SOLUSDT": 86.14,
-    "BNBUSDT": 653.05,
-    "XRPUSDT": 1.4128,
-    "BTCUSDT": 78063.96
+    "ETHUSDT": 2174.77,
+    "TAOUSDT": 268.9,
+    "SOLUSDT": 85.91,
+    "BNBUSDT": 651.49,
+    "XRPUSDT": 1.4068,
+    "BTCUSDT": 77839.23
   },
   "prev_bb_width": {
-    "ETHUSDT": 0.0013,
-    "TAOUSDT": 0.0114,
-    "SOLUSDT": 0.004,
-    "BNBUSDT": 0.0057,
-    "XRPUSDT": 0.0016,
-    "BTCUSDT": 0.0022
+    "ETHUSDT": 0.003,
+    "TAOUSDT": 0.0145,
+    "SOLUSDT": 0.0065,
+    "BNBUSDT": 0.0071,
+    "XRPUSDT": 0.0038,
+    "BTCUSDT": 0.0038
   },
   "daily_reset_date": "2026-05-17",
   "daily_start_pnl": 5.7635,
@@ -7412,16 +7420,30 @@
       "inventory": 0.3292,
       "slippage_pct": 0.0,
       "is_partial": false
+    },
+    {
+      "tradeId": 198900,
+      "symbol": "ETHUSDT",
+      "side": "BUY",
+      "price": 2180.0,
+      "qty": 0.0154,
+      "fee": 0.0,
+      "time": "01:19:08",
+      "timestamp": "2026-05-17T01:19:08Z",
+      "pnl": null,
+      "inventory": 0.3446,
+      "slippage_pct": 0.0,
+      "is_partial": false
     }
   ],
   "realized_pnl": 5.7635,
   "last_prices": {
-    "ETHUSDT": 2180.29,
-    "TAOUSDT": 270.0,
-    "SOLUSDT": 86.13,
-    "BNBUSDT": 652.78,
-    "XRPUSDT": 1.4125,
-    "BTCUSDT": 78031.65
+    "ETHUSDT": 2171.96,
+    "TAOUSDT": 268.9,
+    "SOLUSDT": 85.85,
+    "BNBUSDT": 651.04,
+    "XRPUSDT": 1.4068,
+    "BTCUSDT": 77839.22
   },
   "seen_trade_ids": {
     "ETHUSDT": [
@@ -7513,7 +7535,8 @@
       185627,
       187359,
       188483,
-      196075
+      196075,
+      198900
     ],
     "TAOUSDT": [
       294,
@@ -7631,7 +7654,7 @@
     "BTCUSDT": []
   },
   "inventory": {
-    "ETHUSDT": 0.3292,
+    "ETHUSDT": 0.3446,
     "TAOUSDT": -0.1688
   },
   "equity_history": [
@@ -8095,10 +8118,11 @@
     502.23,
     502.23,
     502.23,
+    502.23,
     502.23
   ],
-  "cycle_count": 1262,
-  "total_open_orders": 10,
+  "cycle_count": 1265,
+  "total_open_orders": 0,
   "win_loss": {
     "wins": 44,
     "losses": 30,
@@ -8116,7 +8140,7 @@
     "real_wins": 41,
     "real_losses": 33
   },
-  "sharpe_ratio": 4.44,
+  "sharpe_ratio": 4.42,
   "max_drawdown_pct": 1.6635,
   "analytics": {
     "ETHUSDT": {
@@ -8129,7 +8153,7 @@
       "worst": -0.6037,
       "avg_pnl": 0.2913,
       "total_trades": 33,
-      "total_buys": 56,
+      "total_buys": 57,
       "profit_factor": 4.44
     },
     "TAOUSDT": {
